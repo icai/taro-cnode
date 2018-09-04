@@ -2,10 +2,10 @@
 
 taro 不怎么样的开发指南
 
-UI 参照 https://github.com/lzxb/vue-cnode
+UI 参照 https://github.com/shinygang/Vue-cnodejs
 
 
-基于 https://github.com/lzxb/vue-cnode 和 https://github.com/NervJS/taro-v2ex 实现
+基于https://github.com/shinygang/Vue-cnodejs 和 https://github.com/NervJS/taro-v2ex 实现
 
 
 
