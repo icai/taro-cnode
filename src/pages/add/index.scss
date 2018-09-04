@@ -1,0 +1,52 @@
+    .add-container {
+      margin-top: 70px;
+      background-color: #fff;
+
+      .line {
+        padding: 10px 15px;
+        border-bottom: solid 1px #d4d4d4;
+
+        .add-btn {
+          color: #fff;
+          background-color: #80bd01;
+          padding: 5px 15px;
+          border-radius: 5px;
+        }
+
+        .add-tab {
+          display: inline-block;
+          width: calc(100% - 140px);
+          min-width: 50%;
+          font-size: 16px;
+          background: transparent;
+          padding: 3px;
+          margin: 0 6px;
+          :after {
+            content: 'xe60e';
+          }
+        }
+
+        .add-title {
+          font-size: 16px;
+          border: none;
+          width: 100%;
+          background: transparent;
+          height: 25px;
+        }
+
+        .err {
+          border: solid 1px red;
+        }
+      }
+
+      .add-content {
+        margin: 15px 2%;
+        width: 96%;
+        border-color: #d4d4d4;
+        color: #000;
+      }
+
+      .err {
+        border: solid 1px red;
+      }
+    }
