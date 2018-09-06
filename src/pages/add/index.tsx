@@ -1,5 +1,6 @@
 import { ComponentClass } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
+import Taro, { Component, Config } from "@tarojs/taro";
+import { withUser } from "../../hoc/router";
 import { View, ScrollView } from '@tarojs/components'
 import Header from '../../components/header/index'
 import { AtTextarea, AtInput } from 'taro-ui'
@@ -179,4 +180,4 @@ class Add extends Component {
   }
 }
 
-export default Add as ComponentClass<PageOwnProps, PageState>
+export default withUser(Add as ComponentClass<PageOwnProps, PageState>);

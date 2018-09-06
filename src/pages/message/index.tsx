@@ -1,5 +1,6 @@
 import { ComponentClass } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
+import Taro, { Component, Config } from "@tarojs/taro";
+import { withUser } from "../../hoc/router";
 import { View, ScrollView } from '@tarojs/components'
 import Header from '../../components/header/index'
 import { AtTextarea, AtInput, AtTabs, AtTabsPane  } from 'taro-ui'
@@ -130,4 +131,4 @@ class Message extends Component {
   }
 }
 
-export default Message as ComponentClass<PageOwnProps, PageState>
+export default withUser(Message as ComponentClass<PageOwnProps, PageState>)

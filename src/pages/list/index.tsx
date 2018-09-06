@@ -1,5 +1,5 @@
 // import { ComponentClass } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
+import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView } from '@tarojs/components'
 import { TopicsList } from '../../components/topics/index'
 import Header from '../../components/header/index';
@@ -143,7 +143,6 @@ class List extends Component<IProps, IState> {
   }
 
   getScrollData = () => {
-    console.info('aaa')
     if (this.state.scroll) {
       let totalheight =
         document.documentElement.clientHeight +

@@ -1,5 +1,5 @@
 // import { ComponentClass } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
+import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView } from '@tarojs/components'
 import Header from '../../components/header/index'
 
