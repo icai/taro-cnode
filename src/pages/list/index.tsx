@@ -2,37 +2,53 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, ScrollView } from '@tarojs/components'
 import { TopicsList } from '../../components/topics/index'
-import Header from '../../components/header/index'
+import Header from '../../components/header/index';
+import { throttle } from "throttle-debounce";
 
 import { ITopic } from "../../interfaces/topic";
+
+import BackTop from "../../components/backtotop/index";
 
 
 import './index.scss'
 
-// interface IProps {
-//   props: IProps;
-// }
+// type IProps =  {};
+interface IProps {
+  props: object
+}
+
+
+type TsearchKey = {
+  page: number,
+  limit: number,
+  tab: string,
+  mdrender: boolean
+}
 
 
 interface IState {
   scroll: boolean,
   loading: boolean,
-  topics: ITopic[]
+  topics: ITopic[],
+  searchKey: TsearchKey
 }
 
 
-class List extends Component<{}, IState> {
-
+class List extends Component<IProps, IState> {
   /**
- * 指定config的类型声明为: Taro.Config
- *
- * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
- * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
- * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
- */
+   * 指定config的类型声明为: Taro.Config
+   *
+   * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
+   * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
+   * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
+   */
   config: Config = {
-    navigationBarTitleText: '全部'
+    navigationBarTitleText: "全部"
   };
+
+  componentScrollBox: document.documentElement;
+
+  throttledScrollHandler: (e)=> void;
 
   state = {
     scroll: true,
@@ -41,50 +57,56 @@ class List extends Component<{}, IState> {
     searchKey: {
       page: 1,
       limit: 20,
-      tab: 'all',
+      tab: "all",
       mdrender: true
     },
     loading: true,
-    searchDataStr: ''
+    searchDataStr: ""
   };
+  index = {};
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps)
+    console.log(this.props, nextProps);
   }
 
   componentWillUnmount() {
+    window.removeEventListener("scroll", this.throttledScrollHandler);
   }
-  componentDidShow() {
-    console.info(this);
-    if(this.$router.params && this.$router.params.tab) {
-      this.setState(prevstate => {
-        searchKey: Object.assign(prevstate.searchKey, {tab: this.$router.params.tab})
-      }, ()=>{
-        this.getTopics();
-      })
+  componentDidMount() {
+    if (this.$router.params && this.$router.params.tab) {
+      this.setState(
+        prevState => {
+          searchKey: Object.assign(prevState.searchKey, {
+            tab: this.$router.params.tab
+          });
+        },
+        () => {
+          this.getTopics();
+        }
+      );
       return;
     }
     this.getTopics();
-
+    this.throttledScrollHandler = throttle(300, this.getScrollData);
+    window.addEventListener("scroll", this.throttledScrollHandler);
   }
-  componentDidHide() { }
   getTitleStr(tab) {
-    let str = '';
+    let str = "";
     switch (tab) {
-      case 'share':
-        str = '分享';
+      case "share":
+        str = "分享";
         break;
-      case 'ask':
-        str = '问答';
+      case "ask":
+        str = "问答";
         break;
-      case 'job':
-        str = '招聘';
+      case "job":
+        str = "招聘";
         break;
-      case 'good':
-        str = '精华';
+      case "good":
+        str = "精华";
         break;
       default:
-        str = '全部';
+        str = "全部";
         break;
     }
     return str;
@@ -93,18 +115,18 @@ class List extends Component<{}, IState> {
   getTopics() {
     let params = this.state.searchKey;
     try {
-      Taro.request(
-        {
-          url: "https://cnodejs.org/api/v1/topics",
-          data: params
-        }
-      ).then(res => {
+      Taro.request({
+        url: "https://cnodejs.org/api/v1/topics",
+        data: params
+      }).then(res => {
         let data = res.data;
         this.setState({
           scroll: true,
           loading: false
-        })
+        });
         if (data && data.data) {
+          // data.data.forEach(this.mergeTopics);
+          // this.mergeTopics(data.data);
           this.setState(prevState => ({
             topics: data.data
           }));
@@ -114,41 +136,62 @@ class List extends Component<{}, IState> {
       });
     } catch (error) {
       Taro.showToast({
-        title: '载入远程数据错误'
-      })
+        title: "载入远程数据错误"
+      });
     }
-
   }
-  mergeTopics(topic, index) {
+  mergeTopics = (topic, index) => {
+    if (typeof this.index[topic.id] === "number") {
+      const topicsIndex: any = this.index[topic.id];
+      let topics = this.state.topics;
+      topics[topicsIndex] = topic;
+      this.setState({ topics: topics });
+    } else {
+      this.index[topic.id] = index;
+      this.setState(prevState => ({
+        topics: [...prevState.topics, topic]
+      }));
+    }
+  }
 
-    // if (typeof this.state.index[topic.id] === 'number') {
-    //   const topicsIndex: any = this.state.index[topic.id];
-    //   let topics = this.state.topics;
-    //   topics[topicsIndex] = topic;
-    //   this.setState({ topics: topics });
-    // } else {
-    //   this.state.index[topic.id] = index;
-    //   this.setState(prevState => ({
-    //     topics: [...prevState.topics, topic]
-    //   }));
-    // }
+  getScrollData() {
+    if (this.state.scroll) {
+      let totalheight =
+        document.documentElement.clientHeight +
+        document.documentElement.scrollTop;
+      if (document.documentElement.scrollHeight <= totalheight + 200) {
+        this.setState(
+          prevState => ({
+            scroll: false,
+            searchKey: {
+              ...prevState.searchKey,
+              page: prevState.searchKey.page + 1
+            }
+          }),
+          () => {
+            this.getTopics();
+          }
+        );
+      }
+    }
   }
   render() {
-    const { searchKey, topics, loading  } = this.state;
+    const { searchKey, topics, loading } = this.state;
     return (
-      <View className="flex-wrp" >
-        <Header pageType={this.getTitleStr(searchKey.tab)} fixHead={true} needAdd={true} ></Header>
+      <View className="flex-wrp">
+        <Header
+          pageType={this.getTitleStr(searchKey.tab)}
+          fixHead={true}
+          needAdd={true}
+        />
         <View id="page">
-          <View className='posts-list'>
-            <TopicsList
-              topics={topics}
-              loading={loading}
-            />
+          <View className="posts-list">
+            <TopicsList topics={topics} loading={loading} />
           </View>
+        </View>
+        <BackTop />
       </View>
-      </View>
-
-    )
+    );
   }
 }
 

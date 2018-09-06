@@ -28,6 +28,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "taro-ui": "^1.1.0",
+    "throttle-debounce": "^2.0.1",
     "timeago.js": "^3.0.2"
   },
   "devDependencies": {

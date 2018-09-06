@@ -7,6 +7,7 @@ import * as utils from '../../libs/utils';
 
 import { connect } from '@tarojs/redux'
 import { get, set } from '../../actions/userinfo'
+import BackTop from "../../components/backtotop/index";
 
 
 import './index.scss'
@@ -75,9 +76,9 @@ class Topic extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps);
+    // console.log(this.props, nextProps);
   }
-  componentDidShow() {
+  componentDidMount() {
     this.getTopic();
   }
   addReply(id) {
@@ -206,6 +207,7 @@ class Topic extends Component {
             <View className="reply-list">
               <View className="ul">{replayList}</View>
             </View>
+            <BackTop></BackTop>
             {/* <nv-top></nv-top>
               <nv-reply v-if="userInfo.userId"
                       :topic="topic"

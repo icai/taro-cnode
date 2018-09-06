@@ -35,7 +35,7 @@ class About extends Component<{}, {}> {
 
   componentWillUnmount () { }
 
-  componentDidShow () { }
+  componentDidMount () { }
 
   componentDidHide () { }
 

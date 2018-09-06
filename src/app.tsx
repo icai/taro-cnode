@@ -46,7 +46,7 @@ class App extends Component {
 
   componentDidMount() {}
 
-  componentDidShow() {
+  componentDidMount() {
     store.subscribe(function () {
     });
     // if (window.sessionStorage.user) {

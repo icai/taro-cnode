@@ -19,14 +19,8 @@ interface IProps {
 
 class NvMenu extends Component<IProps, {}> {
   componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps);
+    // console.log(this.props, nextProps);
   }
-
-  componentWillUnmount() {}
-
-  componentDidShow() {}
-
-  componentDidHide() {}
   toList(pm) {
     Taro.navigateTo({
       url: "/pages/list/index?" + param(pm),
@@ -66,10 +60,7 @@ class NvMenu extends Component<IProps, {}> {
       show: showMenu
     });
     return <View id="sideBar" className={classnames}>
-        <Drawer
-         show={showMenu}
-         mask
-        >
+        <Drawer mask={false} show={showMenu}>
           <UserInfo />
           <View className="list-ul">
             <View className="icon-quanbu iconfont item" onClick={this.listAll}>
@@ -78,13 +69,13 @@ class NvMenu extends Component<IProps, {}> {
             <View className="icon-hao iconfont item" onClick={this.listGood}>
               精华
             </View>
-          <View className="icon-fenxiang iconfont item" onClick={this.listShare}>
+            <View className="icon-fenxiang iconfont item" onClick={this.listShare}>
               分享
             </View>
-          <View className="icon-wenda iconfont item" onClick={this.listAsk}>
+            <View className="icon-wenda iconfont item" onClick={this.listAsk}>
               问答
             </View>
-          <View className="icon-zhaopin iconfont item" onClick={this.listJob}>
+            <View className="icon-zhaopin iconfont item" onClick={this.listJob}>
               招聘
             </View>
             <View className="icon-xiaoxi iconfont item line" onClick={this.listMessage}>

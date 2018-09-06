@@ -8,14 +8,13 @@ import { AtDrawer } from 'taro-ui'
 export default class Drawer extends AtDrawer {
   constructor () {
     super(...arguments)
-    this.state = { animShow: false }
-    if (this.props.show) this.animShow()
+    // this.state = { animShow: false }
+    // if (this.props.show) this.animShow()
   }
-
-  onItemClick (index, e) {
-    this.props.onItemClick && this.props.onItemClick(index)
-    this.animHide(e, index)
-  }
+  // onItemClick (index, e) {
+  //   this.props.onItemClick && this.props.onItemClick(index)
+  //   this.animHide(e, index)
+  // }
 
   onHide () {
     this.setState({ show: false })
@@ -26,31 +25,32 @@ export default class Drawer extends AtDrawer {
     this.setState({
       animShow: false,
     })
+    this.props.onStartHide && this.props.onStartHide();
     setTimeout(() => {
       this.onHide(...arguments)
     }, 300)
   }
 
-  animShow () {
-    this.setState({ show: true })
-    setTimeout(() => {
-      this.setState({
-        animShow: true,
-      })
-    }, 200)
-  }
+  // animShow () {
+  //   this.setState({ show: true })
+  //   setTimeout(() => {
+  //     this.setState({
+  //       animShow: true,
+  //     })
+  //   }, 200)
+  // }
 
-  onMaskClick () {
-    this.animHide(...arguments)
-  }
+  // onMaskClick () {
+  //   this.animHide(...arguments)
+  // }
 
-  componentWillReceiveProps (props) {
-    const { show } = props
-    if (show !== this.props.show) {
-      if (show) this.animShow()
-      else this.animHide(...arguments)
-    }
-  }
+  // componentWillReceiveProps (props) {
+  //   const { show } = props
+  //   if (show !== this.props.show) {
+  //     if (show) this.animShow()
+  //     else this.animHide(...arguments)
+  //   }
+  // }
 
   render () {
     const {
@@ -70,8 +70,8 @@ export default class Drawer extends AtDrawer {
       opacity: animShow ? 1 : 0,
     }
     const listStyle = {
-      width,
-      transition: animShow ? 'all 225ms cubic-bezier(0, 0, 0.2, 1)' : 'all 195ms cubic-bezier(0.4, 0, 0.6, 1)',
+      // width,
+      // transition: animShow ? 'all 225ms cubic-bezier(0, 0, 0.2, 1)' : 'all 195ms cubic-bezier(0.4, 0, 0.6, 1)',
     }
     if (right) rootClassName.push('at-drawer--right')
     else rootClassName.push('at-drawer--left')

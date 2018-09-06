@@ -73,7 +73,7 @@ class Add extends Component {
 
   componentWillUnmount () { }
 
-  componentDidShow () { }
+  componentDidMount () { }
 
   componentDidHide () { }
   addTopic() {

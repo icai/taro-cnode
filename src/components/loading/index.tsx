@@ -12,10 +12,10 @@ interface IProps {
 
 class Loading extends Component<IProps, {}> {
   componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps);
+    // console.log(this.props, nextProps);
   }
   componentWillUnmount() {}
-  componentDidShow() {}
+  componentDidMount() {}
   componentDidHide() {}
   render() {
     const { showTxt, show } = this.props;

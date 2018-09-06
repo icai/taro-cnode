@@ -2,15 +2,15 @@
       position: fixed;
       top: 0;
       bottom: 0;
-      left: -240px;
-      width: 240px;
+      left: -460px;
+      width: 460px;
       background-color: #fff;
       color: #313131;
       transition: all .3s ease;
       z-index: 99;
 
       &.show {
-        transform: translateX(240px);
+        transform: translateX(460px);
       }
     }
 

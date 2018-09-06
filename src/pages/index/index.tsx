@@ -24,7 +24,7 @@ class Index extends Component {
 
   componentWillUnmount () { }
 
-  componentDidShow () {
+  componentDidMount () {
     setTimeout(()=> {
       Taro.navigateTo({
         url: "/pages/list/index"
@@ -38,6 +38,7 @@ class Index extends Component {
     return (
         <View>
           <Image className="index" src={require('../../assets/images/index.png')}></Image>
+          <View className="index-subtitle"> Taro Cnode.js</View>
         </View>
     )
   }

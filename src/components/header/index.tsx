@@ -46,12 +46,12 @@ class Header extends Component<IProps, IState> {
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps);
+    // console.log(this.props, nextProps);
   }
 
   componentWillUnmount() {}
 
-  componentDidShow() {}
+  componentDidMount() {}
 
   componentDidHide() {}
 
