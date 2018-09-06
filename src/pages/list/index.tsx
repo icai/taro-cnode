@@ -8,6 +8,7 @@ import { throttle } from "throttle-debounce";
 import { ITopic } from "../../interfaces/topic";
 
 import BackTop from "../../components/backtotop/index";
+import update from "immutability-helper";
 
 
 import './index.scss'
@@ -46,7 +47,7 @@ class List extends Component<IProps, IState> {
     navigationBarTitleText: "全部"
   };
 
-  componentScrollBox: document.documentElement;
+  componentScrollBox = document.documentElement;
 
   throttledScrollHandler: (e)=> void;
 
@@ -84,9 +85,9 @@ class List extends Component<IProps, IState> {
           this.getTopics();
         }
       );
-      return;
+    } else {
+      this.getTopics();
     }
-    this.getTopics();
     this.throttledScrollHandler = throttle(300, this.getScrollData);
     window.addEventListener("scroll", this.throttledScrollHandler);
   }
@@ -125,13 +126,7 @@ class List extends Component<IProps, IState> {
           loading: false
         });
         if (data && data.data) {
-          // data.data.forEach(this.mergeTopics);
-          // this.mergeTopics(data.data);
-          this.setState(prevState => ({
-            topics: data.data
-          }));
-
-          // data.data.forEach(this.mergeTopics, this);
+          this.mergeTopics(data.data);
         }
       });
     } catch (error) {
@@ -140,21 +135,15 @@ class List extends Component<IProps, IState> {
       });
     }
   }
-  mergeTopics = (topic, index) => {
-    if (typeof this.index[topic.id] === "number") {
-      const topicsIndex: any = this.index[topic.id];
-      let topics = this.state.topics;
-      topics[topicsIndex] = topic;
-      this.setState({ topics: topics });
-    } else {
-      this.index[topic.id] = index;
-      this.setState(prevState => ({
-        topics: [...prevState.topics, topic]
-      }));
-    }
+  mergeTopics = (topics) => {
+    const newData = update(this.state.topics, {
+      $push: topics
+    });
+    this.setState(prevState => ({ topics: newData }));
   }
 
-  getScrollData() {
+  getScrollData = () => {
+    console.info('aaa')
     if (this.state.scroll) {
       let totalheight =
         document.documentElement.clientHeight +
