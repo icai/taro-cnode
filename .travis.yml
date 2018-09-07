@@ -9,6 +9,7 @@ before_install:
 - export TRAVIS_COMMIT_USER="$(git log --no-merges -n 1 --format=%an)"
 - export TRAVIS_COMMIT_EMAIL="$(git log --no-merges -n 1 --format=%ae)"
 script:
+- npm install -g @tarojs/cli
 - npm install
 - npm run build:h5
 after_success:
