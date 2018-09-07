@@ -1033,9 +1033,9 @@ body {
   width: 100%;
   list-style: none;
   border-bottom: solid 0.02133rem #d4d4d4;
-  position: relative;
   display: -webkit-flex;
   display: flex;
+  position: relative;
 }
 
 .user-tabs .item {
@@ -1155,16 +1155,18 @@ body {
 
 .page .tabs {
   width: 100%;
-  margin-top: 45PX;
   list-style: none;
   border-bottom: solid 0.02133rem #d4d4d4;
+  display: -webkit-flex;
+  display: flex;
   position: relative;
 }
 
 .page .tabs .item {
   width: 50%;
   padding: 11.5PX 0;
-  float: left;
+  -webkit-flex: 0 1 auto;
+          flex: 0 1 auto;
   font-size: 0.34133rem;
   text-align: center;
   font-weight: bold;
