@@ -643,7 +643,7 @@ body {
   text-align: center;
   height: 100%;
   line-height: 2.13333rem;
-  font-size: 0.68267rem;
+  font-size: 0.81067rem;
   width: 100%;
   position: relative;
   z-index: 0;
@@ -670,6 +670,7 @@ body {
   right: 0.32rem;
   top: 0.32rem;
   z-index: 10;
+  font-size: 0.81067rem;
   padding: 0.10667rem 0.32rem;
   border-radius: 0.10667rem;
 }

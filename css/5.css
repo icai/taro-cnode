@@ -65,20 +65,22 @@
 .add-container .line .add-btn {
   color: #fff;
   background-color: #80bd01;
-  padding: 0.10667rem 0.32rem;
+  padding: 0.21333rem 0.53333rem;
   border-radius: 0.10667rem;
+  vertical-align: middle;
 }
 
 .add-container .line .add-tab {
   display: inline-block;
-  width: -webkit-calc(100% - 2.98667rem);
-  width: -webkit-calc(100% - 140px);
-  width: calc(100% - 2.98667rem);
+  width: -webkit-calc(100% - 4.69333rem);
+  width: -webkit-calc(100% - 220px);
+  width: calc(100% - 4.69333rem);
   min-width: 50%;
-  font-size: 0.34133rem;
+  font-size: 0.64rem;
   background: transparent;
   padding: 0.064rem;
-  margin: 0 0.128rem;
+  margin: 0.064rem 0.128rem;
+  vertical-align: middle;
 }
 
 .add-container .line .add-tab :after {
