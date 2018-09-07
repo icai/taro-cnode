@@ -99,21 +99,13 @@ class Login extends Component {
   }
   render() {
     const { err, token } = this.state;
-    return (
-      <View className="login-page">
-        <Header pageType={"登录"} />
+    return <View className="login-page">
+        <Header pageType={"登录"} fixHead={true} needAdd={true} />
         <View className="page-body">
           <View className="label">
-            <AtInput
-              className="txt"
-              type="text"
-              placeholder="Access Token"
-              value={token}
-              onChange={e => {
+            <AtInput className="txt" type="text" placeholder="Access Token" value={token} onChange={e => {
                 this.handleChange(e);
-              }}
-              maxlength="36"
-            />
+              }} maxlength="36" />
           </View>
           <View className="label">
             <a className="button" onClick={this.logon}>
@@ -127,8 +119,7 @@ class Login extends Component {
           iconType={err.iconType}
           iconColor={err.iconColor}
           isHiddenIcon={err.isHiddenIcon}></AtToast> */}
-      </View>
-    );
+      </View>;
   }
 }
 
