@@ -30,12 +30,10 @@
 
 .list-ul .item {
   display: block;
-  font-size: 0.29867rem;
   font-weight: 200;
   padding: 9% 0;
   text-align: left;
   text-indent: 0.02133rem;
-  line-height: 0.32rem;
   color: #313131;
   font-weight: 700;
 }
