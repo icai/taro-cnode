@@ -1,5 +1,18 @@
 # taro-cnode
 
+> Taro 开发的多端cnode客户端
+
+
+<p align="center">
+  <a href="https://travis-ci.org/icai/taro-cnode">
+    <img src="https://travis-ci.org/icai/taro-cnode.svg?branch=master">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg">
+  </a>
+</p>
+
+
 ## 这是什么？
 
 这是一个Taro 开发的多端客户端（h5， weapp，……）
