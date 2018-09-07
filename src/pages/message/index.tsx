@@ -1,38 +1,15 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from "@tarojs/taro";
 import { withUser } from "../../hoc/router";
-import { View, ScrollView } from '@tarojs/components'
+import { View, Image, Text, ScrollView } from '@tarojs/components';
+import Link from "../../components/link";
 import Header from '../../components/header/index'
-import { AtTextarea, AtInput, AtTabs, AtTabsPane  } from 'taro-ui'
-import { trim } from '../../libs/utils'
 import classNames from "classnames";
 import * as utils from '../../libs/utils';
 
-import { connect } from '@tarojs/redux'
 
 
 import './index.scss'
-
-// type PageStateProps = {
-//   counter: {
-//     num: number
-//   }
-// }
-
-// type PageDispatchProps = {
-//   getUserInfo: () => void
-//   setUserInfo: () => void
-// }
-
-// type PageOwnProps = {}
-
-// type PageState = {}
-
-// type IProps = PageStateProps & PageDispatchProps & PageOwnProps
-
-// interface Message {
-//   props: IProps;
-// }
 
 
 class Message extends Component {
@@ -45,7 +22,7 @@ class Message extends Component {
     showMenu: false,
     selectItem: 2,
     message: {
-      hasnot_read_messages: []
+      hasnot_read_messages: [],
       has_read_messages: []
     },
     noData: false,
@@ -61,8 +38,51 @@ class Message extends Component {
       noData: currentData.length === 0
     }))
   }
+  componentDidShow() {
+    const { userInfo } = this.props;
+    Taro.request({
+      url: 'https://cnodejs.org/api/v1/messages?accesstoken=' + userInfo.token
+    }).then(resp => {
+      const d = resp.data;
+      const willdata = {};
+      if (d && d.data) {
+        console.info(d);
+        willdata.message = d.data;
+        willdata.no_read_len = d.data.hasnot_read_messages.length;
+        if (d.data.hasnot_read_messages.length > 0) {
+          willdata.currentData = d.data.hasnot_read_messages;
+        } else {
+          willdata.currentData = d.data.has_read_messages;
+          willdata.selectItem = 2;
+        }
+        willdata.noData = willdata.currentData.length === 0;
+      } else {
+        willdata.noData = true;
+      }
+      this.setState({...willdata})
+      setTimeout(() => {
+        console.info(this.state);
+      }, 300);
+    })
+  }
   markall = ()=>{
-
+    const { userInfo } = this.props;
+    Taro.request({
+      method: "POST",
+      url: 'https://cnodejs.org/api/v1/message/mark_all',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json"
+      },
+      data: utils.param({
+        accesstoken: userInfo.token
+      })
+    }).then(resp => {
+      const d = resp.data;
+      if (d && d.success) {
+        window.location.reload();
+      }
+    })
   }
   render () {
     const { currentData, no_read_len, selectItem,  noData } = this.state;
@@ -73,7 +93,7 @@ class Message extends Component {
       <View className="flex-wrp"  >
         <Header pageType={"消息"} fixHead={true} showMenu={true}
         needAdd={true} messageCount={no_read_len}></Header>
-        <View className="page">
+        <View id="page" className="page">
             <View className="tabs">
                 <View className={classNames({'item': 1 , 'br': 1, "selected": selectItem === 2})} onClick={(e)=> this.changeItem(2)}>已读消息</View>
                 <View className={classNames({'item': 1 , "selected": selectItem === 1})}  onClick={(e)=> this.changeItem(1)}>
@@ -84,27 +104,40 @@ class Message extends Component {
             </View>
             <View className='tab-content'>
               { currentData.map((item, idx)=> {
-                  <View className="message markdown-body">
-                    <View className="user">
-                        <Image className="head" src={item.author.avatar_url} ></Image>
+                  return <View className="message markdown-body">
+                      <View className="user">
+                        <Image className="head" src={item.author.avatar_url} />
                         <View className="info">
-                            <Text className="cl">
-                                <Text className="name">{item.author.loginname}</Text>
-                                { item.type==='at' ? <Text className="name" >在回复中@了您</Text> : ''}
-                                { item.type==='reply' ? <Text className="name">回复了您的话题</Text> : ''}
+                          <Text className="cl">
+                            <Text className="name">
+                              {item.author.loginname}
                             </Text>
-                            <Text className="cr">
-                                <Text className="name">{getLastTimeStr(item.reply.create_at, true)}</Text>
+                            {item.type === "at" ? <Text className="name">
+                                在回复中@了您
+                              </Text> : ""}
+                            {item.type === "reply" ? <Text className="name">
+                                回复了您的话题
+                              </Text> : ""}
+                          </Text>
+                          <Text className="cr">
+                            <Text className="name">
+                              {getLastTimeStr(
+                                item.reply.create_at,
+                                true
+                              )}
                             </Text>
+                          </Text>
                         </View>
-                    </View>
-                    <View className="reply_content">{item.reply.content}</View>
-                    <Link to={'/topic/' + item.topic.id } >
+                      </View>
+                    <View className="reply_content" dangerouslySetInnerHTML={{ __html: item.reply.content }}>
+                      </View>
+                      <Link to={{ url: "/pages/topic/index", params: { id: item.topic.id } }}>
                         <View className="topic-title">
-                            话题：{item.topic.title}
+                          话题：
+                          {item.topic.title}
                         </View>
-                    </Link>
-                </View>
+                      </Link>
+                    </View>;
               })}
               { noData ?
                 <View className="no-data">

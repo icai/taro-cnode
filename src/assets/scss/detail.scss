@@ -68,14 +68,15 @@
     .tabs {
         width: 100%;
         // height: $gap* 8.2;
-        margin-top: $gap* 9;
+        // margin-top: $gap* 9;
         list-style: none;
         border-bottom: solid 1px $colord4;
+        display: flex;
         position: relative;
         .item {
             width: 50%;
             padding: $gap*2.3 0;
-            float: left;
+             flex: 0 1 auto;
             font-size: 16px;
             text-align: center;
             font-weight: bold;
