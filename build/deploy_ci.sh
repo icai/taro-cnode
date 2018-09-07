@@ -14,7 +14,7 @@ cd temp_web
 git clone --depth 1 -b gh-pages --single-branch https://$ROT_TOKEN@github.com/icai/taro-cnode.git && cd taro-cnode
 
 
-cp -rf ../dist/** .
+cp -rf ../../dist/** .
 git add -A .
 git commit -m "$TRAVIS_COMMIT_MSG"
 git push origin gh-pages
