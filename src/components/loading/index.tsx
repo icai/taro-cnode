@@ -20,7 +20,7 @@ class Loading extends Component<IProps, {}> {
   render() {
     const { showTxt, show } = this.props;
     return (
-      <View className="index">
+      <View>
         {show ? <View id="wxloading" className="wx_loading">
           <View className="wx_loading_inner">
             <i class="wx_loading_icon"></i>

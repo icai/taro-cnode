@@ -1,26 +1,36 @@
 # taro-cnode
 
-taro 不怎么样的开发指南
+## 这是什么？
 
-UI 参照 https://github.com/shinygang/Vue-cnodejs
+这是一个Taro 开发的多端客户端（h5， weapp，……）
 
+你也可以把他看成是Taro开发指南， 
 
-基于https://github.com/shinygang/Vue-cnodejs 和 https://github.com/NervJS/taro-v2ex 实现
+你也可把他看成React开发教程，
 
+你还可以把他看成是Vue和React的比较开发教程。
 
+因为UI和代码基本参照 https://github.com/shinygang/Vue-cnodejs，
 
-基本实现未登录的所有功能，
-
-拦截器呢？ 中间件呢 ？
-
-
-还有很多东西要添加 
+你基本上可以找到跟 https://github.com/shinygang/Vue-cnodejs 一对一的目录结构。
 
 
 
-仅在H5 模式下测试， weapp 模式下没有测试！
+## h5预览地址
+
+http://taro.w3ucb.com/
+
+
+
+## 小程序地址
+
+
+待定
 
 
 
 
+## 声明
+
+基于https://github.com/shinygang/Vue-cnodejs 和 taro-cli 实现
 
