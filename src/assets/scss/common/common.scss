@@ -192,7 +192,7 @@ $text: #34495e;
 $padding: 30px;
 $border: 1px solid $light;
 $radius: 4Px;
-$font-title: 26px;
+$font-title: 32px;
 $font-content: 18px;
 $font-info: 16px;
 $font-tag: 14px;
@@ -205,12 +205,20 @@ $font-tag: 14px;
     overflow: hidden;
 }
 
+.title-nooverflow {
+  color: $title;
+  font-size: $font-title;
+  line-height: 1.5;
+}
+
 .title {
     color: $title;
     font-size: $font-title;
     line-height: 1.5;
     @extend .text-overflow;
 }
+
+
 
 .tag {
     padding: 5px 6px;

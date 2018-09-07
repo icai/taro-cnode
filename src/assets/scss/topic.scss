@@ -1,12 +1,10 @@
 .topic-title {
+    @extend .title-nooverflow;
     padding: $gap;
     margin:$padding;
-    font-size: 18px;
     color: $title;
-    line-height: 1.5;
     background-color:$colorf0;
     border-radius:$gap;
-    font-size: 18px;
     font-weight: 700;
 }
 

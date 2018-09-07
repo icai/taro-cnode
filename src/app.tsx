@@ -10,6 +10,11 @@ import './assets/scss/iconfont/iconfont.css';
 import './assets/scss/github-markdown.css';
 
 import './app.scss'
+if (process.env.TARO_ENV === "weapp") {
+  require("taro-ui/dist/weapp/css/index.css");
+} else if (process.env.TARO_ENV === "h5") {
+  require("taro-ui/dist/h5/css/index.css");
+}
 
 const store = configStore()
 store.dispatch(actions.authCheckState());
