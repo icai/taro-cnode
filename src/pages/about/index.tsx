@@ -57,7 +57,7 @@ class About extends Component<{}, {}> {
                 发表意见或者提需求</a>
             </dd>
             <dt>当前版本</dt>
-            <dd>V2.0</dd>
+            <dd>V1.0</dd>
           </ScrollView>
       </View>
 
