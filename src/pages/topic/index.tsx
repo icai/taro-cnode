@@ -215,7 +215,7 @@ class Topic extends Component {
             })}>
             <View className="topic-title">{topic.title}</View>
             <View className="author-info">
-          <Link to={{ url: '/pages/user/index', params: { loginname: topic.author.loginname }}}>
+              <Link to={{ url: "/pages/user/index", params: { loginname: topic.author.loginname } }}>
                 <Image className="avatar" src={topic.author.avatar_url} />
               </Link>
               <View className="col">
@@ -247,12 +247,8 @@ class Topic extends Component {
             <View className="reply-list">
               <View className="ul">{replayList}</View>
             </View>
-            <BackTop></BackTop>
-            {/*
-              <nv-reply v-if="userInfo.userId"
-                      :topic="topic"
-                      :topic-id="topicId">
-              </nv-reply> */}
+            <BackTop />
+            {userInfo.userId ? <Reply topic={topic} topicId={topicId} /> : ""}
           </View> : ""}
         {noData ? <View className="no-data">
             <i className="iconfont icon-empty">&#xe60a;</i>

@@ -48,10 +48,14 @@ class List extends Component<IProps, IState> {
   config: Config = {
     navigationBarTitleText: "全部"
   };
-
   componentScrollBox = document.documentElement;
 
   throttledScrollHandler: (e)=> void;
+
+  constructor() {
+    super(...arguments);
+    this.throttledScrollHandler = throttle(300, this.getScrollData);
+  }
 
   state = {
     scroll: true,
@@ -72,10 +76,14 @@ class List extends Component<IProps, IState> {
     console.log(this.props, nextProps);
   }
 
-  componentWillUnmount() {
+  // componentWillUnmount() {
+  //   // 事件好像回收不了啊
+  //   window.removeEventListener("scroll", this.throttledScrollHandler);
+  // }
+  componentDidHide() {
     window.removeEventListener("scroll", this.throttledScrollHandler);
   }
-  componentDidMount() {
+  componentDidShow() {
     if (this.$router.params && this.$router.params.tab) {
       this.setState(
         prevState => {
@@ -90,7 +98,6 @@ class List extends Component<IProps, IState> {
     } else {
       this.getTopics();
     }
-    this.throttledScrollHandler = throttle(300, this.getScrollData);
     window.addEventListener("scroll", this.throttledScrollHandler);
   }
   getTitleStr(tab) {

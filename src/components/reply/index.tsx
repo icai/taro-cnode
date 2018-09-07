@@ -47,7 +47,7 @@ class Reply extends Component<Iprops, {}> {
   }
   addReply() {
     const { content, author_txt, hasErr } = this.state;
-    const { userInfo, topicId, replyId, show, updateReplies } = this.props;
+    const { userInfo, topic, topicId, replyId, show, updateReplies } = this.props;
     if (!content) {
       this.setState({ hasErr: true });
     } else {
@@ -75,7 +75,7 @@ class Reply extends Component<Iprops, {}> {
         .then(resp => {
           let res = resp.data;
           if (res.success) {
-            updateReplies((topic, context) => {
+            updateReplies && updateReplies((topic, context) => {
               update(topic.replies, {
                 $push: {
                   id: res.reply_id,
