@@ -53,6 +53,7 @@
 
 
 .page-body {
+  margin-top: 2.13333rem;
   padding: 1.06667rem 0.32rem;
   min-height: 8.53333rem;
   background-color: #fff;
@@ -80,14 +81,14 @@
 .page-body .label .button {
   display: inline-block;
   width: 99%;
-  height: 0.896rem;
-  line-height: 0.896rem;
+  height: 1.70667rem;
+  line-height: 1.70667rem;
   border-radius: 0.064rem;
   color: #fff;
-  font-size: 0.34133rem;
+  font-size: 0.68267rem;
   background-color: #4fc08d;
   border: none;
-  border-bottom: 0.04267rem solid #3aa373;
+  border-bottom: 0.08533rem solid #3aa373;
   text-align: center;
   vertical-align: middle;
 }
