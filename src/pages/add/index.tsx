@@ -74,7 +74,7 @@ class Add extends Component {
     this.setState(prevState => ({
       topic: {
         ...prevState.topic,
-        tab: e
+        tab: e.target.value
       }
     }));
   };
