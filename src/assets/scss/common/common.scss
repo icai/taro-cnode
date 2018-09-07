@@ -9,7 +9,7 @@ $colora0:#a0a0a0;
 $red:#ff5a5f;
 $yellow:#feb501;
 $color80:#80bd01;
-$gap:5px;
+$gap:5PX;
 
 body {
     height: 100%;
@@ -169,7 +169,7 @@ body {
     padding: 40% 0;
     color: $colord4;
     display: inline-block;
-    font-size: 18px;
+    font-size: 18PX;
     text-align: center;
 }
 
@@ -189,13 +189,13 @@ $text: #34495e;
 
 /* 基础布局 */
 
-$padding: 30px;
-$border: 1px solid $light;
-$radius: 4Px;
-$font-title: 32px;
-$font-content: 18px;
-$font-info: 16px;
-$font-tag: 14px;
+$padding: 15PX;
+$border: 1PX solid $light;
+$radius: 4PX;
+$font-title: 16PX;
+$font-content: 14PX;
+$font-info: 12PX;
+$font-tag: 10PX;
 
 /* 综合布局 */
 

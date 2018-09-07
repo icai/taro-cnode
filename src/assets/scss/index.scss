@@ -36,7 +36,7 @@
         @extend .title;
         &:before {
             content: attr(title);
-            margin-right: 10px;
+            margin-right: 10PX;
             margin-top: -3px;
             @extend .tag;
             color: $white;
