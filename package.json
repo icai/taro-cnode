@@ -11,7 +11,7 @@
     "dev:h5": "npm run build:h5 -- --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Terry Cai",
   "license": "MIT",
   "dependencies": {
     "@tarojs/async-await": "^1.0.0-beta.22",
