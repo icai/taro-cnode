@@ -248,7 +248,7 @@ class Topic extends Component {
               <View className="ul">{replayList}</View>
             </View>
             <BackTop />
-            {userInfo.userId ? <Reply topic={topic} topicId={topicId} /> : ""}
+        {userInfo.userId ? <Reply topic={topic} updateReplies={(fn) => { fn(topic, this) }} topicId={topicId} /> : ""}
           </View> : ""}
         {noData ? <View className="no-data">
             <i className="iconfont icon-empty">&#xe60a;</i>

@@ -76,18 +76,21 @@ class Reply extends Component<Iprops, {}> {
           let res = resp.data;
           if (res.success) {
             updateReplies && updateReplies((topic, context) => {
-              update(topic.replies, {
-                $push: {
-                  id: res.reply_id,
-                  author: {
-                    loginname: userInfo.loginname,
-                    avatar_url: userInfo.avatar_url
-                  },
-                  content: replyContent,
-                  ups: [],
-                  create_at: time
-                }
+              const newreplies = update(topic.replies, {
+                $push: [
+                  {
+                    id: res.reply_id,
+                    author: {
+                      loginname: userInfo.loginname,
+                      avatar_url: userInfo.avatar_url
+                    },
+                    content: replyContent,
+                    ups: [],
+                    create_at: time
+                  }
+                ]
               });
+              topic.replies = newreplies;
               context.setState({ topic: topic });
             });
             this.setState({ content: "" });
