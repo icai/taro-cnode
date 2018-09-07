@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./.temp/pages/index/index.scss"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;;AAEA;AACA;AACA;AACA","file":"css/3.css","sourcesContent":[".index {\n  width: 100%;\n  padding: 0.42667rem;\n  background-color: #fff;\n  margin-top: 40%;\n}\n\n.index-subtitle {\n  text-align: center;\n  font-size: 0.42667rem;\n}\n\n"],"sourceRoot":""}
