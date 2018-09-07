@@ -14,9 +14,6 @@ class Loading extends Component<IProps, {}> {
   componentWillReceiveProps(nextProps) {
     // console.log(this.props, nextProps);
   }
-  componentWillUnmount() {}
-  componentDidMount() {}
-  componentDidHide() {}
   render() {
     const { showTxt, show } = this.props;
     return (

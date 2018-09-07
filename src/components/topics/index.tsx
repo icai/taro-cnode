@@ -22,10 +22,9 @@ class TopicsList extends Component<IProps, {}> {
 
   render() {
     const { loading, topics } = this.props
-
-    if (loading) {
-      return <Loading show={true} />
-    }
+    // if (loading) {
+    //   return <Loading show={true} />
+    // }
     const element = topics.map((topic) => {
       return <Topic key={topic.id} topic={topic} ></Topic>;
     })
