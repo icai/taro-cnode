@@ -23,8 +23,8 @@ type PageState = {};
 
 type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
 
-function withUser(WrappedComponent) {
-
+function withUser(WrappedComponent, allowNologin) {
+  allowNologin = allowNologin || false;
   @connect(
     ({ auth }) => ({
       userInfo: auth
@@ -42,7 +42,7 @@ function withUser(WrappedComponent) {
     }
     render() {
       const props = this.props;
-      if (props.userInfo && props.userInfo.userId) {
+      if (allowNologin || (props.userInfo && props.userInfo.userId)) {
         return super.render();
       } else {
         Taro.navigateTo({ url: "/pages/login/index" });

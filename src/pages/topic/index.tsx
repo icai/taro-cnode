@@ -40,19 +40,7 @@ interface Topic {
   props: IProps;
 }
 
-// @connect(
-//   ({ userInfo }) => ({
-//     userInfo
-//   }),
-//   dispatch => ({
-//     getUserInfo() {
-//       // return dispatch(get());
-//     },
-//     setUserInfo(s) {
-//       // dispatch(set(s));
-//     }
-//   })
-// )
+
 class Topic extends Component {
   config: Config = {
     navigationBarTitleText: "主题"
@@ -258,4 +246,4 @@ class Topic extends Component {
   }
 }
 
-export default withUser(Topic as ComponentClass<PageOwnProps, PageState>);
+export default withUser(Topic as ComponentClass<PageOwnProps, PageState>, true);
