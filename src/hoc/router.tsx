@@ -38,7 +38,7 @@ function withUser(WrappedComponent) {
   class WithUserHOC extends WrappedComponent {
     constructor(){
       super(...arguments);
-      await this.props.authCheckState();
+      this.props.authCheckState();
     }
     render() {
       const props = this.props;

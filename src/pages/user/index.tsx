@@ -165,7 +165,7 @@ class User extends Component<IProps, PageState> {
                   <Link
                     className="head"
                     to={{
-                      url: "/page/user/index",
+                      url: "/pages/user/index",
                       params: { loginname: item.author.loginname }
                     }}
                   >
@@ -173,7 +173,7 @@ class User extends Component<IProps, PageState> {
                   </Link>
                   <Link
                     className="info"
-                    to={{ url: "/page/topic/index", params: { id: item.id } }}
+                    to={{ url: "/pages/topic/index", params: { id: item.id } }}
                   >
                     <View className="t-title">{item.title}</View>
                     <Text className="cl mt12">

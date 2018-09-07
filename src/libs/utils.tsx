@@ -34,6 +34,8 @@ let getCheck = {
   }
 };
 
+const uniq = x => [...new Set(x)];
+
 /**
  * 从文本中提取出@username 标记的用户名数组
  * @param {String} text 文本内容
@@ -67,7 +69,7 @@ const fetchUsers = text => {
       names.push(s);
     }
   }
-  names = _.uniq(names);
+  names = uniq(names);
   return names;
 };
 
@@ -134,6 +136,19 @@ export const MillisecondToDate = time => {
     str = timeagoInstance.format(time, "zh_CN");
   }
   return str;
+};
+
+
+export const inArray = (str, arr) => {
+  return arr.indexOf(str);
+}
+
+
+export const getContentHtml = (v) => {
+  let dom = document.createElement('div');
+  dom.className = "markdown-text";
+  dom.innerHTML = v;
+  return dom.outerHTML;
 };
 
 /**
@@ -216,11 +231,8 @@ export const throttle = (fn, wait, mustRun) => {
   };
 };
 
-// export linkUsers = linkUsers;
-// export fetchUsers = fetchUsers;
-// export getCheck = getCheck;
-// export fmtDate = fmtDate;
-// export MillisecondToDate = MillisecondToDate;
+export { linkUsers, fetchUsers, getCheck, fmtDate };
+
 
 // tslint:disable-next-line
 // export const Thread_DETAIL_NAVIGATE = 'thread_detail_navigate'

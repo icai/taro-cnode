@@ -1,90 +1,137 @@
-import { ComponentClass } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
 
-import { add, minus, asyncAdd } from '../../actions/counter'
-
+import Taro, { Component } from '@tarojs/taro'
+import { View } from '@tarojs/components'
+import * as utils from "../../libs/utils";
+import { withUser } from "../../hoc/router";
+import { AtTextarea, AtInput } from "taro-ui";
+import classNames from "classnames";
+import update from "immutability-helper";
 import './index.scss'
 
-// #region 书写注意
-//
-// 目前 typescript 版本还无法在装饰器模式下将 Props 注入到 Taro.Component 中的 props 属性
-// 需要显示声明 connect 的参数类型并通过 interface 的方式指定 Taro.Component 子类的 props
-// 这样才能完成类型检查和 IDE 的自动提示
-// 使用函数模式则无此限制
-// ref: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/20796
-//
-// #endregion
+const markdown = require("markdown").markdown;
 
-type PageStateProps = {
-  counter: {
-    num: number
-  }
-}
+type Iprops = {
+  props: {
+    topicId;
+    replyId;
+    replyTo;
+    show;
+    updateReplies: () => void;
+    onClose: () => void;
+  };
+};
 
-type PageDispatchProps = {
-  add: () => void
-  dec: () => void
-  asyncAdd: () => any
-}
+// props: ['topic', 'replyId', 'topicId', 'replyTo', 'show'],
+class Reply extends Component<Iprops, {}> {
+  state = {
+    hasErr: false,
+    content: "",
+    author_txt: "\n\n 来自拉风的 [Taro-cnode](https://github.com/icai/taro-cnode)"
+  };
 
-type PageOwnProps = {}
-
-type PageState = {}
-
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps
-
-interface Index {
-  props: IProps;
-}
-
-@connect(({ counter }) => ({
-  counter
-}), (dispatch) => ({
-  add () {
-    dispatch(add())
-  },
-  dec () {
-    dispatch(minus())
-  },
-  asyncAdd () {
-    dispatch(asyncAdd())
-  }
-}))
-class Index extends Component {
-
-    /**
-   * 指定config的类型声明为: Taro.Config
-   *
-   * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-   * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-   * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-   */
-    config: Config = {
-    navigationBarTitleText: '首页'
+  componentWillReceiveProps(nextProps) {
+    console.log(this.props, nextProps);
   }
 
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
+  handleChange = e => {
+    this.setState({
+      content: e.target.value
+    });
+  };
+  componentDidMount() {
+    if (this.props.replyTo) {
+      this.setState({
+        content: `@${this.props.replyTo}`
+      });
+    }
+  }
+  addReply() {
+    const { content, author_txt, hasErr } = this.state;
+    const { userInfo, topicId, replyId, show, updateReplies } = this.props;
+    if (!content) {
+      this.setState({ hasErr: true });
+    } else {
+      let time = new Date();
+      let linkUsers = utils.linkUsers(content);
+      let htmlText = markdown.toHTML(linkUsers) + author_txt;
+      let replyContent = utils.getContentHtml(htmlText);
+      let postData = {
+        accesstoken: userInfo.token,
+        content: content + author_txt
+      };
+      if (replyId) {
+        postData.reply_id = replyId;
+      }
+
+      Taro.request({
+        method: "POST",
+        data: utils.param(postData),
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json"
+        },
+        url: `https://cnodejs.org/api/v1/topic/${topicId}/replies`
+      })
+        .then(resp => {
+          let res = resp.data;
+          if (res.success) {
+            updateReplies((topic, context) => {
+              update(topic.replies, {
+                $push: {
+                  id: res.reply_id,
+                  author: {
+                    loginname: userInfo.loginname,
+                    avatar_url: userInfo.avatar_url
+                  },
+                  content: replyContent,
+                  ups: [],
+                  create_at: time
+                }
+              });
+              context.setState({ topic: topic });
+            });
+            this.setState({ content: "" });
+            if (show) {
+              this.props.onClose();
+            }
+          } else {
+            Taro.showToast({ title: res.error_msg });
+          }
+        })
+        .catch(resp => {
+          console.info(resp);
+        });
+    }
   }
 
-  componentWillUnmount () { }
-
-  componentDidMount () { }
-
-  componentDidHide () { }
-
-  render () {
+  render() {
+    const { hasErr } = this.state;
     return (
-      <View className='index'>
-        <Button className='add_btn' onClick={this.props.add}>+</Button>
-        <Button className='dec_btn' onClick={this.props.dec}>-</Button>
-        <Button className='dec_btn' onClick={this.props.asyncAdd}>async</Button>
-        <View>{this.props.counter.num}</View>
-        <View>Hello, World</View>
+      <View className="reply">
+        <AtTextarea
+          id="content"
+          className={classNames({
+            text: 1,
+            err: hasErr
+          })}
+          value={this.state.content}
+          onChange={this.handleChange}
+          type="text"
+          placeholder="回复支持Markdown语法,请注意标记代码"
+          rows="8"
+          class="text"
+        />
+        <a
+          className="button"
+          onClick={e => {
+            this.addReply();
+          }}
+        >
+          {" "}
+          确定
+        </a>
       </View>
-    )
+    );
   }
 }
 
@@ -95,4 +142,4 @@ class Index extends Component {
 //
 // #endregion
 
-export default Index as ComponentClass<PageOwnProps, PageState>
+export default withUser(Reply); // as ComponentClass<PageOwnProps, PageState>;
