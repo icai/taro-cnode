@@ -10,9 +10,6 @@
 .info {
   display: -webkit-flex;
   display: flex;
-  height: 1.38667rem;
-  margin-bottom: 0.10667rem;
-  margin-top: 0.10667rem;
 }
 
 .info .author {
