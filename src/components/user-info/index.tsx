@@ -1,83 +1,85 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button } from '@tarojs/components';
+import { View, Button, Image, Text } from "@tarojs/components";
 import { connect } from '@tarojs/redux'
+import * as actions from "../../actions/auth";
+// import { IAuth } from "../../interfaces/auth";
 
-import { get, set, asyncAdd } from '../../actions/userinfo'
 
 import './index.scss'
 
 type PageStateProps = {
-  counter: {
-    num: number
-  }
-}
+  authData: IAuth;
+};
+
+// interface PageStateProps {
+//   authData: IAuth;
+// }
 
 type PageDispatchProps = {
-  getUserInfo: () => void
-  setUserInfo: () => void
-}
+  authCheckState: () => void;
+};
 
-type PageOwnProps = {}
+type PageOwnProps = {
 
-type PageState = {}
+};
 
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps
+type PageState = {};
 
-interface Message {
-  props: IProps;
-}
+type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
 
-@connect(({ userinfo }) => ({
-  userinfo
-}), (dispatch) => ({
-  getUserInfo () {
-    return dispatch(get())
-  },
-  setUserInfo(s) {
-    dispatch(set(s))
+@connect(
+  ({ auth }) => ({
+    authData: auth
+  }),
+  (dispatch: Function) => ({
+    authCheckState() {
+      dispatch(actions.authCheckState());
+    }
+  })
+)
+class UserInfo extends Component<IProps, PageState> {
+  componentWillReceiveProps(nextProps) {
+    console.log(this.props, nextProps);
   }
-}))
-class UserInfo extends Component {
-
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
-  }
-
-  goEnter = ()=> {
+  goEnter = () => {
     Taro.navigateTo({
-      url: "/pages/login/index",
+      url: "/pages/login/index"
     });
-  }
-  goUser = ()=> {
+  };
+  goUser = () => {
     Taro.navigateTo({
-      url: "/pages/user/index",
+      url: "/pages/user/index"
     });
+  };
+  componentWillMount() {
+    this.props.authCheckState();
   }
-  render () {
-    const { userInfo } = this.props.userInfo || { userInfo : {}};
+  render() {
+    const userInfo = this.props.authData;
     return (
-
-     <View className="user-info">
-        {!userInfo.loginname ?
-          (
+      <View className="user-info">
+        {!userInfo.loginname ? (
           <View className="login-no">
-            <View className="login" onClick={this.goEnter}><a>登录</a></View>
-          </View>
-          ) : (
-        <View className="login-yes" onClick={this.goUser}>
-            <View className="avertar">{userInfo.avatar_url ? <Image src={userInfo.avatar_url}></Image> : ''}</View>
-            <View className="info">
-                {userInfo.loginname ? <Text>{userInfo.loginname}</Text> : ''}
+            <View className="login" onClick={this.goEnter}>
+              <a>登录</a>
             </View>
-        </View>
-
+          </View>
+        ) : (
+          <View className="login-yes" onClick={this.goUser}>
+            <View className="avertar">
+                {userInfo.avatar_url ? <Image class="avertar" src={userInfo.avatar_url} /> : ""}
+            </View>
+            <View className="info">
+              {userInfo.loginname ? <Text>{userInfo.loginname}</Text> : ""}
+            </View>
+          </View>
         )}
-    </View>
-    )
+      </View>
+    );
   }
 }
 
 
 
-export default UserInfo as ComponentClass<PageOwnProps, PageState>
+export default UserInfo as ComponentClass<IProps, PageState>;

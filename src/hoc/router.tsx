@@ -3,14 +3,11 @@ import Taro, { Component, Config } from "@tarojs/taro";
 function withUser(WrappedComponent) {
   return class WithUserHOC extends WrappedComponent {
     render() {
-      console.info(this.props);
       const props = this.props;
-      if (props.userInfo) {
+      if (props.userInfo && props.userInfo.userId) {
         return super.render();
       } else {
-        Taro.navigateTo({
-          url: "/pages/login/index",
-        });
+        Taro.navigateTo({ url: "/pages/login/index" });
         return null;
       }
     }

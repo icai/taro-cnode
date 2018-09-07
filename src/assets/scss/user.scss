@@ -48,7 +48,7 @@
         border-radius: 20px;
         overflow: hidden;
         float: left;
-        &>img {
+        &> img {
             width: 40px;
             height: 40px;
             display: block;
@@ -79,7 +79,7 @@
 }
 
 .userinfo {
-    margin-top:$gap*9;
+    margin-top:$gap*12;
     width: 100%;
     background-color: $colore7;
     text-align: center;
@@ -121,14 +121,15 @@
 
 .user-tabs {
     width: 100%;
-    height: $gap*8.2;
+    // height: $gap*8.2;
     list-style: none;
     border-bottom: solid 1px $colord4;
     position: relative;
+    display: flex;
     .item {
         width: 50%;
-        padding: $gap*2.5 0;
-        float: left;
+        padding: $gap*3 0;
+        flex: 0 1 auto;
         font-size: 16;
         text-align: center;
         font-weight: bold;

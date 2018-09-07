@@ -2,11 +2,11 @@ import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
 import Header from '../../components/header/index'
+import Link from "../../components/link";
 import classNames from "classnames";
 import * as utils from '../../libs/utils';
 
 import { connect } from '@tarojs/redux'
-import { get, set } from '../../actions/userinfo'
 import BackTop from "../../components/backtotop/index";
 
 
@@ -35,19 +35,19 @@ interface Topic {
   props: IProps;
 }
 
-@connect(
-  ({ userInfo }) => ({
-    userInfo
-  }),
-  dispatch => ({
-    getUserInfo() {
-      return dispatch(get());
-    },
-    setUserInfo(s) {
-      dispatch(set(s));
-    }
-  })
-)
+// @connect(
+//   ({ userInfo }) => ({
+//     userInfo
+//   }),
+//   dispatch => ({
+//     getUserInfo() {
+//       // return dispatch(get());
+//     },
+//     setUserInfo(s) {
+//       // dispatch(set(s));
+//     }
+//   })
+// )
 class Topic extends Component {
   config: Config = {
     navigationBarTitleText: "主题"
@@ -111,7 +111,6 @@ class Topic extends Component {
     });
   };
   render() {
-    console.info(this)
     const { noData, topicId, showMenu, curReplyId, topic } = this.state;
     const getLastTimeStr = (Text, ago) => {
       return utils.getLastTimeStr(Text, ago);
@@ -128,46 +127,40 @@ class Topic extends Component {
 
     const replayList = topic.replies.map(item => {
         return <View className="li flex-wrp">
-          <View className="user">
-            <View>
-              <Image className="head" src={item.author.avatar_url} />
+            <View className="user">
+            <Link to={{ url: '/pages/user/index', params: { loginname: item.author.loginname}}}>
+                <Image className="head" src={item.author.avatar_url} />
+              </Link>
+              <View className="info">
+                <Text className="cl">
+                  <Text className="name">{item.author.loginname}</Text>
+                  <Text className="name mt10">
+                    <Text />
+                    发布于:
+                    {getLastTimeStr(item.create_at, true)}
+                  </Text>
+                </Text>
+                <Text className="cr">
+                  <Text className={classNames({
+                      iconfont: 1,
+                      icon: 1,
+                      uped: isUps(item.ups)
+                    })} onClick={e => {
+                      this.upReply(item);
+                    }}>
+                    &#xe608;
+                  </Text>
+                  {item.ups.length}
+                  <Text className="iconfont icon" onClick={e => {
+                      this.addReply(item.id);
+                    }}>
+                    &#xe609;
+                  </Text>
+                </Text>
+              </View>
             </View>
-            <View className="info">
-              <Text className="cl">
-                <Text className="name">{item.author.loginname}</Text>
-                <Text className="name mt10">
-                  <Text />
-                  发布于:
-                  {getLastTimeStr(item.create_at, true)}
-                </Text>
-              </Text>
-              <Text className="cr">
-                <Text
-                  className={classNames({
-                    iconfont: 1,
-                    icon: 1,
-                    uped: isUps(item.ups)
-                  })}
-                  onClick={e => {
-                    this.upReply(item);
-                  }}
-                >
-                  &#xe608;
-                </Text>
-                {item.ups.length}
-                <Text
-                  className="iconfont icon"
-                  onClick={e => {
-                    this.addReply(item.id);
-                  }}
-                >
-                  &#xe609;
-                </Text>
-              </Text>
-            </View>
-          </View>
-          <View className="reply_content" dangerouslySetInnerHTML={{ __html: item.content }} />
-        </View>;
+            <View className="reply_content" dangerouslySetInnerHTML={{ __html: item.content }} />
+          </View>;
       });
 
     return <View className="flex-wrp">
@@ -177,7 +170,9 @@ class Topic extends Component {
             })}>
             <View className="topic-title">{topic.title}</View>
             <View className="author-info">
-              <Image className="avatar" src={topic.author.avatar_url} />
+          <Link to={{ url: '/pages/user/index', params: { loginname: topic.author.loginname }}}>
+                <Image className="avatar" src={topic.author.avatar_url} />
+              </Link>
               <View className="col">
                 <Text>{topic.author.loginname}</Text>
                 <Text className="time">

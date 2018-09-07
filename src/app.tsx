@@ -1,13 +1,14 @@
+import { ComponentClass } from "react";
 import Taro, { Component, Config } from '@tarojs/taro'
 import '@tarojs/async-await'
-import { Provider } from '@tarojs/redux'
-
+import { Provider, connect } from "@tarojs/redux";
+import { View } from "@tarojs/components";
 import Index from './pages/index'
-// import About from "./pages/about";
-// import List from "./pages/list";
-
-
+import About from "./pages/about";
+import List from "./pages/list";
 import configStore from './store';
+import * as actions from "./actions/auth";
+import { IAuth } from "./interfaces/auth";
 
 import './assets/scss/CV.scss';
 import './assets/scss/iconfont/iconfont.css';
@@ -17,7 +18,55 @@ import './app.scss'
 
 const store = configStore()
 
-class App extends Component {
+
+
+type PageStateProps = {
+  authData: IAuth;
+};
+
+// interface PageStateProps {
+//   authData: IAuth;
+// }
+
+type PageDispatchProps = {
+  authData: IAuth;
+  authCheckState: () => void;
+};
+
+type PageOwnProps = {
+  authData: IAuth;
+};
+
+type PageState = {};
+
+type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
+
+
+class Container extends Component<IProps, PageState> {
+  componentDidMount() {
+    this.props.authCheckState();
+    debugger
+    console.info(this)
+  }
+  render() {
+    return <View>
+        <Index/>
+      </View>;
+  }
+}
+
+const AppContainer = connect(
+  ({ auth }) => ({
+    authData: auth
+  }),
+  (dispatch: Function) => ({
+    authCheckState() {
+      dispatch(actions.authCheckState());
+    }
+  })
+)(Container);
+
+class App extends Component{
   /**
    * 指定config的类型声明为: Taro.Config
    *
@@ -34,7 +83,7 @@ class App extends Component {
       "pages/message/index",
       "pages/login/index",
       "pages/topic/index",
-      // "pages/user/index"
+      "pages/user/index"
     ],
     window: {
       backgroundTextStyle: "light",
@@ -44,28 +93,18 @@ class App extends Component {
     }
   };
 
-  componentDidMount() {}
-
   componentDidMount() {
-    store.subscribe(function () {
-    });
-    // if (window.sessionStorage.user) {
-    //     // store.dispatch('setUserInfo', JSON.parse(window.sessionStorage.user));
-    // }
+    store.subscribe(function() {});
 
+    console.info(store);
   }
-
   componentDidHide() {}
-
   componentCatchError() {}
-
   render() {
-    return (
-      <Provider store={store}>
-        <Index />
-      </Provider>
-    );
+    return <Provider store={store}>
+        <AppContainer />
+      </Provider>;
   }
 }
 
-Taro.render(<App />, document.getElementById('app'))
+Taro.render(<App/>, document.getElementById("app"));

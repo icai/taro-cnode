@@ -9,7 +9,6 @@ import classNames from "classnames";
 import * as utils from '../../libs/utils';
 
 import { connect } from '@tarojs/redux'
-import { get, set } from '../../actions/userinfo'
 
 
 import './index.scss'
@@ -35,16 +34,7 @@ interface Message {
   props: IProps;
 }
 
-@connect(({ userinfo }) => ({
-  userinfo
-}), (dispatch) => ({
-  getUserInfo () {
-    return dispatch(get())
-  },
-  setUserInfo(s) {
-    dispatch(set(s))
-  }
-}))
+
 class Message extends Component {
 
   config: Config = {

@@ -8,7 +8,6 @@ import { trim } from '../../libs/utils'
 import classNames from "classnames";
 
 import { connect } from '@tarojs/redux'
-import { get, set, asyncAdd } from '../../actions/userinfo'
 
 
 import './index.scss'
@@ -43,16 +42,7 @@ interface Add {
   props: IProps;
 }
 
-@connect(({ userinfo }) => ({
-  userinfo
-}), (dispatch) => ({
-  getUserInfo () {
-    return dispatch(get())
-  },
-  setUserInfo(s) {
-    dispatch(set(s))
-  }
-}))
+
 class Add extends Component {
   config: Config = {
       navigationBarTitleText: '主题'
