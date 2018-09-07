@@ -1,19 +1,20 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Image, Text } from "@tarojs/components";
+import Link from "../../components/link";
 import { connect } from '@tarojs/redux'
 import * as actions from "../../actions/auth";
-// import { IAuth } from "../../interfaces/auth";
+import { IAuth } from "../../interfaces/auth";
 
 
 import './index.scss'
 
 type PageStateProps = {
-  authData: IAuth;
+  userInfo: IAuth;
 };
 
 // interface PageStateProps {
-//   authData: IAuth;
+//   userInfo: IAuth;
 // }
 
 type PageDispatchProps = {
@@ -30,7 +31,7 @@ type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
 
 @connect(
   ({ auth }) => ({
-    authData: auth
+    userInfo: auth
   }),
   (dispatch: Function) => ({
     authCheckState() {
@@ -42,41 +43,29 @@ class UserInfo extends Component<IProps, PageState> {
   componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps);
   }
-  goEnter = () => {
-    Taro.navigateTo({
-      url: "/pages/login/index"
-    });
-  };
-  goUser = () => {
-    Taro.navigateTo({
-      url: "/pages/user/index"
-    });
-  };
   componentWillMount() {
     this.props.authCheckState();
   }
   render() {
-    const userInfo = this.props.authData;
-    return (
-      <View className="user-info">
-        {!userInfo.loginname ? (
-          <View className="login-no">
-            <View className="login" onClick={this.goEnter}>
+    const userInfo = this.props.userInfo;
+    return <View className="user-info">
+        {!userInfo.loginname ? <Link className="login-no" to={{ url: "/pages/login/index" }}>
+            <View className="login">
               <a>登录</a>
             </View>
-          </View>
-        ) : (
-          <View className="login-yes" onClick={this.goUser}>
+          </Link> : <Link className="login-yes" to={{ url: "/pages/user/index", params: { loginname: userInfo.loginname } }}>
             <View className="avertar">
-                {userInfo.avatar_url ? <Image class="avertar" src={userInfo.avatar_url} /> : ""}
+              {userInfo.avatar_url ? (
+                <Image class="avertar" src={userInfo.avatar_url} />
+              ) : (
+                ""
+              )}
             </View>
             <View className="info">
               {userInfo.loginname ? <Text>{userInfo.loginname}</Text> : ""}
             </View>
-          </View>
-        )}
-      </View>
-    );
+          </Link>}
+      </View>;
   }
 }
 

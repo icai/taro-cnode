@@ -38,7 +38,7 @@ export const checkAuthTimeout = (expirationTime) => {
 export const auth = (accesstoken) => {
   return dispatch => {
     dispatch(authStart());
-    // const authData = { accesstoken: accesstoken };
+    // const userInfo = { accesstoken: accesstoken };
     return Taro.request({
       method: "POST",
       url: "https://cnodejs.org/api/v1/accesstoken?accesstoken=" + accesstoken,

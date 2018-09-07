@@ -15,11 +15,11 @@ import './index.scss'
 
 
 type PageStateProps = {
-  authData: IAuth;
+  userInfo: IAuth;
 };
 
 // interface PageStateProps {
-//   authData: IAuth;
+//   userInfo: IAuth;
 // }
 
 type PageDispatchProps = {
@@ -36,7 +36,7 @@ type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
 
 @connect(
   ({ auth }) => ({
-    authData: auth
+    userInfo: auth
   }),
   (dispatch: Function) => ({
     authCheckState() {

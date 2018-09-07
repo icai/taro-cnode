@@ -24,21 +24,17 @@ class Link extends Component<IProps, PageState> {
 
   goTo = ({ url, params }) => {
     Taro.navigateTo({
-      url: url + "?" + utils.param(params)
+      url: url + (params ? "?" + utils.param(params) : "")
     });
     return false;
   };
   render() {
     const props = this.props;
-    return (
-      <View
-        onClick={e => {
+    return <View {...props} onClick={e => {
           this.goTo(props.to);
-        }}
-      >
+        }}>
         {this.props.children}
-      </View>
-    );
+      </View>;
   }
 }
 

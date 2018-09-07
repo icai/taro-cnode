@@ -60,7 +60,6 @@ class BackTop extends Component {
   };
   render() {
     const { show } = this.state;
-
     return (
       <View>
         {show ? (

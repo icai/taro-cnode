@@ -13,26 +13,26 @@ import { connect } from '@tarojs/redux'
 
 import './index.scss'
 
-type PageStateProps = {
-  counter: {
-    num: number
-  }
-}
+// type PageStateProps = {
+//   counter: {
+//     num: number
+//   }
+// }
 
-type PageDispatchProps = {
-  getUserInfo: () => void
-  setUserInfo: () => void
-}
+// type PageDispatchProps = {
+//   getUserInfo: () => void
+//   setUserInfo: () => void
+// }
 
-type PageOwnProps = {}
+// type PageOwnProps = {}
 
-type PageState = {}
+// type PageState = {}
 
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps
+// type IProps = PageStateProps & PageDispatchProps & PageOwnProps
 
-interface Message {
-  props: IProps;
-}
+// interface Message {
+//   props: IProps;
+// }
 
 
 class Message extends Component {
@@ -121,4 +121,4 @@ class Message extends Component {
   }
 }
 
-export default withUser(Message as ComponentClass<PageOwnProps, PageState>)
+export default withUser(Message)

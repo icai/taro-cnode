@@ -1,14 +1,9 @@
-import { ComponentClass } from "react";
 import Taro, { Component, Config } from '@tarojs/taro'
 import '@tarojs/async-await'
-import { Provider, connect } from "@tarojs/redux";
-import { View } from "@tarojs/components";
+import { Provider } from "@tarojs/redux";
 import Index from './pages/index'
-import About from "./pages/about";
-import List from "./pages/list";
 import configStore from './store';
 import * as actions from "./actions/auth";
-import { IAuth } from "./interfaces/auth";
 
 import './assets/scss/CV.scss';
 import './assets/scss/iconfont/iconfont.css';
@@ -17,54 +12,7 @@ import './assets/scss/github-markdown.css';
 import './app.scss'
 
 const store = configStore()
-
-
-
-type PageStateProps = {
-  authData: IAuth;
-};
-
-// interface PageStateProps {
-//   authData: IAuth;
-// }
-
-type PageDispatchProps = {
-  authData: IAuth;
-  authCheckState: () => void;
-};
-
-type PageOwnProps = {
-  authData: IAuth;
-};
-
-type PageState = {};
-
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
-
-
-class Container extends Component<IProps, PageState> {
-  componentDidMount() {
-    this.props.authCheckState();
-    debugger
-    console.info(this)
-  }
-  render() {
-    return <View>
-        <Index/>
-      </View>;
-  }
-}
-
-const AppContainer = connect(
-  ({ auth }) => ({
-    authData: auth
-  }),
-  (dispatch: Function) => ({
-    authCheckState() {
-      dispatch(actions.authCheckState());
-    }
-  })
-)(Container);
+store.dispatch(actions.authCheckState());
 
 class App extends Component{
   /**
@@ -95,14 +43,12 @@ class App extends Component{
 
   componentDidMount() {
     store.subscribe(function() {});
-
-    console.info(store);
   }
   componentDidHide() {}
   componentCatchError() {}
   render() {
     return <Provider store={store}>
-        <AppContainer />
+          <Index />
       </Provider>;
   }
 }
