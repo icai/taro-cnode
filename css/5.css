@@ -68,6 +68,7 @@
   padding: 0.21333rem 0.53333rem;
   border-radius: 0.10667rem;
   vertical-align: middle;
+  display: inline;
 }
 
 .add-container .line .add-tab {
