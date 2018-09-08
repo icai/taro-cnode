@@ -1,6 +1,5 @@
 import { ComponentClass } from "react";
-import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Button, Image, Text } from "@tarojs/components";
+import Taro, { Component } from "@tarojs/taro";
 import { connect } from "@tarojs/redux";
 import * as actions from "../actions/auth";
 import { IAuth } from "../interfaces/auth";
@@ -9,12 +8,10 @@ type PageStateProps = {
   userInfo: IAuth;
 };
 
-// interface PageStateProps {
-//   userInfo: IAuth;
-// }
 
 type PageDispatchProps = {
-  authCheckState: () => void;
+  authLogin:(token)=> void;
+  authCheckState:() => void;
 };
 
 type PageOwnProps = {};
@@ -25,27 +22,34 @@ type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
 
 function withUser(WrappedComponent, allowNologin) {
   allowNologin = allowNologin || false;
-  @connect(
-    ({ auth }) => ({
-      userInfo: auth
-    }),
+  @connect( ({ auth }) => ({ userInfo: auth }),
     (dispatch: Function) => ({
-      authCheckState() {
-        dispatch(actions.authCheckState());
-      }
+      authLogin: (...args) => dispatch(actions.auth(...args)),
+      authCheckState: () => dispatch(actions.authCheckState())
     })
   )
-  class WithUserHOC extends WrappedComponent {
-    constructor(){
+  class WithUserHOC extends WrappedComponent<IProps, PageState> {
+    constructor() {
       super(...arguments);
       this.props.authCheckState();
     }
-    render() {
+    isSuperRender() {
       const props = this.props;
-      if (allowNologin || (props.userInfo && props.userInfo.userId)) {
+      return allowNologin || (props.userInfo && props.userInfo.userId)
+    }
+    // refer  https://github.com/ReactTraining/react-router/blob/master/packages/react-router/modules/Redirect.js
+    perform() {
+      if (!this.isSuperRender()) {
+        Taro.navigateTo({ url: "/pages/login/index" });
+      }
+    }
+    componentWillMount() {
+      this.perform();
+    }
+    render() {
+      if (this.isSuperRender()) {
         return super.render();
       } else {
-        Taro.navigateTo({ url: "/pages/login/index" });
         return null;
       }
     }

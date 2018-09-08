@@ -46,7 +46,6 @@ class Message extends Component {
       const d = resp.data;
       const willdata = {};
       if (d && d.data) {
-        console.info(d);
         willdata.message = d.data;
         willdata.no_read_len = d.data.hasnot_read_messages.length;
         if (d.data.hasnot_read_messages.length > 0) {
@@ -60,9 +59,6 @@ class Message extends Component {
         willdata.noData = true;
       }
       this.setState({...willdata})
-      setTimeout(() => {
-        console.info(this.state);
-      }, 300);
     })
   }
   markall = ()=>{

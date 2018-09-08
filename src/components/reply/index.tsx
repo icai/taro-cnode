@@ -21,16 +21,23 @@ type Iprops = {
   };
 };
 
+type PageState = {
+  hasErr;
+  content;
+  author_txt;
+};
+
 // props: ['topic', 'replyId', 'topicId', 'replyTo', 'show'],
-class Reply extends Component<Iprops, {}> {
+class Reply extends Component<Iprops, PageState> {
   state = {
     hasErr: false,
     content: "",
-    author_txt: "\n\n 来自拉风的 [Taro-cnode](https://github.com/icai/taro-cnode)"
+    author_txt:
+      "\n\n 来自拉风的 [Taro-cnode](https://github.com/icai/taro-cnode)"
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps);
+    // console.log(this.props, nextProps);
   }
 
   handleChange = e => {
@@ -46,8 +53,15 @@ class Reply extends Component<Iprops, {}> {
     }
   }
   addReply() {
-    const { content, author_txt, hasErr } = this.state;
-    const { userInfo, topic, topicId, replyId, show, updateReplies } = this.props;
+    const { content, author_txt } = this.state;
+    const {
+      userInfo,
+      topic,
+      topicId,
+      replyId,
+      show,
+      updateReplies
+    } = this.props;
     if (!content) {
       this.setState({ hasErr: true });
     } else {
@@ -75,24 +89,25 @@ class Reply extends Component<Iprops, {}> {
         .then(resp => {
           let res = resp.data;
           if (res.success) {
-            updateReplies && updateReplies((topic, context) => {
-              const newreplies = update(topic.replies, {
-                $push: [
-                  {
-                    id: res.reply_id,
-                    author: {
-                      loginname: userInfo.loginname,
-                      avatar_url: userInfo.avatar_url
-                    },
-                    content: replyContent,
-                    ups: [],
-                    create_at: time
-                  }
-                ]
+            updateReplies &&
+              updateReplies((topic, context) => {
+                const newreplies = update(topic.replies, {
+                  $push: [
+                    {
+                      id: res.reply_id,
+                      author: {
+                        loginname: userInfo.loginname,
+                        avatar_url: userInfo.avatar_url
+                      },
+                      content: replyContent,
+                      ups: [],
+                      create_at: time
+                    }
+                  ]
+                });
+                topic.replies = newreplies;
+                context.setState({ topic: topic });
               });
-              topic.replies = newreplies;
-              context.setState({ topic: topic });
-            });
             this.setState({ content: "" });
             if (show) {
               this.props.onClose();
@@ -124,15 +139,14 @@ class Reply extends Component<Iprops, {}> {
           rows="8"
           class="text"
         />
-        <a
+        <View
           className="button"
           onClick={e => {
             this.addReply();
           }}
         >
-          {" "}
           确定
-        </a>
+        </View>
       </View>
     );
   }

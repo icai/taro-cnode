@@ -41,7 +41,7 @@ type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
 )
 class UserInfo extends Component<IProps, PageState> {
   componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps);
+    // console.log(this.props, nextProps);
   }
   componentWillMount() {
     this.props.authCheckState();
@@ -51,7 +51,7 @@ class UserInfo extends Component<IProps, PageState> {
     return <View className="user-info">
         {!userInfo.loginname ? <Link className="login-no" to={{ url: "/pages/login/index" }}>
             <View className="login">
-              <a>登录</a>
+              <View>登录</View>
             </View>
           </Link> : <Link className="login-yes" to={{ url: "/pages/user/index", params: { loginname: userInfo.loginname } }}>
             <View className="avertar">

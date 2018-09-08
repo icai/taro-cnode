@@ -73,7 +73,7 @@ class List extends Component<IProps, IState> {
   index = {};
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps);
+    // console.log(this.props, nextProps);
   }
 
   // componentWillUnmount() {

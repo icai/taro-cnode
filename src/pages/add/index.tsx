@@ -25,8 +25,10 @@ class Add extends Component {
     authorTxt: "\n\n 来自拉风的 [Taro-cnode](https://github.com/icai/taro-cnode)"
   };
 
+  componentDidHide() {
+  }
   componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps);
+    // console.log(this.props, nextProps);
   }
   addTopic() {
     let title = utils.trim(this.state.topic.title);
@@ -96,57 +98,34 @@ class Add extends Component {
   };
   render() {
     const { err } = this.state;
-    return (
-      <View className="flex-wrp">
+    return <View className="flex-wrp">
         <Header pageType={"主题"} fixHead={true} showMenu={true} />
         <View className="add-container">
           <View className="line">
             选择分类：
-            <select
-              className="add-tab"
-              value={this.state.topic.tab}
-              onChange={this.handleTopicTabChange}
-            >
+            <select className="add-tab" value={this.state.topic.tab} onChange={this.handleTopicTabChange}>
               <option value="share">分享</option>
               <option value="ask">问答</option>
               <option value="job">招聘</option>
             </select>
-            <a
-              className="add-btn"
-              onClick={e => {
+            <View className="add-btn" onClick={e => {
                 this.addTopic();
-              }}
-            >
+              }}>
               发布
-            </a>
+            </View>
           </View>
           <View className="line">
-            <AtInput
-              className={classNames({
+            <AtInput className={classNames({
                 "add-title": 1,
                 err: err == "title"
-              })}
-              value={this.state.topic.title}
-              onChange={this.handleTopicChange}
-              type="text"
-              placeholder="标题，字数10字以上"
-              max-length="100"
-            />
+              })} value={this.state.topic.title} onChange={this.handleTopicChange} type="text" placeholder="标题，字数10字以上" max-length="100" />
           </View>
-          <AtTextarea
-            className={classNames({
+          <AtTextarea className={classNames({
               "add-content": 1,
               err: err == "content"
-            })}
-            value={this.state.topic.content}
-            onChange={this.handleTopicContentChange}
-            maxlength={9999}
-            height="400"
-            placeholder="回复支持Markdown语法,请注意标记代码"
-          />
+            })} value={this.state.topic.content} onChange={this.handleTopicContentChange} maxlength={9999} height="400" placeholder="回复支持Markdown语法,请注意标记代码" />
         </View>
-      </View>
-    );
+      </View>;
   }
 }
 
