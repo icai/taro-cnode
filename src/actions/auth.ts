@@ -1,6 +1,7 @@
 import Taro from "@tarojs/taro";
 import * as actionTypes from "../constants/auth";
 import { post, get } from "../utils/request";
+import store from "../utils/store";
 
 export const authStart = () => {
   return {
@@ -20,9 +21,9 @@ export const authFail = (error) => {
 };
 
 export const logout = () => {
-  localStorage.removeItem('user');
-  // localStorage.removeItem('expirationDate');
-  // localStorage.removeItem('userId');
+  store.removeItem("user");
+  // store.removeItem('expirationDate');
+  // store.removeItem('userId');
   return {
     type: actionTypes.AUTH_LOGOUT
   };
@@ -54,10 +55,10 @@ export const auth = (accesstoken) => {
             token: accesstoken
           };
           // const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-          localStorage.setItem("user", JSON.stringify(user));
+          store.setItem("user", JSON.stringify(user));
           dispatch(authSuccess(user));
-          // localStorage.setItem("expirationDate", expirationDate);
-          // localStorage.setItem("userId", response.data.localId);
+          // store.setItem("expirationDate", expirationDate);
+          // store.setItem("userId", response.data.localId);
           // dispatch(checkAuthTimeout(response.data.expiresIn));
         }
       })
@@ -76,16 +77,16 @@ export const setAuthRedirectPath = (path) => {
 
 export const authCheckState = () => {
   return dispatch => {
-    const token = localStorage.getItem('user');
+    const token = store.getItem('user');
     if (!token) {
       // dispatch(logout());
     } else {
-            //  const expirationDate = new Date(localStorage.getItem("expirationDate"));
-            // && expirationDate <= new Date()
+        //  const expirationDate = new Date(store.getItem("expirationDate"));
+        // && expirationDate <= new Date()
       if (false) {
         dispatch(logout());
       } else {
-        // const userId = localStorage.getItem("userId");
+        // const userId = store.getItem("userId");
         dispatch(authSuccess(JSON.parse(token)));
         // dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
       }

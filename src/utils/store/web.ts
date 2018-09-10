@@ -2,12 +2,17 @@ import { IStore } from "../../interfaces/store";
 import Taro from "@tarojs/taro";
 
 class Store implements IStore {
-  constructor() {}
+  removeItem(key) {
+    return Taro.removeStorageSync(key);
+  }
   getItem(key) {
     return Taro.getStorageSync(key);
   }
   setItem(key, value) {
     return Taro.setStorageSync(key, value);
+  }
+  clear() {
+    return Taro.clearStorageSync();
   }
 }
 
