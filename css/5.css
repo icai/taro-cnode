@@ -60,6 +60,7 @@
 .add-container .line {
   padding: 0.21333rem 0.32rem;
   border-bottom: solid 0.02133rem #d4d4d4;
+  font-size: 0.64rem;
 }
 
 .add-container .line .add-btn {
@@ -73,19 +74,14 @@
 
 .add-container .line .add-tab {
   display: inline-block;
-  width: -webkit-calc(100% - 4.69333rem);
-  width: -webkit-calc(100% - 220px);
-  width: calc(100% - 4.69333rem);
+  width: -webkit-calc(100% - 220PX);
+  width: calc(100% - 220PX);
   min-width: 50%;
-  font-size: 0.64rem;
   background: transparent;
   padding: 0.064rem;
   margin: 0.064rem 0.128rem;
   vertical-align: middle;
-}
-
-.add-container .line .add-tab :after {
-  content: 'xe60e';
+  border: 0.02133rem solid #222;
 }
 
 .add-container .line .add-title {
