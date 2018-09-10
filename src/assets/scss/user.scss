@@ -85,11 +85,14 @@
     text-align: center;
     // height: 180px;
     .u-img {
-        width: 100px;
-        height: 100px;
+        width: 100PX;
+        height: 100PX;
         border-radius: 50%;
         margin-top: $gap*3;
         display: inline-block;
+        background: url("../images/components/user.png") no-repeat center center;
+        background-size: 100PX 100PX;
+
     }
     .u-name {
         color: #000;
