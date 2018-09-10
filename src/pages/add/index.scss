@@ -5,6 +5,7 @@
       .line {
         padding: 10px 15px;
         border-bottom: solid 1px #d4d4d4;
+        font-size: 30px;
 
         .add-btn {
           color: #fff;
@@ -17,16 +18,13 @@
 
         .add-tab {
           display: inline-block;
-          width: calc(100% - 220px);
+          width: calc(100% - 220PX);
           min-width: 50%;
-          font-size: 30px;
           background: transparent;
           padding: 3px;
           margin: 3px 6px;
           vertical-align: middle;
-          :after {
-            content: 'xe60e';
-          }
+          border: 1px solid #222;
         }
 
         .add-title {

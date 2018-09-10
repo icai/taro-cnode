@@ -1,8 +1,8 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { withUser } from "../../hoc/router";
-import { View } from '@tarojs/components'
+import { View, Picker } from '@tarojs/components'
 import Header from '../../components/header/index'
-import { AtTextarea, AtInput } from 'taro-ui'
+import { AtTextarea, AtInput } from "taro-ui";
 import * as utils from '../../libs/utils'
 import classNames from "classnames";
 
@@ -10,7 +10,7 @@ import classNames from "classnames";
 import './index.scss'
 
 
-class Add extends Component {
+class Add extends Component<{}, {}> {
   config: Config = {
     navigationBarTitleText: "主题"
   };
@@ -21,15 +21,21 @@ class Add extends Component {
       title: "",
       content: ""
     },
+    selectorIndex: 0,
+    selector: [{
+      name: '分享',
+      value: 'share'
+    }, {
+        name: '问答',
+        value: 'ask'
+    }, {
+        name: '招聘',
+        value: 'job'
+    }],
     err: "",
-    authorTxt: "\n\n 来自拉风的 [Taro-cnode](https://github.com/icai/taro-cnode)"
+    authorTxt:
+      "\n 来自拉风的 [Taro-cnode](https://github.com/icai/taro-cnode)"
   };
-
-  componentDidHide() {
-  }
-  componentWillReceiveProps(nextProps) {
-    // console.log(this.props, nextProps);
-  }
   addTopic() {
     let title = utils.trim(this.state.topic.title);
     let contents = utils.trim(this.state.topic.content);
@@ -76,8 +82,9 @@ class Add extends Component {
     this.setState(prevState => ({
       topic: {
         ...prevState.topic,
-        tab: e.target.value
-      }
+        tab: prevState.selector[e.detail.value]["value"]
+      },
+      selectorIndex: e.detail.value
     }));
   };
   handleTopicContentChange = e => {
@@ -97,17 +104,20 @@ class Add extends Component {
     }));
   };
   render() {
-    const { err } = this.state;
+    const { err, selectorIndex } = this.state;
     return <View className="flex-wrp">
         <Header pageType={"主题"} fixHead={true} showMenu={true} />
         <View className="add-container">
           <View className="line">
             选择分类：
-            <select className="add-tab" value={this.state.topic.tab} onChange={this.handleTopicTabChange}>
+            <Picker className="add-tab" mode="selector" value={selectorIndex} range={this.state.selector} rangeKey={"name"} onChange={this.handleTopicTabChange}>
+              <View className="picker">{this.state.selector[selectorIndex]['name']}</View>
+            </Picker>
+            {/* <select className="add-tab" value={this.state.topic.tab} onChange={this.handleTopicTabChange}>
               <option value="share">分享</option>
               <option value="ask">问答</option>
               <option value="job">招聘</option>
-            </select>
+            </select> */}
             <View className="add-btn" onClick={e => {
                 this.addTopic();
               }}>
