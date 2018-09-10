@@ -6,7 +6,7 @@ import Link from "../../components/link";
 import Header from '../../components/header/index'
 import classNames from "classnames";
 import * as utils from '../../libs/utils';
-
+import { post, get } from "../../utils/request";
 
 
 import './index.scss'
@@ -40,7 +40,7 @@ class Message extends Component {
   }
   componentDidShow() {
     const { userInfo } = this.props;
-    Taro.request({
+    get({
       url: 'https://cnodejs.org/api/v1/messages?accesstoken=' + userInfo.token
     }).then(resp => {
       const d = resp.data;
@@ -63,16 +63,11 @@ class Message extends Component {
   }
   markall = ()=>{
     const { userInfo } = this.props;
-    Taro.request({
-      method: "POST",
+    post({
       url: 'https://cnodejs.org/api/v1/message/mark_all',
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json"
-      },
-      data: utils.param({
+      data: {
         accesstoken: userInfo.token
-      })
+      }
     }).then(resp => {
       const d = resp.data;
       if (d && d.success) {

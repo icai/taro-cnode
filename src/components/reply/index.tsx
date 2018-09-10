@@ -6,6 +6,7 @@ import { withUser } from "../../hoc/router";
 import { AtTextarea, AtInput } from "taro-ui";
 import classNames from "classnames";
 import update from "immutability-helper";
+import { post, get } from "../../utils/request";
 import './index.scss'
 
 const markdown = require("markdown").markdown;
@@ -77,20 +78,14 @@ class Reply extends Component<Iprops, PageState> {
         postData.reply_id = replyId;
       }
 
-      Taro.request({
-        method: "POST",
-        data: utils.param(postData),
-        header: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Accept: "application/json"
-        },
+      post({
+        data: postData,
         url: `https://cnodejs.org/api/v1/topic/${topicId}/replies`
       })
         .then(resp => {
           let res = resp.data;
           if (res.success) {
-            updateReplies &&
-              updateReplies((topic, context) => {
+            updateReplies && updateReplies((topic, context) => {
                 const newreplies = update(topic.replies, {
                   $push: [
                     {

@@ -8,6 +8,7 @@ import classNames from "classnames";
 import * as utils from '../../libs/utils';
 import { withUser } from "../../hoc/router";
 import update from "immutability-helper";
+import { post, get } from "../../utils/request";
 
 
 
@@ -94,20 +95,15 @@ class Topic extends Component {
         //   }
         // });
     } else {
-      Taro.request({
-        method: "POST",
-        url: 'https://cnodejs.org/api/v1/reply/' + item.id + '/ups',
-        header: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Accept: "application/json"
-        },
-        data: utils.param({
+      post({
+        url: "https://cnodejs.org/api/v1/reply/" + item.id + "/ups",
+        data: {
           accesstoken: userInfo.token
-        })
+        }
       }).then(resp => {
         let res = resp.data;
         if (res.success) {
-          if (res.action === 'down') {
+          if (res.action === "down") {
             let index = utils.inArray(userInfo.userId, item.ups);
             item.ups.splice(index, 1);
           } else {
@@ -126,19 +122,17 @@ class Topic extends Component {
   getTopic = () => {
     const topicId = this.$router.params.id;
     this.setState({ topicId });
-    Taro.request({
-      method: "GET",
-      url: "https://cnodejs.org/api/v1/topic/" + topicId
+    get({
+      url: "https://cnodejs.org/api/v1/topic/" + topicId,
+      // data: {
+      //   mdrender: false
+      // }
     }).then(resp => {
       let d = resp.data;
       if (d && d.data) {
-        this.setState({
-          topic: d.data
-        });
+        this.setState({ topic: d.data });
       } else {
-        this.setState({
-          noData: true
-        });
+        this.setState({ noData: true });
       }
     });
   };

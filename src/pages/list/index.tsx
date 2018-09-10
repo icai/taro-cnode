@@ -4,13 +4,10 @@ import { View, ScrollView } from '@tarojs/components'
 import { TopicsList } from '../../components/topics/index'
 import Header from '../../components/header/index';
 import { throttle } from "throttle-debounce";
-
 import { ITopic } from "../../interfaces/topic";
-
-
-
 import BackTop from "../../components/backtotop/index";
 import update from "immutability-helper";
+import { post, get } from "../../utils/request";
 
 
 import './index.scss'
@@ -72,14 +69,6 @@ class List extends Component<IProps, IState> {
   };
   index = {};
 
-  componentWillReceiveProps(nextProps) {
-    // console.log(this.props, nextProps);
-  }
-
-  // componentWillUnmount() {
-  //   // 事件好像回收不了啊
-  //   window.removeEventListener("scroll", this.throttledScrollHandler);
-  // }
   componentDidHide() {
     window.removeEventListener("scroll", this.throttledScrollHandler);
   }
@@ -125,7 +114,7 @@ class List extends Component<IProps, IState> {
   getTopics() {
     let params = this.state.searchKey;
     try {
-      Taro.request({
+      get({
         url: "https://cnodejs.org/api/v1/topics",
         data: params
       }).then(res => {
@@ -145,10 +134,10 @@ class List extends Component<IProps, IState> {
     }
   }
   mergeTopics = (topics) => {
-    const newData = update(this.state.topics, {
-      $push: topics
+    const newData = update(this.state.topics, { $push: topics });
+    this.setState({
+      topics: newData
     });
-    this.setState(prevState => ({ topics: newData }));
   }
 
   getScrollData = () => {

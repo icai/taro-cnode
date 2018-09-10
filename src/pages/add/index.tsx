@@ -5,6 +5,7 @@ import Header from '../../components/header/index'
 import { AtTextarea, AtInput } from "taro-ui";
 import * as utils from '../../libs/utils'
 import classNames from "classnames";
+import { post, get } from "../../utils/request";
 
 
 import './index.scss'
@@ -57,13 +58,8 @@ class Add extends Component<{}, {}> {
       accesstoken: this.props.userInfo.token
     };
 
-    Taro.request({
-      method: "POST",
-      data: utils.param(postData),
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json"
-      },
+    post({
+      data: postData,
       url: "https://cnodejs.org/api/v1/topics"
     })
       .then(resp => {

@@ -10,6 +10,7 @@ import Link from '../../components/link'
 import * as actions from "../../actions/auth";
 import classNames from "classnames";
 import * as utils from '../../libs/utils';
+import { post, get } from "../../utils/request";
 
 import './index.scss'
 
@@ -85,7 +86,7 @@ class User extends Component<IProps, PageState> {
       });
       return false;
     }
-    Taro.request({
+    get({
       url: "https://cnodejs.org/api/v1/user/" + loginname
     }).then(res => {
       let d = res.data;

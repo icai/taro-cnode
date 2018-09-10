@@ -14,6 +14,16 @@ export const updateObject = (oldObject, updatedProperties) => {
 };
 
 
+export const typeOf = (obj)=> {
+  return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
+}
+
+
+export const isObject = (obj)=> {
+  return typeOf(obj) === "object";
+}
+
+
 let getCheck = {
   checkEmail(val) {
     var filter = /^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\.)+([a-zA-Z0-9]{2,4})+$/;

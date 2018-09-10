@@ -1,5 +1,6 @@
 import Taro from "@tarojs/taro";
 import * as actionTypes from "../constants/auth";
+import { post, get } from "../utils/request";
 
 export const authStart = () => {
   return {
@@ -38,10 +39,10 @@ export const checkAuthTimeout = (expirationTime) => {
 export const auth = (accesstoken) => {
   return dispatch => {
     dispatch(authStart());
-    // const userInfo = { accesstoken: accesstoken };
-    return Taro.request({
-      method: "POST",
-      url: "https://cnodejs.org/api/v1/accesstoken?accesstoken=" + accesstoken,
+    const userInfo = { accesstoken: accesstoken };
+    return post({
+      url: "https://cnodejs.org/api/v1/accesstoken",
+      data: userInfo
     })
       .then(response => {
         if (response.data && response.data.success) {
