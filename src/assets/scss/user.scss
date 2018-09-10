@@ -79,7 +79,7 @@
 }
 
 .userinfo {
-    margin-top:$gap*12;
+    margin-top: 100px;
     width: 100%;
     background-color: $colore7;
     text-align: center;
@@ -118,6 +118,9 @@
         justify-content: center
       }
     }
+
+
+
 }
 
 .message {
@@ -130,16 +133,17 @@
     width: 100%;
     // height: $gap*8.2;
     list-style: none;
-    border-bottom: solid 1px $colord4;
+
     display: flex;
-    position: relative;
+    // position: relative;
     .item {
         width: 50%;
-        padding: $gap*3 0;
+        padding: $gap*2.3 0;
         flex: 0 1 auto;
-        font-size: 16;
+        font-size: 16PX;
         text-align: center;
         font-weight: bold;
+        border-bottom: solid 1px $colord4;
     }
     .read {
         font-size: $gap*5;
@@ -158,8 +162,11 @@
     }
 }
 
-.icon-empty {
+.topics {
+  .icon-empty {
     font-size: $gap*25;
-    color:$colord4;
+    color: $colord4;
     display: block;
+  }
 }
+
