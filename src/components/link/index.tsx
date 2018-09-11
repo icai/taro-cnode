@@ -8,6 +8,8 @@ type IProps = {
       url: string,
       params: object
     }
+    className: string,
+    children: any
   }
 }
 type PageState = {
@@ -15,7 +17,7 @@ type PageState = {
 }
 
 class Link extends Component<IProps, PageState> {
-  defaultProps = {
+  static defaultProps = {
     to: {
       url: "",
       params: ""
@@ -30,7 +32,12 @@ class Link extends Component<IProps, PageState> {
   };
   render() {
     const props = this.props;
-    return <View {...props} onClick={e => {
+    const cprops = {
+      ...props, style: {
+        cursor: 'pointer'
+      }};
+    delete cprops.to;
+    return <View {...cprops} onClick={e => {
           this.goTo(props.to);
         }}>
         {this.props.children}

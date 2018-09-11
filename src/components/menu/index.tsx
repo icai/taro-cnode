@@ -1,10 +1,9 @@
-import Taro, { Component, Config, eventCenter } from "@tarojs/taro";
-import { View, Button, Text, Navigator, Image } from "@tarojs/components";
-import { AtDrawer } from 'taro-ui'
-import UserInfo from '../user-info/index';
+import Taro, { Component } from "@tarojs/taro";
+import { View } from "@tarojs/components";
+import UserInfo from '../user-info';
 import classNames from "classnames";
-import Drawer from '../drawer/index'
-import { param } from '../../libs/utils'
+import Drawer from '../drawer'
+import Link from "../link"
 
 
 import './index.scss'
@@ -18,41 +17,6 @@ interface IProps {
 }
 
 class NvMenu extends Component<IProps, {}> {
-  componentWillReceiveProps(nextProps) {
-    // console.log(this.props, nextProps);
-  }
-  toList(pm) {
-    Taro.navigateTo({
-      url: "/pages/list/index?" + param(pm),
-    });
-  }
-  listAll = () => {
-    this.toList({tab: 'all'})
-  };
-  listGood = () => {
-    this.toList({tab: 'good'})
-  };
-  listShare = () => {
-    this.toList({tab: 'share'})
-  };
-
-  listAsk = () => {
-    this.toList({tab: 'ask'})
-  };
-
-  listJob = () => {
-    this.toList({tab: 'job'})
-  };
-  listMessage = () => {
-    Taro.navigateTo({
-      url: "/pages/message/index",
-    });
-  };
-  listAbout = () => {
-    Taro.navigateTo({
-      url: "/pages/about/index",
-    });
-  };
   render() {
     const { showMenu } = this.props;
     const classnames = classNames({
@@ -63,27 +27,27 @@ class NvMenu extends Component<IProps, {}> {
         <Drawer mask={false} show={showMenu}>
           <UserInfo />
           <View className="list-ul">
-            <View className="icon-quanbu iconfont item" onClick={this.listAll}>
+            <Link className="icon-quanbu iconfont item" to={{ url: "/pages/list/index?tab=all" }}>
               全部
-            </View>
-            <View className="icon-hao iconfont item" onClick={this.listGood}>
+            </Link>
+            <Link className="icon-hao iconfont item" to={{ url: "/pages/list/index?tab=good" }}>
               精华
-            </View>
-            <View className="icon-fenxiang iconfont item" onClick={this.listShare}>
+            </Link>
+            <Link className="icon-fenxiang iconfont item" to={{ url: "/pages/list/index?tab=share" }}>
               分享
-            </View>
-            <View className="icon-wenda iconfont item" onClick={this.listAsk}>
+            </Link>
+            <Link className="icon-wenda iconfont item" to={{ url: "/pages/list/index?tab=ask" }}>
               问答
-            </View>
-            <View className="icon-zhaopin iconfont item" onClick={this.listJob}>
+            </Link>
+            <Link className="icon-zhaopin iconfont item" to={{ url: "/pages/list/index?tab=job" }}>
               招聘
-            </View>
-            <View className="icon-xiaoxi iconfont item line" onClick={this.listMessage}>
+            </Link>
+            <Link className="icon-xiaoxi iconfont item line" to={{ url: "/pages/message/index" }}>
               消息
-            </View>
-            <View className="icon-about iconfont item" onClick={this.listAbout}>
+            </Link>
+            <Link className="icon-about iconfont item" to={{ url: "/pages/about/index" }}>
               关于
-            </View>
+            </Link>
           </View>
         </Drawer>
       </View>;

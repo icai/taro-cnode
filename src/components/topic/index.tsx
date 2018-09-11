@@ -1,5 +1,6 @@
 import Taro, { Component, eventCenter } from '@tarojs/taro'
 import { View, Text, Navigator, Image } from '@tarojs/components'
+import Link from "../../components/link";
 
 import classNames from "classnames";
 
@@ -21,19 +22,6 @@ interface IProps {
 
 class Topic extends Component<IProps, {}> {
 
-  handleNavigate = (id) => {
-    // 这里必须显式指名 this.props 包含 tid
-    // 或设置 defaultProps
-    // const { tid, not_navi } = this.props
-    // if (not_navi) {
-    //   return
-    // }
-    // // 懒得用 redux 了
-    // eventCenter.trigger(Thread_DETAIL_NAVIGATE, this.props)
-    Taro.navigateTo({
-      url: '/pages/topic/index?id=' + id
-    })
-  }
   getTabInfo(tab, good, top, isClass) {
     return utils.getTabInfo(tab, good, top, isClass);
   }
@@ -43,9 +31,8 @@ class Topic extends Component<IProps, {}> {
 
     const classnames = 'stitle ' + this.getTabInfo(tab, good, top, true)
     const tit = this.getTabInfo(tab, good, top, false)
-    return (
-      <View className="topic" onClick={(e)=> {this.handleNavigate(id)}}>
-        <h3 className={classnames}  title={tit} >
+    return <Link className="topic" to={{ url: '/pages/topic/index?id=' + id }}>
+        <h3 className={classnames} title={tit}>
           {title}
         </h3>
         <View className="content">
@@ -60,13 +47,16 @@ class Topic extends Component<IProps, {}> {
                 </Text> : ""}
             </View>
             <View>
-              <Text className="time">{utils.getLastTimeStr(create_at, true)}</Text>
-              <Text className="time">{utils.getLastTimeStr(last_reply_at, true)}</Text>
+              <Text className="time">
+                {utils.getLastTimeStr(create_at, true)}
+              </Text>
+              <Text className="time">
+                {utils.getLastTimeStr(last_reply_at, true)}
+              </Text>
             </View>
           </View>
         </View>
-      </View>
-      );
+      </Link>;
   }
 }
 

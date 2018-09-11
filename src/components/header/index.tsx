@@ -1,7 +1,8 @@
-import Taro, { Component, Config } from '@tarojs/taro'
+import Taro, { Component } from '@tarojs/taro'
 import classNames from "classnames";
-import { View, Button, Text } from "@tarojs/components";
-import NvMenu from "../menu/index"
+import { View, Text } from "@tarojs/components";
+import NvMenu from "../menu"
+import Link from "../link"
 
 
 
@@ -35,12 +36,6 @@ class Header extends Component<IProps, IState> {
     show: false
   };
 
-  goToAdd = () => {
-    // async
-    Taro.navigateTo({
-      url: "/pages/add/index"
-    });
-  };
   openMenu = () => {
     this.setState({
       show: !this.state.show
@@ -71,12 +66,13 @@ class Header extends Component<IProps, IState> {
             {messageCount > 0 ? <Text className="num">
                 {messageCount}
               </Text> : ""}
-            {(needAdd && !messageCount) || messageCount <= 0 ? <View className="iconfont add-icon" onClick={this.goToAdd}>
+          {(needAdd && !messageCount) || messageCount <= 0 ? <Link className="iconfont add-icon" to={{url: "/pages/add/index"}} >
                 &#xe60f;
-              </View> : ""}
+              </Link> : ""}
           </View>
         </View>
-        {fixHead ? <NvMenu showMenu={show} pageType={pageType} nickName={nickname} profileUrl={profileimgurl} /> : ""}
+        <NvMenu showMenu={show} pageType={pageType} nickName={nickname} profileUrl={profileimgurl} />
+        {/* {fixHead ? "" : ""} */}
       </View>;
   }
 }

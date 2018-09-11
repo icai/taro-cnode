@@ -29,16 +29,6 @@ class About extends Component<{}, {}> {
       navigationBarTitleText: '关于'
   }
 
-  componentWillReceiveProps (nextProps) {
-    // console.log(this.props, nextProps)
-  }
-
-  componentWillUnmount () { }
-
-  componentDidMount () { }
-
-  componentDidHide () { }
-
   render () {
     return (
       <View className="flex-wrp"  >

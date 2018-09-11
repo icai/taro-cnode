@@ -5,7 +5,7 @@ import Header from '../../components/header/index'
 import { AtTextarea, AtInput } from "taro-ui";
 import * as utils from '../../libs/utils'
 import classNames from "classnames";
-import { post, get } from "../../utils/request";
+import { post } from "../../utils/request";
 
 
 import './index.scss'

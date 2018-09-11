@@ -1,7 +1,7 @@
-import { ComponentClass } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text, Image } from '@tarojs/components'
-import Header from '../../components/header/index'
+import { ComponentClass } from 'react';
+import Taro, { Component, Config } from '@tarojs/taro';
+import { View, Text, Image } from '@tarojs/components';
+import Header from '../../components/header/index';
 import Link from "../../components/link";
 import Reply from '../../components/reply';
 import classNames from "classnames";
@@ -9,10 +9,6 @@ import * as utils from '../../libs/utils';
 import { withUser } from "../../hoc/router";
 import update from "immutability-helper";
 import { post, get } from "../../utils/request";
-
-
-
-import { connect } from '@tarojs/redux'
 import BackTop from "../../components/backtotop/index";
 
 

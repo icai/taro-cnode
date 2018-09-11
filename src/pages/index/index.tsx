@@ -18,29 +18,22 @@ class Index extends Component {
     navigationBarTitleText: '首页'
   }
 
-  componentWillReceiveProps (nextProps) {
-    // console.log(this.props, nextProps)
-  }
-
-  componentWillUnmount () { }
 
   componentDidMount () {
     setTimeout(()=> {
       Taro.navigateTo({
         url: "/pages/list/index"
       });
-    }, 2000)
+    }, 1000)
   }
 
   componentDidHide () { }
 
   render () {
-    return (
-        <View>
-          <Image className="index" src={require('../../assets/images/index.png')}></Image>
-          <View className="index-subtitle"> Taro Cnode.js</View>
-        </View>
-    )
+    return <View>
+        <Image className="index" mode="widthFix" src={require("../../assets/images/index.png")} />
+        <View className="index-subtitle">Taro Cnode.js社区</View>
+      </View>;
   }
 }
 

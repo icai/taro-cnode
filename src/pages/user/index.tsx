@@ -1,16 +1,15 @@
-import { ComponentClass } from 'react'
+import { ComponentClass } from 'react';
 import Taro, { Config } from "@tarojs/taro";
 import { Component } from "../../hoc/router";
-import { View, Image, Text } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
-
+import { View, Image, Text } from '@tarojs/components';
+import { connect } from '@tarojs/redux';
 import Header from "../../components/header/index";
-import Link from '../../components/link'
-
-import * as actions from "../../actions/auth";
+import Link from '../../components/link';
 import classNames from "classnames";
+import * as actions from "../../actions/auth";
 import * as utils from '../../libs/utils';
-import { post, get } from "../../utils/request";
+import { get } from "../../utils/request";
+import { IAuth } from "../../interfaces/auth";
 
 import './index.scss'
 
@@ -19,9 +18,7 @@ type PageStateProps = {
   userInfo: IAuth;
 };
 
-// interface PageStateProps {
-//   userInfo: IAuth;
-// }
+
 
 type PageDispatchProps = {
   authCheckState: () => void;
