@@ -20,8 +20,7 @@ type PageState = {};
 
 type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
 
-function withUser(WrappedComponent, allowNologin) {
-  allowNologin = allowNologin || false;
+function withUser(WrappedComponent, allowNologin = false) {
   @connect( ({ auth }) => ({ userInfo: auth }),
     (dispatch: Function) => ({
       authLogin: (...args) => dispatch(actions.auth(...args)),
