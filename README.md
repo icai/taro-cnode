@@ -1,12 +1,8 @@
 # taro-cnode
-<p>
-  <a href="https://travis-ci.org/icai/taro-cnode">
-    <img src="https://travis-ci.org/icai/taro-cnode.svg?branch=master">
-  </a>
-  <a href="LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-yellow.svg">
-  </a>
-</p>
+
+[![](https://travis-ci.org/icai/taro-cnode.svg?branch=master)](https://travis-ci.org/icai/taro-cnode)
+[![](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Greenkeeper badge](https://badges.greenkeeper.io/icai/gulp-liquidr.svg)](https://greenkeeper.io/)
 
 
 ## 这是什么？
@@ -59,6 +55,6 @@ http://taro.w3ucb.com/
 
 
 
-## 协议
+## LICENSE
 
 Copyright (c) 2018 Terry Cai. Licensed under the MIT license.
