@@ -1,7 +1,7 @@
 # taro-cnode
 
-[![](https://travis-ci.org/icai/taro-cnode.svg?branch=master)](https://travis-ci.org/icai/taro-cnode)
 [![Greenkeeper badge](https://badges.greenkeeper.io/icai/taro-cnode.svg)](https://greenkeeper.io/)
+<!-- [![](https://travis-ci.org/icai/taro-cnode.svg?branch=master)](https://travis-ci.org/icai/taro-cnode) -->
 [![](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 
