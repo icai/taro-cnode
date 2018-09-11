@@ -64,10 +64,6 @@ class Topic extends Component {
     topicId: "",
     curReplyId: ""
   };
-
-  componentWillReceiveProps(nextProps) {
-    // console.log(this.props, nextProps);
-  }
   componentDidMount() {
     this.getTopic();
   }
@@ -84,12 +80,12 @@ class Topic extends Component {
     const { userInfo } = this.props;
     const { topic } = this.state;
     if (!userInfo.userId) {
-        // this.$router.push({
-        //   name: 'login',
-        //   params: {
-        //     redirect: encodeURIComponent(this.$route.path)
-        //   }
-        // });
+      utils.navigateTo({
+        url: "/pages/login/index",
+        params: {
+          redirect: encodeURIComponent(this.$router.fullUrl)
+        }
+      });
     } else {
       post({
         url: "https://cnodejs.org/api/v1/reply/" + item.id + "/ups",
@@ -165,24 +161,18 @@ class Topic extends Component {
                     iconfont: 1,
                     icon: 1,
                     uped: isUps(item.ups)
-                  })} onClick={e => {
-                    this.upReply(item, index);
-                  }}>
+              })} onClick={this.upReply.bind(this, item, index)}>
                   &#xe608;
                 </Text>
                 {item.ups.length}
-                <Text className="iconfont icon" onClick={e => {
-                    this.addReply(item.id);
-                  }}>
+               <Text className="iconfont icon" onClick={this.addReply.bind(this, item.id)}>
                   &#xe609;
                 </Text>
               </Text>
             </View>
           </View>
           <View className="reply_content" dangerouslySetInnerHTML={{ __html: item.content }} />
-        {userInfo.userId && curReplyId === item.id ? <Reply topic={topic} updateReplies={(fn) => {fn(topic, this)}} topicId={topicId} replyId={item.id} replyTo={item.author.loginname} show={curReplyId} onClose={e => {
-                this.hideItemReply();
-              }} /> : ""}
+        {userInfo.userId && curReplyId === item.id ? <Reply topic={topic} updateReplies={(fn) => { fn(topic, this) }} topicId={topicId} replyId={item.id} replyTo={item.author.loginname} show={curReplyId} onClose={this.hideItemReply.bind(this)} /> : ""}
         </View>;
     });
 

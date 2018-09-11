@@ -119,31 +119,15 @@ class Reply extends Component<Iprops, PageState> {
 
   render() {
     const { hasErr } = this.state;
-    return (
-      <View className="reply">
-        <AtTextarea
-          id="content"
-          className={classNames({
+    return <View className="reply">
+        <AtTextarea id="content" className={classNames({
             text: 1,
             err: hasErr
-          })}
-          value={this.state.content}
-          onChange={this.handleChange}
-          type="text"
-          placeholder="回复支持Markdown语法,请注意标记代码"
-          rows="8"
-          class="text"
-        />
-        <View
-          className="button"
-          onClick={e => {
-            this.addReply();
-          }}
-        >
+          })} value={this.state.content} onChange={this.handleChange} type="text" placeholder="回复支持Markdown语法,请注意标记代码" rows="8" class="text" />
+        <View className="button" onClick={this.addReply.bind(this)}>
           确定
         </View>
-      </View>
-    );
+      </View>;
   }
 }
 

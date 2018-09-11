@@ -18,6 +18,7 @@ html, body {
     line-height: 1.5;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 div, span, object, iframe, img, table, caption, thead, tbody,
@@ -26,6 +27,7 @@ nav, footer, header, section, summary, mark, audio, video {
     border: 0;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cit, code,
@@ -36,11 +38,13 @@ ol, ul, li, fieldset, legend, label {
     vertical-align: baseline;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 article, aside, canvas, figure, figure img, figcaption, hgroup,
 footer, header, nav, section, audio, video {
     display: block;
+    box-sizing: border-box;
 }
 
 table {
@@ -64,17 +68,19 @@ a img {
 :focus {
     outline: 0;
 }
-*{
-    box-sizing: border-box;
-}
+
+
 textarea{
     resize: none;
     appearance: none;
+    box-sizing: border-box;
 }
 input{
     appearance: none;
+    box-sizing: border-box;
 }
 select {
     appearance: none;
     background-color: #fff;
+    box-sizing: border-box;
 }

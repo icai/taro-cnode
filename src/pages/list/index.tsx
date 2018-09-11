@@ -150,7 +150,6 @@ class List extends Component<IProps, IState> {
     }
   }
   mergeTopics = topics => {
-    // const newData = update(this.state.topics, { $push: topics });
     this.setState({ topics: [...this.state.topics, ...topics] });
   };
   onReachBottom = () => {

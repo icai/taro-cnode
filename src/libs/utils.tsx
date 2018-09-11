@@ -2,6 +2,7 @@
 
 // import _ from 'lodash';
 import Timeago from "timeago.js";
+import Taro from "@tarojs/taro";
 import { ITopic } from "../interfaces/topic";
 
 import { eventCenter } from "@tarojs/taro";
@@ -22,6 +23,12 @@ export const typeOf = (obj)=> {
 export const isObject = (obj)=> {
   return typeOf(obj) === "object";
 }
+
+export const navigateTo = ({ url, params }) => {
+  Taro.navigateTo({
+    url: url + (params ? "?" + param(params) : "")
+  });
+};
 
 
 let getCheck = {

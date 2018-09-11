@@ -80,9 +80,7 @@
   padding: 0;
 }
 
-.markdown-body * {
-  box-sizing: border-box;
-}
+
 
 .markdown-body input {
   font: 13px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
@@ -209,11 +207,11 @@
   content: '\f05c';
 }
 
-.markdown-body>*:first-child {
+.markdown-body div:first-child {
   margin-top: 0 !important;
 }
 
-.markdown-body>*:last-child {
+.markdown-body div:last-child {
   margin-bottom: 0 !important;
 }
 
@@ -361,7 +359,7 @@
   margin-bottom: 0;
 }
 
-.markdown-body li>p {
+.markdown-body li p {
   margin-top: 16px;
 }
 
@@ -388,11 +386,11 @@
   border-left: 4px solid #ddd;
 }
 
-.markdown-body blockquote>:first-child {
+.markdown-body blockquote :first-child {
   margin-top: 0;
 }
 
-.markdown-body blockquote>:last-child {
+.markdown-body blockquote :last-child {
   margin-bottom: 0;
 }
 
@@ -445,7 +443,7 @@
   content: "\00a0";
 }
 
-.markdown-body pre>code {
+.markdown-body pre code {
   padding: 0;
   margin: 0;
   font-size: 100%;
@@ -509,7 +507,7 @@
   box-shadow: inset 0 -1px 0 #bbb;
 }
 
-.markdown-body .pl-c {
+/* .markdown-body .pl-c {
   color: #969896;
 }
 
@@ -620,7 +618,7 @@
   border-bottom-color: #bbb;
   border-radius: 3px;
   box-shadow: inset 0 -1px 0 #bbb;
-}
+} */
 
 .markdown-body:before {
   display: table;
@@ -633,21 +631,3 @@
   content: "";
 }
 
-.markdown-body .task-list-item {
-  list-style-type: none;
-}
-
-.markdown-body .task-list-item+.task-list-item {
-  margin-top: 3px;
-}
-
-.markdown-body .task-list-item input {
-  margin: 0 0.35em 0.25em -1.6em;
-  vertical-align: middle;
-}
-
-.markdown-body :checked+.radio-label {
-  z-index: 1;
-  position: relative;
-  border-color: #4078c0;
-}

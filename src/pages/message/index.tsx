@@ -86,11 +86,11 @@ class Message extends Component {
         needAdd={true} messageCount={no_read_len}></Header>
         <View id="page" className="page">
             <View className="tabs">
-                <View className={classNames({'item': 1 , 'br': 1, "selected": selectItem === 2})} onClick={(e)=> this.changeItem(2)}>已读消息</View>
-                <View className={classNames({'item': 1 , "selected": selectItem === 1})}  onClick={(e)=> this.changeItem(1)}>
+            <View className={classNames({ 'item': 1, 'br': 1, "selected": selectItem === 2 })} onClick={this.changeItem.bind(this, 2)}>已读消息</View>
+            <View className={classNames({ 'item': 1, "selected": selectItem === 1 })} onClick={this.changeItem.bind(this, 1)}>
                     未读消息
-                    {no_read_len > 0 ?  <i className="iconfont read"
-                        onClick={this.markall}>&#xe60c;</i> : ''}
+                    {no_read_len > 0 ?  <Text className="iconfont read"
+                onClick={this.markall}>&#xe60c;</Text> : ''}
                 </View>
             </View>
             <View className='tab-content'>
@@ -103,10 +103,10 @@ class Message extends Component {
                             <Text className="name">
                               {item.author.loginname}
                             </Text>
-                            {item.type === "at" ? <Text className="name">
+                            {item.type === 'at' ? <Text className="name">
                                 在回复中@了您
                               </Text> : ""}
-                            {item.type === "reply" ? <Text className="name">
+                            {item.type === 'reply' ? <Text className="name">
                                 回复了您的话题
                               </Text> : ""}
                           </Text>

@@ -37,9 +37,7 @@ class Link extends Component<IProps, PageState> {
         cursor: 'pointer'
       }};
     delete cprops.to;
-    return <View {...cprops} onClick={e => {
-          this.goTo(props.to);
-        }}>
+    return <View className={cprops.className} style={cprops.style} onClick={this.goTo.bind(this, props.to)}>
         {this.props.children}
       </View>;
   }

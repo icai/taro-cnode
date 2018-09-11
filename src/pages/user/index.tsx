@@ -141,17 +141,13 @@ class User extends Component<IProps, PageState> {
                 br: 1,
                 selected: selectItem === 1
               })}
-              onClick={e => {
-                this.changeItem(1);
-              }}
+              onClick={this.changeItem.bind(this, 1)}
             >
               最近回复
             </View>
             <View
               className={classNames({ item: 1, selected: selectItem === 2 })}
-              onClick={e => {
-                this.changeItem(2);
-              }}
+              onClick={this.changeItem.bind(this, 2)}
             >
               最新发布
             </View>
