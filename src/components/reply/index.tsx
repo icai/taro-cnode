@@ -34,7 +34,7 @@ class Reply extends Component<Iprops, PageState> {
     hasErr: false,
     content: "",
     author_txt:
-      "\n 来自拉风的 [Taro-cnode](https://github.com/icai/taro-cnode)"
+      "\n\n 来自拉风的 [Taro-cnode](https://github.com/icai/taro-cnode)"
   };
 
   componentWillReceiveProps(nextProps) {
