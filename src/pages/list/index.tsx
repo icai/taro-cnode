@@ -1,38 +1,35 @@
 // import { ComponentClass } from 'react'
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, ScrollView } from '@tarojs/components'
-import { TopicsList } from '../../components/topics/index'
-import Header from '../../components/header/index';
+import { View, ScrollView } from "@tarojs/components";
+import { TopicsList } from "../../components/topics";
+import Header from "../../components/header/index";
 import { throttle } from "throttle-debounce";
 import { ITopic } from "../../interfaces/topic";
-import BackTop from "../../components/backtotop/index";
-import update from "immutability-helper";
-import { post, get } from "../../utils/request";
+import BackTop from "../../components/backtotop";
+// import update from "immutability-helper";
+import {  get } from "../../utils/request";
+import Loading from "../../components/loading2";
 
-
-import './index.scss'
+import "./index.scss";
 
 // type IProps =  {};
 interface IProps {
-  props: object
+  props: object;
 }
-
 
 type TsearchKey = {
-  page: number,
-  limit: number,
-  tab: string,
-  mdrender: boolean
-}
-
+  page: number;
+  limit: number;
+  tab: string;
+  mdrender: boolean;
+};
 
 interface IState {
-  scroll: boolean,
-  loading: boolean,
-  topics: ITopic[],
-  searchKey: TsearchKey
+  scroll: boolean;
+  loading: boolean;
+  topics: ITopic[];
+  searchKey: TsearchKey;
 }
-
 
 class List extends Component<IProps, IState> {
   /**
@@ -45,13 +42,16 @@ class List extends Component<IProps, IState> {
   config: Config = {
     navigationBarTitleText: "全部"
   };
-  componentScrollBox = document.documentElement;
 
-  throttledScrollHandler: (e)=> void;
+  componentScrollBox;
+  throttledScrollHandler;
 
   constructor() {
     super(...arguments);
-    this.throttledScrollHandler = throttle(300, this.getScrollData);
+    if (process.env.TARO_ENV === "h5") {
+      this.componentScrollBox = document.documentElement;
+      this.throttledScrollHandler = throttle(300, this.getScrollData);
+    }
   }
 
   state = {
@@ -70,7 +70,9 @@ class List extends Component<IProps, IState> {
   index = {};
 
   componentDidHide() {
-    window.removeEventListener("scroll", this.throttledScrollHandler);
+    if (process.env.TARO_ENV === "h5") {
+      window.removeEventListener("scroll", this.throttledScrollHandler);
+    }
   }
   componentDidShow() {
     if (this.$router.params && this.$router.params.tab) {
@@ -87,8 +89,22 @@ class List extends Component<IProps, IState> {
     } else {
       this.getTopics();
     }
-    window.addEventListener("scroll", this.throttledScrollHandler);
+    if (process.env.TARO_ENV === "h5") {
+      window.addEventListener("scroll", this.throttledScrollHandler);
+    }
   }
+  getScrollData = () => {
+    if (process.env.TARO_ENV === "h5") {
+      if (this.state.scroll) {
+        let totalheight =
+          document.documentElement.clientHeight +
+          document.documentElement.scrollTop;
+        if (document.documentElement.scrollHeight <= totalheight + 200) {
+          this.onReachBottom();
+        }
+      }
+    }
+  };
   getTitleStr(tab) {
     let str = "";
     switch (tab) {
@@ -133,34 +149,28 @@ class List extends Component<IProps, IState> {
       });
     }
   }
-  mergeTopics = (topics) => {
-    const newData = update(this.state.topics, { $push: topics });
-    this.setState({
-      topics: newData
-    });
-  }
-
-  getScrollData = () => {
+  mergeTopics = topics => {
+    // const newData = update(this.state.topics, { $push: topics });
+    this.setState({ topics: [...this.state.topics, ...topics] });
+  };
+  onReachBottom = () => {
     if (this.state.scroll) {
-      let totalheight =
-        document.documentElement.clientHeight +
-        document.documentElement.scrollTop;
-      if (document.documentElement.scrollHeight <= totalheight + 200) {
-        this.setState(
-          prevState => ({
-            scroll: false,
-            searchKey: {
-              ...prevState.searchKey,
-              page: prevState.searchKey.page + 1
-            }
-          }),
-          () => {
-            this.getTopics();
+      this.setState(
+        prevState => ({
+          scroll: false,
+          loading: true,
+          searchKey: {
+            ...prevState.searchKey,
+            page: prevState.searchKey.page + 1
           }
-        );
-      }
+        }),
+        () => {
+          this.getTopics();
+        }
+      );
     }
-  }
+  };
+
   render() {
     const { searchKey, topics, loading } = this.state;
     return (
@@ -174,6 +184,7 @@ class List extends Component<IProps, IState> {
           <View className="posts-list">
             <TopicsList topics={topics} loading={loading} />
           </View>
+          {loading && searchKey.page > 1 && <Loading height="20vh" />}
         </View>
         <BackTop />
       </View>
@@ -181,4 +192,4 @@ class List extends Component<IProps, IState> {
   }
 }
 
-export default List
+export default List;

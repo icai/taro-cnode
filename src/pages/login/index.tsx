@@ -24,9 +24,6 @@ class Login extends Component {
     }
   };
 
-  componentWillReceiveProps(nextProps) {
-    // console.log(this.props, nextProps);
-  }
   showMessage(message) {
     Taro.showToast({ title: message });
   }

@@ -11,9 +11,6 @@ interface IProps {
 
 
 class Loading extends Component<IProps, {}> {
-  componentWillReceiveProps(nextProps) {
-    // console.log(this.props, nextProps);
-  }
   render() {
     const { showTxt, show } = this.props;
     return (

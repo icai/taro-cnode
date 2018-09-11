@@ -40,7 +40,7 @@ function withUser(WrappedComponent, allowNologin) {
     // refer  https://github.com/ReactTraining/react-router/blob/master/packages/react-router/modules/Redirect.js
     perform() {
       if (!this.isSuperRender()) {
-        Taro.navigateTo({ url: "/pages/login/index" });
+        Taro.redirectTo({ url: "/pages/login/index" });
       }
     }
     componentWillMount() {

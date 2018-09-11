@@ -1,9 +1,7 @@
 import { ComponentClass } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button } from '@tarojs/components'
-// import { connect } from '@tarojs/redux'
+import Taro, { Component } from '@tarojs/taro'
+import { View } from '@tarojs/components'
 import { throttle } from 'throttle-debounce';
-
 
 import './index.scss'
 
@@ -22,41 +20,52 @@ interface BackTop {
 
 
 class BackTop extends Component {
-  // constructor() {
-  //   super(...arguments);
-  // }
+  componentScrollBox;
+  constructor() {
+    super(...arguments);
+    if (Taro.getEnv() == 'WEB') {
+      this.componentScrollBox = document.documentElement;
+    }
+  }
   state = {
     show: false
   };
 
-  componentScrollBox = document.documentElement;
-  // componentScrollHander = window;
-
-  componentWillReceiveProps(nextProps) {
-    // console.log(this.props, nextProps);
-  }
-
   componentWillUnmount() {
-    window.removeEventListener("scroll", this.scrollbinding);
+    if (Taro.getEnv() == 'WEB') {
+      window.removeEventListener("scroll", this.scrollbinding);
+    }
   }
 
   componentDidMount() {
-    this.scrollbinding = throttle(300, this.handleScroll);
-    window.addEventListener("scroll", this.scrollbinding);
+    if (Taro.getEnv() == 'WEB') {
+      this.scrollbinding = throttle(300, this.handleScroll);
+      window.addEventListener("scroll", this.scrollbinding);
+    }
   }
-
-  componentDidHide() {}
-
+  // web
   handleScroll = () => {
     const scrollTop = this.componentScrollBox.scrollTop;
     const show = scrollTop >= 0.5 * document.body.clientHeight;
-
     this.setState({
       show: show
     });
-  };
+  }
+  // weapp
+  onPageScroll =  (e) => {
+    const scrollTop = e.scrollTop
+    const show = scrollTop > 500 ? true : false
+    this.setState({ show: show });
+  }
+
   goTop = () => {
-    this.componentScrollBox.scrollTop = 0;
+    if (Taro.getEnv() == 'WEB') {
+      this.componentScrollBox.scrollTop = 0;
+    } else if (Taro.getEnv() == 'WEAPP') {
+      Taro.pageScrollTo({
+        scrollTop: 0
+      })
+    }
   };
   render() {
     const { show } = this.state;
@@ -74,11 +83,5 @@ class BackTop extends Component {
   }
 }
 
-// #region 导出注意
-//
-// 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性
-// 这样在使用这个子类时 Ts 才不会提示缺少 JSX 类型参数错误
-//
-// #endregion
 
 export default BackTop as ComponentClass<PageOwnProps, PageState>
