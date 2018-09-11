@@ -27,7 +27,11 @@
 ```bash
 
 git clone --depth 50 -b master --single-branch https://github.com/icai/taro-cnode.git && cd taro-cnode
+
 npm install -g @tarojs/cli
+
+npm install
+
 npm run dev:h5
 
 ```
