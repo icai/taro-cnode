@@ -1,8 +1,8 @@
 # taro-cnode
 
 [![](https://travis-ci.org/icai/taro-cnode.svg?branch=master)](https://travis-ci.org/icai/taro-cnode)
-[![](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Greenkeeper badge](https://badges.greenkeeper.io/icai/gulp-liquidr.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/icai/taro-cnode.svg)](https://greenkeeper.io/)
+[![](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 
 ## 这是什么？
