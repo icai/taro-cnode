@@ -1,13 +1,14 @@
 .index {
-  width: 100%;
-  padding: 0.42667rem;
+  display: block;
   background-color: #fff;
+  margin: 0 auto;
   margin-top: 40%;
 }
 
 .index-subtitle {
   text-align: center;
-  font-size: 0.42667rem;
+  margin-top: 0.21333rem;
+  font-size: 0.68267rem;
 }
 
 
