@@ -4,7 +4,7 @@ import { Component } from "../../hoc/router";
 import { View, Image, Text } from '@tarojs/components';
 import { connect } from '@tarojs/redux';
 import Header from "../../components/header/index";
-import Link from '../../components/link';
+import ALink from '../../components/link';
 import classNames from "classnames";
 import * as actions from "../../actions/auth";
 import * as utils from '../../libs/utils';
@@ -153,35 +153,26 @@ class User extends Component<IProps, PageState> {
             </View>
           </View>
           {currentData.map(item => {
-            return (
-              <View className="message">
+            return <View className="message">
                 <View className="user">
-                  <Link
-                    className="head"
-                    to={{
-                      url: "/pages/user/index",
-                      params: { loginname: item.author.loginname }
-                    }}
-                  >
+                  <ALink link-class="head" to={{ url: "/pages/user/index", params: { loginname: item.author.loginname } }}>
                     <Image class="head" src={item.author.avatar_url} />
-                  </Link>
-                  <Link
-                    className="info"
-                    to={{ url: "/pages/topic/index", params: { id: item.id } }}
-                  >
+                  </ALink>
+                <ALink link-class="info" to={{ url: "/pages/topic/index", params: { id: item.id } }}>
                     <View className="t-title">{item.title}</View>
                     <Text className="cl mt12">
-                      <Text className="name">{item.author.loginname}</Text>
+                      <Text className="name">
+                        {item.author.loginname}
+                      </Text>
                     </Text>
                     <Text className="cr mt12">
                       <Text className="name">
                         {getLastTimeStr(item.last_reply_at, true)}
                       </Text>
                     </Text>
-                  </Link>
+                  </ALink>
                 </View>
-              </View>
-            );
+              </View>;
           })}
           {currentData.length === 0 ? (
             <View className="no-data">

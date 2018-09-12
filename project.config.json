@@ -2,14 +2,16 @@
 	"miniprogramRoot": "./dist",
 	"projectname": "taro-cnode",
 	"description": "taro-cnode",
-	"appid": "wx04fe8dc8599989b1",
+	"appid": "wx1ba428be9e18dfe4",
 	"setting": {
-		"urlCheck": true,
-		"es6": false,
+		"urlCheck": false,
+		"es6": true,
 		"postcss": false,
 		"minified": false,
-		"newFeature": true
+		"newFeature": true,
+		"nodeModules": false
 	},
 	"compileType": "miniprogram",
+	"libVersion": "2.2.5",
 	"condition": {}
 }

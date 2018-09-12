@@ -1,13 +1,10 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import '@tarojs/async-await'
+// import '@tarojs/async-await'
 import { Provider } from "@tarojs/redux";
 import Index from './pages/index'
 import configStore from './store';
 import * as actions from "./actions/auth";
 
-import './assets/scss/CV.scss';
-import './assets/scss/iconfont/iconfont.css';
-import './assets/scss/github-markdown.css';
 
 import './app.scss'
 
@@ -20,7 +17,7 @@ if (process.env.TARO_ENV === "weapp") {
 const store = configStore()
 store.dispatch(actions.authCheckState());
 
-class App extends Component{
+class App extends Component {
   /**
    * 指定config的类型声明为: Taro.Config
    *
@@ -30,19 +27,50 @@ class App extends Component{
    */
   config: Config = {
     pages: [
+      "pages/list/index",
+      "pages/add/index",
+      "pages/login/index",
+      "pages/message/index",
       "pages/index/index",
       "pages/about/index",
-      "pages/add/index",
-      "pages/list/index",
-      "pages/message/index",
-      "pages/login/index",
       "pages/topic/index",
       "pages/user/index"
     ],
+    tabBar: {
+      // color: "#c1c1c1",
+      // selectedColor: "#222",
+      // borderStyle: "white",
+      // backgroundColor: "#fff",
+      list: [
+        {
+          iconPath: "./assets/images/icons/latest.png",
+          selectedIconPath: "./assets/images/icons/lastest_on.png",
+          pagePath: "pages/list/index",
+          text: "最新"
+        },
+        {
+          iconPath: "./assets/images/icons/hotest.png",
+          selectedIconPath: "./assets/images/icons/hotest_on.png",
+          pagePath: "pages/add/index",
+          text: "精华"
+        },
+        {
+          iconPath: "./assets/images/icons/node.png",
+          selectedIconPath: "./assets/images/icons/node_on.png",
+          pagePath: "pages/login/index",
+          text: "招聘"
+        }
+      ],
+      color: "#000",
+      selectedColor: "#56abe4",
+      backgroundColor: "#fff",
+      borderStyle: "white"
+    },
+
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#fff",
-      navigationBarTitleText: "WeChat",
+      navigationBarTitleText: "TaroCNodejs",
       navigationBarTextStyle: "black"
     }
   };
@@ -53,9 +81,11 @@ class App extends Component{
   componentDidHide() {}
   componentCatchError() {}
   render() {
-    return <Provider store={store}>
-          <Index />
-      </Provider>;
+    return (
+      <Provider store={store}>
+        <Index />
+      </Provider>
+    );
   }
 }
 

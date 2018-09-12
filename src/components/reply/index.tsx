@@ -8,8 +8,7 @@ import classNames from "classnames";
 import update from "immutability-helper";
 import { post, get } from "../../utils/request";
 import './index.scss'
-
-const markdown = require("markdown").markdown;
+// const markdown = require("markdown").markdown;
 
 type Iprops = {
   props: {
@@ -67,9 +66,9 @@ class Reply extends Component<Iprops, PageState> {
       this.setState({ hasErr: true });
     } else {
       let time = new Date();
-      let linkUsers = utils.linkUsers(content);
-      let htmlText = markdown.toHTML(linkUsers) + author_txt;
-      let replyContent = utils.getContentHtml(htmlText);
+      // let linkUsers = utils.linkUsers(content);
+      // let htmlText = markdown.toHTML(linkUsers) + author_txt;
+      // let replyContent = utils.getContentHtml(htmlText);
       let postData = {
         accesstoken: userInfo.token,
         content: content + author_txt
@@ -94,7 +93,7 @@ class Reply extends Component<Iprops, PageState> {
                         loginname: userInfo.loginname,
                         avatar_url: userInfo.avatar_url
                       },
-                      content: replyContent,
+                      content: content,
                       ups: [],
                       create_at: time
                     }

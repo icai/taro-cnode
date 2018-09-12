@@ -20,11 +20,11 @@ class Index extends Component {
 
 
   componentDidMount () {
-    setTimeout(()=> {
-      Taro.navigateTo({
-        url: "/pages/list/index"
-      });
-    }, 1000)
+    // setTimeout(()=> {
+    //   Taro.navigateTo({
+    //     url: "/pages/list/index"
+    //   });
+    // }, 1000)
   }
 
   componentDidHide () { }

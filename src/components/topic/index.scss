@@ -1,3 +1,5 @@
+
+@import '../../assets/scss/_variable.scss';
 .topic {
   display: flex;
   padding: 15px;
@@ -7,9 +9,6 @@
 
 .info {
   display: flex;
-  // height: 65px;
-  // margin-bottom: 5px;
-  // margin-top: 5px;
 }
 
 .info .author {
@@ -60,3 +59,88 @@
   margin-top: 10px;
   font-size: 30px;
 }
+
+
+.topic {
+  &__topic {
+    padding: 20px $padding;
+    border-bottom: $border;
+  }
+
+  &__stitle {
+    @extend .title;
+
+    .t-tag {
+      margin-right: 10PX;
+      margin-top: -3px;
+      @extend .tag;
+      color: $white;
+      &.top {
+        background: #E74C3C;
+      }
+
+      &.ask {
+        background: #3498DB;
+      }
+
+      &.good {
+        background: #E67E22;
+      }
+
+      &.job {
+        background: #9B59B6;
+      }
+
+      &.share {
+        background: #1ABC9C;
+      }
+
+    }
+
+
+  }
+
+  &__content {
+    padding-top: 10Px;
+    display: flex;
+  }
+
+  &__avatar {
+    @extend .user-avatar;
+  }
+
+  &__info {
+    display: block;
+    width: 100%;
+    flex: 1;
+
+    .region {
+      padding: 3px 0;
+      display: flex;
+      color: $text;
+      font-size: $font-info;
+
+      &:first-child {
+        font-size: $font-content;
+      }
+
+      .name,
+      .time:first-child {
+        display: block;
+        flex: 1 0 auto;
+      }
+      .status,
+      .time2 {
+        display: block;
+        white-space: nowrap;
+        text-align: right;
+        flex: 1 0 auto;
+      }
+
+      .b {
+        color: #42b983;
+      }
+    }
+  }
+}
+

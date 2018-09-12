@@ -1,15 +1,15 @@
-import Taro from '@tarojs/taro'
+import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 
-import { AtDrawer } from 'taro-ui'
 
 
 
-export default class Drawer extends AtDrawer {
+
+export default class ADrawer extends Component {
   constructor () {
-    super(...arguments)
-    // this.state = { animShow: false }
-    // if (this.props.show) this.animShow()
+    // super(...arguments)
+    this.state = { animShow: false }
+    if (this.props.show) this.animShow()
   }
   // onItemClick (index, e) {
   //   this.props.onItemClick && this.props.onItemClick(index)
@@ -31,26 +31,26 @@ export default class Drawer extends AtDrawer {
     }, 300)
   }
 
-  // animShow () {
-  //   this.setState({ show: true })
-  //   setTimeout(() => {
-  //     this.setState({
-  //       animShow: true,
-  //     })
-  //   }, 200)
-  // }
+  animShow () {
+    this.setState({ show: true })
+    setTimeout(() => {
+      this.setState({
+        animShow: true,
+      })
+    }, 200)
+  }
 
-  // onMaskClick () {
-  //   this.animHide(...arguments)
-  // }
+  onMaskClick () {
+    this.animHide(...arguments)
+  }
 
-  // componentWillReceiveProps (props) {
-  //   const { show } = props
-  //   if (show !== this.props.show) {
-  //     if (show) this.animShow()
-  //     else this.animHide(...arguments)
-  //   }
-  // }
+  componentWillReceiveProps (props) {
+    const { show } = props
+    if (show !== this.props.show) {
+      if (show) this.animShow()
+      else this.animHide(...arguments)
+    }
+  }
 
   render () {
     const {

@@ -1,0 +1,67 @@
+  .user-info {
+    padding: 15PX;
+    font-size: 15PX;
+    color: #313131;
+  }
+
+  .login-no {
+    overflow: hidden;
+    margin: 8PX 9PX;
+
+    .login {
+      float: right;
+      height: 24PX;
+      line-height: 24PX;
+      padding-left: 34PX;
+      position: relative;
+
+      &:before {
+        width: 24PX;
+        height: 24PX;
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    }
+
+    .login {
+      float: left;
+      &:before {
+        background: url("../../assets/images/components/login_icon.png") no-repeat left center;
+        background-size: 24PX 24PX;
+      }
+    }
+  }
+
+  /*已登录*/
+  .login-yes {
+    height: 100%;
+    background: url("../../assets/images/components/go_next_icon.png") no-repeat right center;
+    background-size: 6PX 10PX;
+    overflow: hidden;
+    position: relative;
+
+    .avertar {
+      width: 40PX;
+      height: 40PX;
+      background: url("../../assets/images/components/user.png") no-repeat center center;
+      background-size: 40PX 40PX;
+      border-radius: 20PX;
+      overflow: hidden;
+      float: left;
+
+    }
+
+    .info {
+      margin-left: 10px;
+      overflow: hidden;
+      float: left;
+    }
+
+    &:after {
+      display: block;
+      background: url("../../assets/images/components/go_icon.png") no-repeat center right;
+      background-size: 7PX 7PX;
+    }
+  }

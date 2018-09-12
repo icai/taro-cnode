@@ -2,7 +2,7 @@ import { ComponentClass } from 'react';
 import Taro, { Component, Config } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 import Header from '../../components/header/index';
-import Link from "../../components/link";
+import ALink from "../../components/link";
 import Reply from '../../components/reply';
 import classNames from "classnames";
 import * as utils from '../../libs/utils';
@@ -144,9 +144,9 @@ class Topic extends Component {
     const replayList = topic.replies.map((item, index) => {
       return <View className="li flex-wrp">
           <View className="user">
-            <Link to={{ url: "/pages/user/index", params: { loginname: item.author.loginname } }}>
+            <ALink to={{ url: "/pages/user/index", params: { loginname: item.author.loginname } }}>
               <Image className="head" src={item.author.avatar_url} />
-            </Link>
+            </ALink>
             <View className="info">
               <Text className="cl">
                 <Text className="name">{item.author.loginname}</Text>
@@ -178,14 +178,15 @@ class Topic extends Component {
 
     return <View className="flex-wrp">
         <Header pageType={"主题"} fixHead={true} needAdd={true} />
-        {topic.title ? <View id="page" className={classNames({
+        {topic.title ? <View className={classNames({
+              'page-box': 1
               "show-menu": showMenu
             })}>
             <View className="topic-title">{topic.title}</View>
             <View className="author-info">
-              <Link to={{ url: "/pages/user/index", params: { loginname: topic.author.loginname } }}>
+              <ALink to={{ url: "/pages/user/index", params: { loginname: topic.author.loginname } }}>
                 <Image className="avatar" src={topic.author.avatar_url} />
-              </Link>
+              </ALink>
               <View className="col">
                 <Text>{topic.author.loginname}</Text>
                 <Text className="time">

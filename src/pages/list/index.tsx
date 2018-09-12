@@ -179,7 +179,7 @@ class List extends Component<IProps, IState> {
           fixHead={true}
           needAdd={true}
         />
-        <View id="page">
+        <View className="page">
           <View className="posts-list">
             <TopicsList topics={topics} loading={loading} />
           </View>

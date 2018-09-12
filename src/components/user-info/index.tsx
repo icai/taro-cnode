@@ -1,7 +1,7 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Image, Text } from "@tarojs/components";
-import Link from "../../components/link";
+import ALink from "../../components/link";
 import { connect } from '@tarojs/redux'
 import * as actions from "../../actions/auth";
 import { IAuth } from "../../interfaces/auth";
@@ -49,11 +49,11 @@ class UserInfo extends Component<IProps, PageState> {
   render() {
     const userInfo = this.props.userInfo;
     return <View className="user-info">
-        {!userInfo.loginname ? <Link className="login-no" to={{ url: "/pages/login/index" }}>
+      {!userInfo.loginname ? <ALink link-class="login-no" to={{ url: "/pages/login/index" }}>
             <View className="login">
               <View>登录</View>
             </View>
-          </Link> : <Link className="login-yes" to={{ url: "/pages/user/index", params: { loginname: userInfo.loginname } }}>
+      </ALink> : <ALink link-class="login-yes" to={{ url: "/pages/user/index", params: { loginname: userInfo.loginname } }}>
             <View className="avertar">
               {userInfo.avatar_url ? (
                 <Image class="avertar" src={userInfo.avatar_url} />
@@ -64,7 +64,7 @@ class UserInfo extends Component<IProps, PageState> {
             <View className="info">
               {userInfo.loginname ? <Text>{userInfo.loginname}</Text> : ""}
             </View>
-          </Link>}
+          </ALink>}
       </View>;
   }
 }
