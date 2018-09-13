@@ -38,9 +38,9 @@ npm run dev:h5
 
 - h5预览地址
 
-http://taro.w3ucb.com/
+http://taro.w3cub.com/
 
-<img src="https://user-images.githubusercontent.com/1061012/45255911-2542e080-b3c1-11e8-90bf-4be7cd765516.png" width="250" height="250"/>
+<img src="https://user-images.githubusercontent.com/1061012/45255911-2542e080-b3c1-11e8-90bf-4be7cd765516.png" width="200" height="200"/>
 
 - 小程序地址
 
