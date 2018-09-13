@@ -1,9 +1,22 @@
+
+
 @import '_variable.scss';
+
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 14px;
+  color: #313131;
+  overflow-x: hidden;
+  line-height: 1;
+  background: url('../images/loading.gif') no-repeat center 250px;
+}
+
 .posts-list {
   background-color: $white;
 }
 
-// @import 'common/reset.scss';
+@import 'common/reset.scss';
 @import 'common/common.scss';
 
 
@@ -12,6 +25,7 @@
 .show-menu {
   transform: translateX($gap*40);
 }
+
 @import 'topic.scss';
 @import 'user.scss';
 @import 'detail.scss';
@@ -23,3 +37,9 @@
   transition: all .3s ease;
   overflow-x: hidden;
 }
+
+
+
+
+@import 'iconfont/iconfont.scss';
+@import 'github-markdown.scss';

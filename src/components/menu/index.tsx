@@ -23,6 +23,7 @@ class NvMenu extends Component<IProps, {}> {
       "nav-list": 1,
       show: showMenu
     });
+
     return <View  className={classnames}>
         <ADrawer mask={false} show={showMenu}>
           <UserInfo />

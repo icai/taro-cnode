@@ -32,13 +32,10 @@ interface IState {
 }
 
 class List extends Component<IProps, IState> {
-  /**
-   * 指定config的类型声明为: Taro.Config
-   *
-   * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-   * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-   * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-   */
+  static options = {
+    addGlobalClass: true
+  };
+
   config: Config = {
     navigationBarTitleText: "全部"
   };
@@ -76,6 +73,9 @@ class List extends Component<IProps, IState> {
   }
   componentDidShow() {
     if (this.$router.params && this.$router.params.tab) {
+      Taro.setNavigationBarTitle({
+        title: this.getTitleStr(this.$router.params.tab)
+      });
       this.setState(
         prevState => {
           searchKey: Object.assign(prevState.searchKey, {
@@ -179,7 +179,7 @@ class List extends Component<IProps, IState> {
           fixHead={true}
           needAdd={true}
         />
-        <View className="page">
+        <View className="page-box page">
           <View className="posts-list">
             <TopicsList topics={topics} loading={loading} />
           </View>

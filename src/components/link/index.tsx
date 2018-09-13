@@ -1,5 +1,5 @@
 import { View } from "@tarojs/components";
-import Taro, { Component, Config } from "@tarojs/taro";
+import Taro, { Component, eventCenter } from "@tarojs/taro";
 import * as utils from '../../libs/utils';
 
 type IProps = {
@@ -28,11 +28,12 @@ class ALink extends Component<IProps, PageState> {
 
   static externalClasses = ["link-class"];
 
-  // static options = {
-  //   addGlobalClass: true
-  // };
+  static options = {
+    addGlobalClass: true
+  };
 
   goTo = ({ url, params }) => {
+    eventCenter.trigger('beforeNavigate');
     Taro.navigateTo({
       url: url + (params ? "?" + utils.param(params) : "")
     });

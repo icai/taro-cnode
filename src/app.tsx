@@ -5,12 +5,11 @@ import Index from './pages/index'
 import configStore from './store';
 import * as actions from "./actions/auth";
 
-
-import './app.scss'
-
 if (process.env.TARO_ENV === "weapp") {
+  require('./assets/scss/weapp.scss');
   require("taro-ui/dist/weapp/css/index.css");
 } else if (process.env.TARO_ENV === "h5") {
+  require("./assets/scss/h5.scss");
   require("taro-ui/dist/h5/css/index.css");
 }
 
@@ -36,36 +35,36 @@ class App extends Component {
       "pages/topic/index",
       "pages/user/index"
     ],
-    tabBar: {
-      // color: "#c1c1c1",
-      // selectedColor: "#222",
-      // borderStyle: "white",
-      // backgroundColor: "#fff",
-      list: [
-        {
-          iconPath: "./assets/images/icons/latest.png",
-          selectedIconPath: "./assets/images/icons/lastest_on.png",
-          pagePath: "pages/list/index",
-          text: "最新"
-        },
-        {
-          iconPath: "./assets/images/icons/hotest.png",
-          selectedIconPath: "./assets/images/icons/hotest_on.png",
-          pagePath: "pages/add/index",
-          text: "精华"
-        },
-        {
-          iconPath: "./assets/images/icons/node.png",
-          selectedIconPath: "./assets/images/icons/node_on.png",
-          pagePath: "pages/login/index",
-          text: "招聘"
-        }
-      ],
-      color: "#000",
-      selectedColor: "#56abe4",
-      backgroundColor: "#fff",
-      borderStyle: "white"
-    },
+    // tabBar: {
+    //   // color: "#c1c1c1",
+    //   // selectedColor: "#222",
+    //   // borderStyle: "white",
+    //   // backgroundColor: "#fff",
+    //   list: [
+    //     {
+    //       iconPath: "./assets/images/icons/latest.png",
+    //       selectedIconPath: "./assets/images/icons/lastest_on.png",
+    //       pagePath: "pages/list/index",
+    //       text: "最新"
+    //     },
+    //     {
+    //       iconPath: "./assets/images/icons/hotest.png",
+    //       selectedIconPath: "./assets/images/icons/hotest_on.png",
+    //       pagePath: "pages/add/index",
+    //       text: "精华"
+    //     },
+    //     {
+    //       iconPath: "./assets/images/icons/node.png",
+    //       selectedIconPath: "./assets/images/icons/node_on.png",
+    //       pagePath: "pages/login/index",
+    //       text: "招聘"
+    //     }
+    //   ],
+    //   color: "#000",
+    //   selectedColor: "#56abe4",
+    //   backgroundColor: "#fff",
+    //   borderStyle: "white"
+    // },
 
     window: {
       backgroundTextStyle: "light",

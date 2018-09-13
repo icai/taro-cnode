@@ -1,0 +1,26 @@
+@import '../../assets/scss/_variable.scss';
+.about-info {
+  height: 100%;
+  padding: 100px 15px;
+  line-height: 1.5;
+  background: #f7f7f7;
+
+  dt {
+    @extend .title;
+    padding: 1em 0;
+    font-weight: bold;
+    display:block
+  }
+
+  dd {
+    padding-bottom: 15px;
+    font-size: $font-content;
+    border-bottom: $border;
+    display:block
+  }
+
+  a {
+    color: #42b983;
+  }
+
+}

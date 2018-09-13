@@ -1,11 +1,17 @@
-import Taro, { Component } from '@tarojs/taro'
+import Taro, { Component, eventCenter } from "@tarojs/taro";
 import classNames from "classnames";
 import { View, Text } from "@tarojs/components";
 import NvMenu from "../menu"
 import ALink from "../link"
 
-import './index.scss'
 
+// import "./h5.scss";
+
+if (process.env.TARO_ENV === "weapp") {
+  require("./weapp.scss");
+} else if (process.env.TARO_ENV === "h5") {
+  require("./h5.scss");
+}
 
 type IProps = {
   pageType: string,
@@ -22,10 +28,13 @@ interface IState {
 }
 
 class Header extends Component<IProps, IState> {
-
   static defaultProps = {
     messageCount: 0,
     scrollTop: 0
+  };
+
+  static options = {
+    addGlobalClass: true
   };
 
   state = {
@@ -37,19 +46,35 @@ class Header extends Component<IProps, IState> {
   openMenu = () => {
     this.setState({
       show: !this.state.show
-    })
+    });
   };
   showMenus = () => {
     this.setState({
       show: !this.state.show
-    })
+    });
   };
+
+  refreshPage = () => {
+    const url = this.$router.params.url;
+    Taro.redirectTo({
+      url
+    })
+  }
+  componentDidMount() {
+    eventCenter.on("beforeNavigate", () => {
+      if (this.state.show) {
+        this.setState({
+          show: false
+        });
+      }
+    });
+  }
 
   render() {
     const { show, nickname, profileimgurl } = this.state;
     const { needAdd, pageType, fixHead, messageCount } = this.props;
     const classnames = classNames({
-      'header-bar': 1,
+      "header-bar": 1,
       show: show && fixHead,
       "fix-header": fixHead,
       "no-fix": !fixHead
@@ -61,7 +86,12 @@ class Header extends Component<IProps, IState> {
         <View className={classnames}>
           <View className="nv-toolbar">
             {fixHead ? <View className="toolbar-nav" onClick={this.openMenu} /> : ""}
-          <Text className="title-name">{pageType}</Text>
+            { Taro.getEnv() == "WEAPP" ?
+            <View className="title-name" onClick={this.refreshPage}>
+              刷新
+            </View> :
+            <Text className="title-name">{pageType}</Text>
+            }
             {messageCount > 0 ? <Text className="num">
                 {messageCount}
               </Text> : ""}
@@ -71,7 +101,6 @@ class Header extends Component<IProps, IState> {
           </View>
         </View>
         <NvMenu showMenu={show} pageType={pageType} nickName={nickname} profileUrl={profileimgurl} />
-        {/* {fixHead ? "" : ""} */}
       </View>;
   }
 }

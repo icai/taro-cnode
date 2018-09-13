@@ -7,7 +7,7 @@ import { View } from '@tarojs/components'
 
 export default class ADrawer extends Component {
   constructor () {
-    // super(...arguments)
+    super(...arguments)
     this.state = { animShow: false }
     if (this.props.show) this.animShow()
   }

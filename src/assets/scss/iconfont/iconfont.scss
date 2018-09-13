@@ -25,3 +25,15 @@
 .icon-zhaopin:before { content: "\e605"; margin-right: 30px;}
 .icon-xiaoxi:before { content: "\e606"; margin-right: 30px;}
 .icon-about:before { content: "\e607"; margin-right: 30px;}
+
+
+.add-icon {
+  color: #42b983;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  z-index: 10;
+  font-size: 38px;
+  padding: 5px 15px;
+  border-radius: 5px;
+}

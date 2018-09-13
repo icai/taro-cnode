@@ -1,4 +1,15 @@
 @import '_variable.scss';
+
+page {
+  height: 100%;
+  width: 100%;
+  font-size: 14px;
+  color: #313131;
+  overflow-x: hidden;
+  line-height: 1;
+  background: url('../images/loading.gif') no-repeat center 250px;
+}
+
 .posts-list {
   background-color: $white;
 }
@@ -12,14 +23,19 @@
 .show-menu {
   transform: translateX($gap*40);
 }
+
 @import 'topic.scss';
 @import 'user.scss';
 @import 'detail.scss';
 
 
 .page-box.page {
-  padding-top: 100px;
+  padding-bottom: 100px;
   background-color: #fff;
   transition: all .3s ease;
   overflow-x: hidden;
 }
+
+
+@import 'iconfont/iconfont.scss';
+@import 'github-markdown.scss';
