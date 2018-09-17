@@ -34,7 +34,7 @@ function withUser(WrappedComponent, allowNologin = false) {
     }
     isSuperRender() {
       const props = this.props;
-      return allowNologin || (props.userInfo && props.userInfo.userId)
+      return allowNologin || (props.userInfo && props.userInfo.userId);
     }
     // refer  https://github.com/ReactTraining/react-router/blob/master/packages/react-router/modules/Redirect.js
     perform() {

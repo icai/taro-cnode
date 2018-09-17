@@ -77,9 +77,11 @@ export const setAuthRedirectPath = (path) => {
 
 export const authCheckState = () => {
   return dispatch => {
+
     const token = store.getItem('user');
+
     if (!token) {
-      // dispatch(logout());
+      dispatch(logout());
     } else {
         //  const expirationDate = new Date(store.getItem("expirationDate"));
         // && expirationDate <= new Date()

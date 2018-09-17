@@ -70,6 +70,7 @@ class Header extends Component<IProps, IState> {
     });
   }
 
+
   render() {
     const { show, nickname, profileimgurl } = this.state;
     const { needAdd, pageType, fixHead, messageCount } = this.props;
@@ -84,21 +85,36 @@ class Header extends Component<IProps, IState> {
             <View className="page-cover" onClick={this.showMenus} />
           </View> : ""}
         <View className={classnames}>
-          <View className="nv-toolbar">
-            {fixHead ? <View className="toolbar-nav" onClick={this.openMenu} /> : ""}
-            { Taro.getEnv() == "WEAPP" ?
-            <View className="title-name" onClick={this.refreshPage}>
-              刷新
-            </View> :
-            <Text className="title-name">{pageType}</Text>
-            }
-            {messageCount > 0 ? <Text className="num">
-                {messageCount}
-              </Text> : ""}
-            {(needAdd && !messageCount) || messageCount <= 0 ? <ALink link-class=" iconfont add-icon" to={{ url: "/pages/add/index" }}>
-                &#xe60f;
-              </ALink> : ""}
-          </View>
+          {Taro.getEnv() == "WEAPP" ? <View className="nv-toolbar">
+              <View className="at-row">
+                <View className="at-col">
+                  <View className="home"></View>
+                </View>
+              {fixHead ? (
+                <View className="at-col">
+                    <View className="toolbar-nav" onClick={this.openMenu} />
+                </View>) : ""}
+                <View className="at-col">
+                  <View className="refresh"></View>
+                </View>
+              {(needAdd && !messageCount) || messageCount <= 0 ?
+                  <View className="at-col">
+                    <View class="write"></View>
+                </View> : ""}
+                <View className="at-col">
+                    <View className="user"></View>
+                </View>
+              </View>
+            </View> : <View className="nv-toolbar">
+              {fixHead ? <View className="toolbar-nav" onClick={this.openMenu} /> : ""}
+              <Text className="title-name">{pageType}</Text>
+              {messageCount > 0 ? <Text className="num">
+                  {messageCount}
+                </Text> : ""}
+              {(needAdd && !messageCount) || messageCount <= 0 ? <ALink link-class=" iconfont add-icon" to={{ url: "/pages/add/index" }}>
+                  &#xe60f;
+                </ALink> : ""}
+            </View>}
         </View>
         <NvMenu showMenu={show} pageType={pageType} nickName={nickname} profileUrl={profileimgurl} />
       </View>;
