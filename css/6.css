@@ -64,8 +64,6 @@
   font-size: 0.64rem;
 }
 
-
-
 @charset "UTF-8";
 
 .nav-list {
@@ -117,8 +115,6 @@
   border-top: 0.02133rem solid #d4d4d4;
 }
 
-
-
 .icon-top {
   position: fixed;
   right: 0.21333rem;
@@ -127,8 +123,6 @@
   z-index: 9999;
   color: #42b983;
 }
-
-
 .loading2 {
   width: 100%;
   display: -webkit-flex;
@@ -138,6 +132,4 @@
   -webkit-justify-content: center;
           justify-content: center;
 }
-
-
 

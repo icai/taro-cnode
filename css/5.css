@@ -50,8 +50,6 @@
   border-top: 0.02133rem solid #d4d4d4;
 }
 
-
-
 .add-container {
   margin-top: 2.13333rem;
   background-color: #fff;
@@ -106,5 +104,3 @@
 .add-container .err {
   border: solid 0.02133rem red;
 }
-
-
