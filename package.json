@@ -36,13 +36,13 @@
   "devDependencies": {
     "@types/react": "^16.4.8",
     "@types/webpack-env": "^1.13.6",
-    "@tarojs/cli": "^1.0.0-beta.28",
-    "@tarojs/plugin-babel": "^1.0.0-beta.28",
-    "@tarojs/plugin-csso": "^1.0.0-beta.28",
-    "@tarojs/plugin-sass": "^1.0.0-beta.28",
-    "@tarojs/plugin-typescript": "^1.0.0-beta.28",
-    "@tarojs/plugin-uglifyjs": "^1.0.0-beta.28",
-    "@tarojs/webpack-runner": "^1.0.0-beta.28",
+    "@tarojs/cli": "^1.0.0-beta.30",
+    "@tarojs/plugin-babel": "^1.0.0-beta.30",
+    "@tarojs/plugin-csso": "^1.0.0-beta.30",
+    "@tarojs/plugin-sass": "^1.0.0-beta.30",
+    "@tarojs/plugin-typescript": "^1.0.0-beta.30",
+    "@tarojs/plugin-uglifyjs": "^1.0.0-beta.30",
+    "@tarojs/webpack-runner": "^1.0.0-beta.30",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-jsx-stylesheet": "^0.6.5",
@@ -50,10 +50,10 @@
     "babel-preset-env": "^1.6.1",
     "babel-eslint": "^9.0.0",
     "eslint": "^5.5.0",
-    "eslint-config-taro": "^1.0.0-beta.28",
+    "eslint-config-taro": "^1.0.0-beta.30",
     "eslint-plugin-react": "^7.8.2",
     "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-taro": "^1.0.0-beta.28",
+    "eslint-plugin-taro": "^1.0.0-beta.30",
     "typescript": "^3.0.1"
   }
 }
