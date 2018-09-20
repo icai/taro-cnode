@@ -1,6 +1,6 @@
 "use strict";
 
-// import _ from 'lodash';
+import _ from 'lodash';
 import Timeago from "timeago.js";
 import Taro from "@tarojs/taro";
 import { ITopic } from "../interfaces/topic";
@@ -12,6 +12,22 @@ export const updateObject = (oldObject, updatedProperties) => {
     ...oldObject,
     ...updatedProperties
   };
+};
+
+
+export const imageStyle =  alt => {
+  if (!alt || !_.isString(alt)) return {};
+  if (_.includes(alt, "px")) {
+    return { maxWidth: alt };
+  } else if (_.includes(alt, "rem")) {
+    return { maxWidth: alt };
+  } else if (_.includes(alt, "%")) {
+    return { maxWidth: alt };
+  } else if (_.includes(alt, "auto")) {
+    return { maxWidth: "100px" };
+  } else {
+    return {};
+  }
 };
 
 

@@ -76,7 +76,7 @@ class Header extends Component<IProps, IState> {
     const { needAdd, pageType, fixHead, messageCount } = this.props;
     const classnames = classNames({
       "header-bar": 1,
-      show: show && fixHead,
+      // show: show && fixHead,
       "fix-header": fixHead,
       "no-fix": !fixHead
     });
@@ -94,9 +94,9 @@ class Header extends Component<IProps, IState> {
                 <View className="at-col">
                     <View className="toolbar-nav" onClick={this.openMenu} />
                 </View>) : ""}
-                <View className="at-col">
+                {/* <View className="at-col">
                   <View className="refresh"></View>
-                </View>
+                </View> */}
               {(needAdd && !messageCount) || messageCount <= 0 ?
                   <View className="at-col">
                     <View class="write"></View>

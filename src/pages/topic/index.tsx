@@ -1,6 +1,6 @@
 import { ComponentClass } from 'react';
 import Taro, { Component, Config } from '@tarojs/taro';
-import { View, Text, Image } from '@tarojs/components';
+import { View, Text, Image, RichText } from '@tarojs/components';
 import Header from '../../components/header/index';
 import ALink from "../../components/link";
 import Reply from '../../components/reply';
@@ -10,38 +10,44 @@ import { withUser } from "../../hoc/router";
 import update from "immutability-helper";
 import { post, get } from "../../utils/request";
 import BackTop from "../../components/backtotop/index";
-
+import { connect } from "@tarojs/redux";
+import * as actions from "../../actions/auth";
+import { IAuth } from "../../interfaces/auth";
+import Markdown from "../../components/markdown/index";
 
 import './index.scss'
 
 type PageStateProps = {
-  userInfo: {
-    userId: string;
-  };
+  userInfo: IAuth;
 };
+
 
 type PageDispatchProps = {
-  getUserInfo: () => void
-  setUserInfo: () => void
-}
-
-type PageOwnProps = {
-  userInfo: object
+  authLogin: (token) => void;
+  authCheckState: () => void;
 };
 
-type PageState = {}
+type PageOwnProps = {};
 
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps
+type PageState = {};
 
-interface Topic {
-  props: IProps;
-}
+type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
 
-
-class Topic extends Component {
+@connect(({ auth }) => ({ userInfo: auth }),
+  (dispatch: Function) => ({
+    authLogin: (...args) => dispatch(actions.auth(...args)),
+    authCheckState: () => dispatch(actions.authCheckState())
+  })
+)
+class Topic extends Component<IProps, PageState> {
   config: Config = {
     navigationBarTitleText: "主题"
   };
+
+  static options = {
+    addGlobalClass: true
+  };
+
 
   state = {
     showMenu: false,
@@ -116,9 +122,9 @@ class Topic extends Component {
     this.setState({ topicId });
     get({
       url: "https://cnodejs.org/api/v1/topic/" + topicId,
-      // data: {
-      //   mdrender: false
-      // }
+      data: {
+        mdrender: Taro.getEnv() == "WEAPP" ? false : true
+      }
     }).then(resp => {
       let d = resp.data;
       if (d && d.data) {
@@ -142,7 +148,7 @@ class Topic extends Component {
       return ups.includes((userInfo || {}).userId)
     };
     const replayList = topic.replies.map((item, index) => {
-      return <View className="li flex-wrp">
+      return <View className="li flex-wrp" key={index}>
           <View className="user">
             <ALink to={{ url: "/pages/user/index", params: { loginname: item.author.loginname } }}>
               <Image className="head" src={item.author.avatar_url} />
@@ -171,7 +177,11 @@ class Topic extends Component {
               </Text>
             </View>
           </View>
+        {Taro.getEnv() == "WEAPP" ?
+          <Markdown className="reply_content" md={item.content} />
+        :
           <View className="reply_content" dangerouslySetInnerHTML={{ __html: item.content }} />
+        }
         {userInfo.userId && curReplyId === item.id ? <Reply topic={topic} updateReplies={(fn) => { fn(topic, this) }} topicId={topicId} replyId={item.id} replyTo={item.author.loginname} show={curReplyId} onClose={this.hideItemReply.bind(this)} /> : ""}
         </View>;
     });
@@ -180,6 +190,7 @@ class Topic extends Component {
         <Header pageType={"主题"} fixHead={true} needAdd={true} />
         {topic.title ? <View className={classNames({
               'page-box': 1
+              'page': 1
               "show-menu": showMenu
             })}>
             <View className="topic-title">{topic.title}</View>
@@ -209,7 +220,11 @@ class Topic extends Component {
                 </Text>
               </View>
             </View>
+          {Taro.getEnv() == "WEAPP" ?
+            <Markdown className="markdown-body topic-content" md={topic.content} />
+          :
             <View className="markdown-body topic-content" dangerouslySetInnerHTML={{ __html: topic.content }} />
+          }
             <View className="topic-reply">
               <Text className="strong">{topic.reply_count}</Text> 回复
             </View>
@@ -227,4 +242,4 @@ class Topic extends Component {
   }
 }
 
-export default withUser(Topic as ComponentClass<PageOwnProps, PageState>, true);
+export default Topic as ComponentClass<PageOwnProps, PageState>; //withUser(Topic as ComponentClass<PageOwnProps, PageState>, true);

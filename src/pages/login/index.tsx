@@ -4,10 +4,33 @@ import { View } from '@tarojs/components'
 import Header from '../../components/header/index'
 import {  AtInput } from 'taro-ui'
 import { withUser } from "../../hoc/router";
-
+import { connect } from "@tarojs/redux";
+import * as actions from "../../actions/auth";
+import { IAuth } from "../../interfaces/auth";
 import './index.scss'
 
+type PageStateProps = {
+  userInfo: IAuth;
+};
 
+type PageDispatchProps = {
+  authLogin: (token) => void;
+  authCheckState: () => void;
+};
+
+type PageOwnProps = {};
+
+type PageState = {};
+
+type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
+
+@connect(
+  ({ auth }) => ({ userInfo: auth }),
+  (dispatch: Function) => ({
+    authLogin: (...args) => dispatch(actions.auth(...args)),
+    authCheckState: () => dispatch(actions.authCheckState())
+  })
+)
 class Login extends Component {
   config: Config = {
     navigationBarTitleText: "登录"
@@ -43,7 +66,7 @@ class Login extends Component {
     // result: "xxx-xxx-xx-xxx-xxx"
     // scanType: "QR_CODE"
     Taro.scanCode({
-      success: (res) => {
+      success: res => {
         if (res.errMsg == "scanCode:ok") {
           if (res.result.length == 36) {
             debugger;
@@ -56,7 +79,7 @@ class Login extends Component {
           return false;
         }
       }
-    })
+    });
   };
 
   handleChange(val) {
@@ -64,29 +87,42 @@ class Login extends Component {
   }
   render() {
     const { token } = this.state;
-    return <View className="page-box login-page">
+    return (
+      <View className="page-box login-page">
         <Header pageType={"登录"} fixHead={true} needAdd={true} />
         <View className="page-body">
-          {Taro.getEnv() == "WEAPP" ? <View>
+          {Taro.getEnv() == "WEAPP" ? (
+            <View>
               <View className="tip"> 前往 主页/ 设置 </View>
               <View className="label">
                 <View className="button" onClick={this.scanCode}>
                   扫码登陆
                 </View>
               </View>
-            </View> : <View>
+            </View>
+          ) : (
+            <View>
               <View className="label">
-                <AtInput className="txt" type="text" placeholder="Access Token" value={token} onChange={this.handleChange.bind(this)} maxlength="36" />
+                <AtInput
+                  className="txt"
+                  type="text"
+                  placeholder="Access Token"
+                  value={token}
+                  onChange={this.handleChange.bind(this)}
+                  maxlength="36"
+                />
               </View>
               <View className="label">
                 <View className="button" onClick={this.logon}>
                   登录
                 </View>
               </View>
-            </View>}
+            </View>
+          )}
         </View>
-      </View>;
+      </View>
+    );
   }
 }
 
-export default withUser(Login, true);
+export default Login as ComponentClass<PageOwnProps, PageState>; // withUser(Login, true);
