@@ -2,16 +2,16 @@
 .reply {
   margin: 0 $padding;
 
-  // textarea {
-  //   display: block;
-  //   width: 100%;
-  //   flex: 1;
-  //   border: $border;
-  //   background-color: #fff;
-  //   font-size: 14px;
-  //   padding: $padding;
-  //   color: #313131;
-  // }
+  textarea.text {
+    display: block;
+    width: auto;
+    flex: 1;
+    border: $border;
+    background-color: #fff;
+    font-size: 14PX;
+    padding: $padding;
+    color: #313131;
+  }
 
   .button {
     display: inline-block;

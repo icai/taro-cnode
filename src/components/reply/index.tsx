@@ -1,6 +1,6 @@
 
-import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import Taro, { Component } from "@tarojs/taro";
+import { View, Textarea } from "@tarojs/components";
 import * as utils from "../../libs/utils";
 import { withUser } from "../../hoc/router";
 import { AtTextarea, AtInput } from "taro-ui";
@@ -119,8 +119,9 @@ class Reply extends Component<Iprops, PageState> {
   render() {
     const { hasErr } = this.state;
     return <View className="reply">
-        <AtTextarea id="content" className={classNames({
+        <Textarea  id="content" className={classNames({
             text: 1,
+            'textarea': 1,
             err: hasErr
           })} value={this.state.content} onChange={this.handleChange} type="text" placeholder="回复支持Markdown语法,请注意标记代码" rows="8" class="text" />
         <View className="button" onClick={this.addReply.bind(this)}>
