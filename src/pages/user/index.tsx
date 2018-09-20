@@ -113,52 +113,53 @@ class User extends Component<IProps, PageState> {
     };
     return (
       <View className="flex-wrp">
-        <Header
-          pageType={"用户信息"}
-          fixHead={true}
-          showMenu={true}
-          needAdd={true}
-        />
-        <View className="userinfo">
-          <Image className="u-img" src={user.avatar_url} />
-          <br />
-          <Text className="u-name">{user.loginname}</Text>
-          <View className="u-bottom">
-            <Text className="u-time">
-              {getLastTimeStr(user.create_at, false)}
-            </Text>
-            <Text className="u-score">
-              积分：
+        <View className="page-box page">
+          <Header
+            pageType={"用户信息"}
+            fixHead={true}
+            showMenu={true}
+            needAdd={true}
+          />
+          <View className="userinfo">
+            <Image className="u-img" src={user.avatar_url} />
+            <br />
+            <Text className="u-name">{user.loginname}</Text>
+            <View className="u-bottom">
+              <Text className="u-time">
+                {getLastTimeStr(user.create_at, false)}
+              </Text>
+              <Text className="u-score">
+                积分：
               {user.score}
-            </Text>
-          </View>
-        </View>
-        <View className="topics">
-          <View className="user-tabs">
-            <View
-              className={classNames({
-                item: 1,
-                br: 1,
-                selected: selectItem === 1
-              })}
-              onClick={this.changeItem.bind(this, 1)}
-            >
-              最近回复
-            </View>
-            <View
-              className={classNames({ item: 1, selected: selectItem === 2 })}
-              onClick={this.changeItem.bind(this, 2)}
-            >
-              最新发布
+              </Text>
             </View>
           </View>
-          {currentData.map(item => {
-            return <View className="message">
+          <View className="topics">
+            <View className="user-tabs">
+              <View
+                className={classNames({
+                  item: 1,
+                  br: 1,
+                  selected: selectItem === 1
+                })}
+                onClick={this.changeItem.bind(this, 1)}
+              >
+                最近回复
+            </View>
+              <View
+                className={classNames({ item: 1, selected: selectItem === 2 })}
+                onClick={this.changeItem.bind(this, 2)}
+              >
+                最新发布
+            </View>
+            </View>
+            {currentData.map(item => {
+              return <View className="message">
                 <View className="user">
                   <ALink link-class="head" to={{ url: "/pages/user/index", params: { loginname: item.author.loginname } }}>
                     <Image class="head" src={item.author.avatar_url} />
                   </ALink>
-                <ALink link-class="info" to={{ url: "/pages/topic/index", params: { id: item.id } }}>
+                  <ALink link-class="info" to={{ url: "/pages/topic/index", params: { id: item.id } }}>
                     <View className="t-title">{item.title}</View>
                     <Text className="cl mt12">
                       <Text className="name">
@@ -173,15 +174,16 @@ class User extends Component<IProps, PageState> {
                   </ALink>
                 </View>
               </View>;
-          })}
-          {currentData.length === 0 ? (
-            <View className="no-data">
-              <Text className="iconfont icon-empty">&#xe60a;</Text>
-              暂无数据!
+            })}
+            {currentData.length === 0 ? (
+              <View className="no-data">
+                <Text className="iconfont icon-empty">&#xe60a;</Text>
+                暂无数据!
             </View>
-          ) : (
-            ""
-          )}
+            ) : (
+                ""
+              )}
+          </View>
         </View>
       </View>
     );
