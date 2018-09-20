@@ -93,6 +93,7 @@ class Login extends Component {
         <View className="page-body">
           {Taro.getEnv() == "WEAPP" ? (
             <View>
+              <View className="scan-pic"></View>
               <View className="tip"> 前往 主页/ 设置 </View>
               <View className="label">
                 <View className="button" onClick={this.scanCode}>

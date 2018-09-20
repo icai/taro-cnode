@@ -73,7 +73,7 @@ $font-tag: 10PX;
 }
 
 .user {
-  width: 100%;
+  width: auto;
   margin: $gap*2 0;
   padding: 0 $gap*2;
   display: flex;
@@ -110,7 +110,7 @@ $font-tag: 10PX;
     width: $gap*9;
     height: $gap*9;
     margin-right: $gap*2;
-    border-radius: 10px;
+    border-radius: 50%;
 
     img {
       width: $gap*9;
@@ -147,6 +147,7 @@ $font-tag: 10PX;
 
       .name {
         color: $color62;
+        font-size: 12Px;
       }
 
       .mt10 {

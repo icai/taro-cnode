@@ -122,8 +122,9 @@ class User extends Component<IProps, PageState> {
           />
           <View className="userinfo">
             <Image className="u-img" src={user.avatar_url} />
-            <br />
-            <Text className="u-name">{user.loginname}</Text>
+            <View>
+              <Text className="u-name">{user.loginname}</Text>
+            </View>
             <View className="u-bottom">
               <Text className="u-time">
                 {getLastTimeStr(user.create_at, false)}

@@ -18,6 +18,9 @@
   }
 
   .u-name {
+    margin-top: 1em;
+    font-size: 12Px;
+    display: block;
     color: #000;
   }
 
@@ -26,6 +29,7 @@
     width: 100%;
     margin-top: 20px;
     padding-bottom: 20px;
+    font-size: 12Px;
     display: flex;
 
     .u-time {

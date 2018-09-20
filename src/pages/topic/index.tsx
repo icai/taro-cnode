@@ -157,7 +157,6 @@ class Topic extends Component<IProps, PageState> {
               <Text className="cl">
                 <Text className="name">{item.author.loginname}</Text>
                 <Text className="name mt10">
-                  <Text />
                   发布于:
                   {getLastTimeStr(item.create_at, true)}
                 </Text>
@@ -167,11 +166,11 @@ class Topic extends Component<IProps, PageState> {
                     iconfont: 1,
                     icon: 1,
                     uped: isUps(item.ups)
-              })} onClick={this.upReply.bind(this, item, index)}>
+                  })} onClick={this.upReply.bind(this, item, index)}>
                   &#xe608;
                 </Text>
-                {item.ups.length}
-               <Text className="iconfont icon" onClick={this.addReply.bind(this, item.id)}>
+                <Text className="upcount">{item.ups.length}</Text>
+                <Text className="iconfont icon" onClick={this.addReply.bind(this, item.id)}>
                   &#xe609;
                 </Text>
               </Text>
@@ -199,7 +198,7 @@ class Topic extends Component<IProps, PageState> {
                 <Image className="avatar" src={topic.author.avatar_url} />
               </ALink>
               <View className="col">
-                <Text>{topic.author.loginname}</Text>
+                <Text className="name">{topic.author.loginname}</Text>
                 <Text className="time">
                   发布于:
                   {getLastTimeStr(topic.create_at, true)}
@@ -235,7 +234,7 @@ class Topic extends Component<IProps, PageState> {
         {userInfo.userId ? <Reply topic={topic} updateReplies={(fn) => { fn(topic, this) }} topicId={topicId} /> : ""}
           </View> : ""}
         {noData ? <View className="no-data">
-            <i className="iconfont icon-empty">&#xe60a;</i>
+          <Text className="iconfont icon-empty">&#xe60a;</Text>
             该话题不存在!
           </View> : ""}
       </View>;

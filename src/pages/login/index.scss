@@ -5,6 +5,19 @@
       min-height: 400px;
       background-color: #fff;
 
+      .scan-pic {
+        display: block;
+        margin: auto;
+        text-align: center;
+        z-index: 1;
+        // background-image: url("../../assets/images/components/scan.png");
+        background: url("../../assets/images/components/scan.png") no-repeat center center;
+        width: 200Px;
+        height: 200Px;
+        background-size: 200Px;
+        background-repeat: no-repeat;
+      }
+
       .tip {
         font-size: 32px;
         text-align: center;

@@ -35,14 +35,17 @@
     text-align: right;
   }
 
-  span,
-  time {
+  .name,
+  .time {
     display: block;
     padding: 5px 0;
+    font-size: 12Px;
   }
 
   .tag {
     @extend .tag;
+    display: block;
+    font-size: 12Px;
     color: #ffffff;
 
     &.top {
@@ -122,6 +125,10 @@
         font-size: 26PX;
       }
 
+      .upcount {
+        font-size: 14PX;
+      }
+
       .from {
         color: $red;
       }
@@ -134,34 +141,3 @@
   }
 }
 
-/* 回复框样式 */
-
-.reply {
-  margin: 0 $padding;
-
-  textarea {
-    display: block;
-    width: 100%;
-    flex: 1;
-    border: $border;
-    background-color: #fff;
-    font-size: 14px;
-    padding: $padding;
-    color: #313131;
-  }
-
-  .button {
-    display: inline-block;
-    width: 100%;
-    height: 80px;
-    margin: $padding 0;
-    line-height: 80px;
-    color: #fff;
-    font-size: 32px;
-    background-color: #4fc08d;
-    border: none;
-    border-bottom: 4px solid #3aa373;
-    text-align: center;
-    vertical-align: middle;
-  }
-}
