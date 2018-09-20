@@ -12,4 +12,4 @@ script:
 - npm install -g @tarojs/cli
 - npm run build:h5
 after_success:
-- sh build/deploy-ci.sh
+- test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && sh build/deploy-ci.sh
