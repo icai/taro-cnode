@@ -1,6 +1,6 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { View, Image } from "@tarojs/components";
 import Header from '../../components/header/index'
 import {  AtInput } from 'taro-ui'
 import { withUser } from "../../hoc/router";
@@ -93,7 +93,9 @@ class Login extends Component {
         <View className="page-body">
           {Taro.getEnv() == "WEAPP" ? (
             <View>
-              <View className="scan-pic"></View>
+              <View className="scan-pic">
+                <Image src={require('../../assets/images/compontents/scan.png')}></Image>
+              </View>
               <View className="tip"> 前往 主页/ 设置 </View>
               <View className="label">
                 <View className="button" onClick={this.scanCode}>
