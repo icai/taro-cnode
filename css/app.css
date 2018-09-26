@@ -1998,6 +1998,47 @@ body {
  * }
  */
 /**
+ * Default Theme
+ */
+/**
+ * Mixes a color with white. It's different from lighten()
+ *
+ * @param {color} $color
+ * @param {number (percentage)} $percent [The amout of white to be mixed in]
+ * @return {color}
+ *
+ * @example
+ *   .element {
+ *     background-color: tint(#6ecaa6 , 40%);
+ *   }
+ *
+ *   // CSS Output
+ *   .element {
+ *     background-color: #a8dfc9;
+ *   }
+ */
+/* The Color of O2Team Brand */
+/* Color */
+/* Color Palette */
+/* Text Color */
+/* Link */
+/* 背景色 */
+/* 边框颜色 */
+/* 图标颜色 */
+/* Border Radius */
+/* 透明度 */
+/* Font */
+/* Line Height */
+/* 水平间距 */
+/* 垂直间距 */
+/* 图标尺寸 */
+/* z-index */
+/* timing function */
+/**
+ * CSS cubic-bezier timing functions
+ * http://bourbon.io/docs/#timing-functions
+ */
+/**
  * 通用的遮罩
  */
 /**
@@ -2337,6 +2378,47 @@ body {
  * }
  */
 /**
+ * Default Theme
+ */
+/**
+ * Mixes a color with white. It's different from lighten()
+ *
+ * @param {color} $color
+ * @param {number (percentage)} $percent [The amout of white to be mixed in]
+ * @return {color}
+ *
+ * @example
+ *   .element {
+ *     background-color: tint(#6ecaa6 , 40%);
+ *   }
+ *
+ *   // CSS Output
+ *   .element {
+ *     background-color: #a8dfc9;
+ *   }
+ */
+/* The Color of O2Team Brand */
+/* Color */
+/* Color Palette */
+/* Text Color */
+/* Link */
+/* 背景色 */
+/* 边框颜色 */
+/* 图标颜色 */
+/* Border Radius */
+/* 透明度 */
+/* Font */
+/* Line Height */
+/* 水平间距 */
+/* 垂直间距 */
+/* 图标尺寸 */
+/* z-index */
+/* timing function */
+/**
+ * CSS cubic-bezier timing functions
+ * http://bourbon.io/docs/#timing-functions
+ */
+/**
  * 通用的遮罩
  */
 /**
@@ -2554,7 +2636,6 @@ body {
   width: 100%;
   display: block;
   white-space: nowrap;
-  word-break: keep-all;
   box-sizing: border-box; }
 
 .at-col-1 {
@@ -2678,7 +2759,8 @@ body {
   align-self: center; }
 
 .at-col--auto {
-  max-width: initial; }
+  max-width: initial;
+  word-break: keep-all; }
 
 .at-col--wrap {
   white-space: normal;
