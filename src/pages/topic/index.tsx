@@ -147,6 +147,7 @@ class Topic extends Component<IProps, PageState> {
     const isUps = ups => {
       return ups.includes((userInfo || {}).userId)
     };
+    const updateReplies = (fn) => { fn(topic, this) }
     const replayList = topic.replies.map((item, index) => {
       return <View className="li flex-wrp" key={index}>
           <View className="user">
@@ -181,7 +182,7 @@ class Topic extends Component<IProps, PageState> {
         :
           <View className="reply_content" dangerouslySetInnerHTML={{ __html: item.content }} />
         }
-        {userInfo.userId && curReplyId === item.id ? <Reply topic={topic} updateReplies={(fn) => { fn(topic, this) }} topicId={topicId} replyId={item.id} replyTo={item.author.loginname} show={curReplyId} onClose={this.hideItemReply.bind(this)} /> : ""}
+        {userInfo.userId && curReplyId === item.id ? <Reply topic={topic} updateReplies={updateReplies} topicId={topicId} replyId={item.id} replyTo={item.author.loginname} show={curReplyId} onClose={this.hideItemReply.bind(this)} /> : ""}
         </View>;
     });
 
@@ -231,7 +232,7 @@ class Topic extends Component<IProps, PageState> {
               <View className="ul">{replayList}</View>
             </View>
             <BackTop />
-        {userInfo.userId ? <Reply topic={topic} updateReplies={(fn) => { fn(topic, this) }} topicId={topicId} /> : ""}
+        {userInfo.userId ? <Reply topic={topic} updateReplies={updateReplies} topicId={topicId} /> : ""}
           </View> : ""}
         {noData ? <View className="no-data">
           <Text className="iconfont icon-empty">&#xe60a;</Text>
