@@ -94,7 +94,7 @@ class Login extends Component {
           {Taro.getEnv() == "WEAPP" ? (
             <View>
               <View className="scan-pic">
-                <Image src={require('../../assets/images/compontents/scan.png')}></Image>
+                <Image src={require('../../assets/images/components/scan.png')}></Image>
               </View>
               <View className="tip"> 前往 主页/ 设置 </View>
               <View className="label">
