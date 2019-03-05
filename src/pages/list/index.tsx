@@ -12,10 +12,8 @@ import Loading from "../../components/loading2";
 
 import "./index.scss";
 
-// type IProps =  {};
-interface IProps {
-  props: object;
-}
+type IProps =  {};
+
 
 type TsearchKey = {
   page: number;
