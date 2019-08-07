@@ -30,7 +30,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "remarkable": "^1.7.1",
+    "remarkable": "^2.0.0",
     "taro-ui": "^2.1.0",
     "throttle-debounce": "^2.1.0",
     "timeago.js": "^3.0.2"
