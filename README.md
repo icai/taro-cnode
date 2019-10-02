@@ -55,8 +55,12 @@ https://github.com/cpitax/taro-tax
 
 
 
-
 ## 声明
+
+本程序一开始存在一个错误的兼容方向。按照Taro的设计原理，应该先兼容小程序再兼容其他端。
+本工程本来基于 https://github.com/shinygang/Vue-cnodejs 开发而来，所以一开始是兼容H5为主， 
+但是到了后续Taro的升级，存在各种Taro API向小程序靠拢的迹象， 很多ES6，React的屏蔽。 
+所以假如要用Taro开发，建议先以**小程序**为主端，向多端扩散。
 
 基于 https://github.com/shinygang/Vue-cnodejs 和 taro-cli 实现
 
