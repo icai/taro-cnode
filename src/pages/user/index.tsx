@@ -1,6 +1,4 @@
-import { ComponentClass } from 'react';
-import Taro, { Config } from "@tarojs/taro";
-import { Component } from "../../hoc/router";
+import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Image, Text } from '@tarojs/components';
 import { connect } from '@tarojs/redux';
 import Header from "../../components/header/index";
@@ -199,4 +197,4 @@ class User extends Component<IProps, PageState> {
 
 
 
-export default User as ComponentClass<PageOwnProps, PageState>
+export default User //as ComponentClass<PageOwnProps, PageState>

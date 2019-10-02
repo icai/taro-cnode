@@ -6,7 +6,7 @@ type IProps = {
   props: {
     to: {
       url: string,
-      params: object
+      params?: object
     }
     className: string,
     children: any
@@ -20,7 +20,7 @@ class Link extends Component<IProps, PageState> {
   static defaultProps = {
     to: {
       url: "",
-      params: ""
+      params: {}
     }
   };
 

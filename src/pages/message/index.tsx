@@ -1,18 +1,23 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from "@tarojs/taro";
-import { withUser } from "../../hoc/router";
-import { View, Image, Text, ScrollView } from '@tarojs/components';
+import { View, Image, Text } from '@tarojs/components';
 import Link from "../../components/link";
 import Header from '../../components/header/index'
 import classNames from "classnames";
 import * as utils from '../../libs/utils';
 import { post, get } from "../../utils/request";
+import { connect } from "@tarojs/redux";
+import * as actions from "../../actions/auth";
 
 
 import './index.scss'
 
-
-class Message extends Component {
+@connect( ({ auth }) => ({ userInfo: auth }),
+(dispatch: Function) => ({
+  authLogin: (...args: any) => dispatch(actions.auth(...args)),
+  authCheckState: () => dispatch(actions.authCheckState())
+}))
+class Message extends Component<Iprops, PageState> {
 
   config: Config = {
       navigationBarTitleText: '消息'
@@ -145,4 +150,4 @@ class Message extends Component {
   }
 }
 
-export default withUser(Message)
+export default Message// withUser(Message)

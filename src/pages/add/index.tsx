@@ -1,16 +1,21 @@
 import Taro, { Component, Config } from "@tarojs/taro";
-import { withUser } from "../../hoc/router";
 import { View, Picker } from '@tarojs/components'
 import Header from '../../components/header/index'
 import { AtTextarea, AtInput } from "taro-ui";
 import * as utils from '../../libs/utils'
 import classNames from "classnames";
 import { post } from "../../utils/request";
+import { connect } from "@tarojs/redux";
+import * as actions from "../../actions/auth";
 
 
 import './index.scss'
 
-
+@connect( ({ auth }) => ({ userInfo: auth }),
+(dispatch: Function) => ({
+  authLogin: (...args: any) => dispatch(actions.auth(...args)),
+  authCheckState:() => dispatch(actions.authCheckState())
+}))
 class Add extends Component<{}, {}> {
   config: Config = {
     navigationBarTitleText: "主题"
@@ -139,4 +144,4 @@ class Add extends Component<{}, {}> {
   }
 }
 
-export default withUser(Add);
+export default Add //withUser(Add);

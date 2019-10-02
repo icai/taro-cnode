@@ -1,4 +1,3 @@
-import { ComponentClass } from "react";
 import Taro, { Component } from "@tarojs/taro";
 import { connect } from "@tarojs/redux";
 import * as actions from "../actions/auth";
@@ -20,10 +19,10 @@ type PageState = {};
 
 type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
 
-function withUser(WrappedComponent, allowNologin = false) {
+function withUser(WrappedComponent: any, allowNologin = false) {
   @connect( ({ auth }) => ({ userInfo: auth }),
     (dispatch: Function) => ({
-      authLogin: (...args) => dispatch(actions.auth(...args)),
+      authLogin: (...args: any) => dispatch(actions.auth(...args)),
       authCheckState: () => dispatch(actions.authCheckState())
     })
   )
@@ -36,7 +35,6 @@ function withUser(WrappedComponent, allowNologin = false) {
       const props = this.props;
       return allowNologin || (props.userInfo && props.userInfo.userId)
     }
-    // refer  https://github.com/ReactTraining/react-router/blob/master/packages/react-router/modules/Redirect.js
     perform() {
       if (!this.isSuperRender()) {
         Taro.redirectTo({ url: "/pages/login/index" });

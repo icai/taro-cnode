@@ -1,11 +1,7 @@
 "use strict";
 
-// import _ from 'lodash';
-import Timeago from "timeago.js";
+import { format, register } from 'timeago.js';
 import Taro from "@tarojs/taro";
-import { ITopic } from "../interfaces/topic";
-
-import { eventCenter } from "@tarojs/taro";
 
 export const updateObject = (oldObject, updatedProperties) => {
   return {
@@ -77,7 +73,7 @@ const fetchUsers = text => {
   });
 
   var results = text.match(/@[a-z0-9\-_]+\b/gim);
-  var names = [];
+  var names = [] as any;
   if (results) {
     for (var i = 0, l = results.length; i < l; i++) {
       var s = results[i];
@@ -149,8 +145,7 @@ const fmtDate = (date, fmt) => {
 export const MillisecondToDate = time => {
   var str = "";
   if (time !== null && time !== "") {
-    let timeagoInstance = new Timeago();
-    str = timeagoInstance.format(time, "zh_CN");
+    str = format(time, "zh_CN");
   }
   return str;
 };
@@ -230,11 +225,11 @@ export const getTabInfo = (tab, good, top, isClass) => {
  */
 export const throttle = (fn, wait, mustRun) => {
   let timeout;
-  let startTime = new Date();
+  let startTime = new Date().getTime();
   return function() {
     let context = this;
     let args = arguments;
-    let curTime = new Date();
+    let curTime = new Date().getTime();
 
     clearTimeout(timeout);
     // 如果达到了规定的触发时间间隔，触发 handler
@@ -251,23 +246,8 @@ export const throttle = (fn, wait, mustRun) => {
 export { linkUsers, fetchUsers, getCheck, fmtDate };
 
 
-// tslint:disable-next-line
-// export const Thread_DETAIL_NAVIGATE = 'thread_detail_navigate'
 
-// export interface ITopicProps extends ITopic {
-//   tid: string
-// }
 
-// eventCenter.on(Thread_DETAIL_NAVIGATE, (topic: ITopicProps) => {
-//   GlobalState.topic = topic
-// })
-
-// export const GlobalState = {
-//   topic: {}
-//   as ITopicProps
-// }
-
-export const timeagoInst = Timeago();
 
 // 数字/英文与中文之间需要加空格
 const betterChineseDict = (_, index) => {
@@ -289,7 +269,7 @@ const betterChineseDict = (_, index) => {
   ][index];
 };
 
-Timeago.register("zh", betterChineseDict);
+register("zh", betterChineseDict);
 
 
 export const trim = (v)=> {
@@ -302,6 +282,7 @@ export const param = function(a) {
   var add = function(k, v) {
     v = typeof v === "function" ? v() : v;
     v = v === null ? "" : v === undefined ? "" : v;
+    // @ts-ignore
     s[s.length] = encodeURIComponent(k) + "=" + encodeURIComponent(v);
   };
   var buildParams = function(prefix, obj) {

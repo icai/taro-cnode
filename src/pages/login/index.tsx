@@ -1,14 +1,17 @@
-import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import Header from '../../components/header/index'
 import {  AtInput } from 'taro-ui'
-import { withUser } from "../../hoc/router";
-
+import { connect } from "@tarojs/redux";
+import * as actions from "../../actions/auth";
 import './index.scss'
 
-
-class Login extends Component {
+@connect( ({ auth }) => ({ userInfo: auth }),
+(dispatch: Function) => ({
+  authLogin: (...args: any) => dispatch(actions.auth(...args)),
+  authCheckState: () => dispatch(actions.authCheckState())
+}))
+class Login extends Component<Iprops, PageState> {
   config: Config = {
     navigationBarTitleText: "登录"
   };
@@ -57,4 +60,4 @@ class Login extends Component {
   }
 }
 
-export default withUser(Login, true);
+export default Login //withUser(Login, true);

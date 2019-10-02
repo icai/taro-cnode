@@ -2,11 +2,12 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import * as utils from "../../libs/utils";
-import { withUser } from "../../hoc/router";
-import { AtTextarea, AtInput } from "taro-ui";
+import { AtTextarea } from "taro-ui";
 import classNames from "classnames";
 import update from "immutability-helper";
-import { post, get } from "../../utils/request";
+import { post } from "../../utils/request";
+import { connect } from "@tarojs/redux";
+import * as actions from "../../actions/auth";
 import './index.scss'
 
 const markdown = require("markdown").markdown;
@@ -29,6 +30,11 @@ type PageState = {
 };
 
 // props: ['topic', 'replyId', 'topicId', 'replyTo', 'show'],
+@connect( ({ auth }) => ({ userInfo: auth }),
+(dispatch: Function) => ({
+  authLogin: (...args: any) => dispatch(actions.auth(...args)),
+  authCheckState: () => dispatch(actions.authCheckState())
+}))
 class Reply extends Component<Iprops, PageState> {
   state = {
     hasErr: false,
@@ -138,4 +144,4 @@ class Reply extends Component<Iprops, PageState> {
 //
 // #endregion
 
-export default withUser(Reply); // as ComponentClass<PageOwnProps, PageState>;
+export default Reply //withUser(Reply); // as ComponentClass<PageOwnProps, PageState>;
