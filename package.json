@@ -41,7 +41,7 @@
     "@tarojs/cli": "^1.3.19",
     "@tarojs/plugin-babel": "^1.3.19",
     "@tarojs/plugin-csso": "^1.3.19",
-    "@tarojs/plugin-sass": "^1.3.19",
+    "@tarojs/plugin-sass": "^2.1.4",
     "@tarojs/plugin-typescript": "^1.3.19",
     "@tarojs/plugin-uglifyjs": "^1.3.19",
     "@tarojs/webpack-runner": "^1.3.19",
