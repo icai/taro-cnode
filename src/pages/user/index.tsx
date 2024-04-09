@@ -1,200 +1,144 @@
-import Taro, { Component, Config } from "@tarojs/taro";
+import React, { useState, useEffect } from "react";
+import Taro, { useRouter } from "@tarojs/taro";
 import { View, Image, Text } from '@tarojs/components';
-import { connect } from '@tarojs/redux';
-import Header from "../../components/header/index";
-import Link from '../../components/link';
+import { useSelector, useDispatch } from 'react-redux';
+import Link from '@/components/link';
 import classNames from "classnames";
-import * as actions from "../../actions/auth";
-import * as utils from '../../libs/utils';
-import { get } from "../../utils/request";
-import { IAuth } from "../../interfaces/auth";
+import * as utils from '@/libs/utils';
+import { getUser } from "@/api";
+import withUser from '@/components/withUser';
 
-import './index.scss'
+import './index.scss';
+import Page from "@/components/page";
+import NoData from "@/components/nodata";
+import { Tabs } from "@nutui/nutui-react-taro";
 
+const User: React.FC = () => {
+  const [currentData, setCurrentData] = useState<any[]>([]);
+  const [user, setUser] = useState<any>({ avatar_url: "", create_at: "2018-09-06T17:46:48.352Z", loginname: "", recent_replies: [], recent_topics: [], score: 0 });
+  const [showMenu, setShowMenu] = useState(false);
+  const [selectItem, setSelectItem] = useState(1);
 
-type PageStateProps = {
-  userInfo: IAuth;
-};
+  const userInfo = useSelector((state: any) => state.auth.user);
 
+  useEffect(() => {
+    getUserData();
+  }, []);
 
-
-type PageDispatchProps = {
-  authCheckState: () => void;
-};
-
-type PageOwnProps = {
-
-};
-
-type PageState = {};
-
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
-
-@connect(
-  ({ auth }) => ({
-    userInfo: auth
-  }),
-  (dispatch: Function) => ({
-    authCheckState() {
-      dispatch(actions.authCheckState());
-    }
-  })
-)
-class User extends Component<IProps, PageState> {
-  config: Config = {
-    navigationBarTitleText: "用户信息"
-  };
-  state = {
-    currentData: [],
-    user: {
-      avatar_url: ""
-    },
-    showMenu: false,
-    selectItem: 1
-  };
-
-  componentDidMount() {
-    this.getUser();
-  }
-
-  componentDidHide() {}
-
-  changeItem = idx => {
-    const currentData =
+  const changeItem = (idx: number) => {
+    const newData =
       idx === 1
-        ? this.state.user.recent_replies
-        : this.state.user.recent_topics;
-    this.setState(prevState => ({
-      ...prevState,
-      selectItem: idx,
-      currentData: currentData
-    }));
+        ? user.recent_replies
+        : user.recent_topics;
+    setSelectItem(idx);
+    setCurrentData(newData);
   };
-  getUser() {
-    let loginname = this.$router.params.loginname;
+
+  const getUserData = () => {
+    let loginname = userInfo.loginname;
     if (!loginname) {
       Taro.showToast({
         title: "缺少用户名参数"
       });
       Taro.navigateTo({
-        url: "/pages/list/index"
+        url: "/pages/index/index"
       });
       return false;
     }
-    get({
-      url: "https://cnodejs.org/api/v1/user/" + loginname
+    getUser({
+      loginname
     }).then(res => {
       let d = res.data;
       if (d && d.data) {
         let data = d.data;
-        this.setState({
-          user: data
-        });
+        setUser(data);
         if (data.recent_replies.length > 0) {
-          this.setState({
-            currentData: data.recent_replies
-          });
+          setCurrentData(data.recent_replies);
         } else {
-          this.setState({
-            currentData: data.recent_topics,
-            selectItem: 2
-          });
+          setCurrentData(data.recent_topics);
+          setSelectItem(2);
         }
       }
     });
   }
+  const getLastTimeStr = (date: string, friendly: boolean) => {
+    return utils.getLastTimeStr(date, friendly);
+  };
 
-  render() {
-    const { selectItem, user, currentData } = this.state;
-    const getLastTimeStr = (date, friendly) => {
-      return utils.getLastTimeStr(date, friendly);
-    };
-    return (
-      <View className="flex-wrp">
-        <Header
-          pageType={"用户信息"}
-          fixHead={true}
-          showMenu={true}
-          needAdd={true}
-        />
-        <View className="userinfo">
-          <Image className="u-img" src={user.avatar_url} />
-          <br />
-          <Text className="u-name">{user.loginname}</Text>
-          <View className="u-bottom">
-            <Text className="u-time">
-              {getLastTimeStr(user.create_at, false)}
-            </Text>
-            <Text className="u-score">
-              积分：
-              {user.score}
-            </Text>
-          </View>
-        </View>
-        <View className="topics">
-          <View className="user-tabs">
-            <View
-              className={classNames({
-                item: 1,
-                br: 1,
-                selected: selectItem === 1
-              })}
-              onClick={this.changeItem.bind(this, 1)}
-            >
-              最近回复
-            </View>
-            <View
-              className={classNames({ item: 1, selected: selectItem === 2 })}
-              onClick={this.changeItem.bind(this, 2)}
-            >
-              最新发布
-            </View>
-          </View>
-          {currentData.map(item => {
-            return (
-              <View className="message">
-                <View className="user">
-                  <Link
-                    className="head"
-                    to={{
-                      url: "/pages/user/index",
-                      params: { loginname: item.author.loginname }
-                    }}
-                  >
-                    <Image class="head" src={item.author.avatar_url} />
-                  </Link>
-                  <Link
-                    className="info"
-                    to={{ url: "/pages/topic/index", params: { id: item.id } }}
-                  >
-                    <View className="t-title">{item.title}</View>
-                    <Text className="cl mt12">
-                      <Text className="name">{item.author.loginname}</Text>
-                    </Text>
-                    <Text className="cr mt12">
-                      <Text className="name">
-                        {getLastTimeStr(item.last_reply_at, true)}
-                      </Text>
-                    </Text>
-                  </Link>
-                </View>
-              </View>
-            );
-          })}
-          {currentData.length === 0 ? (
-            <View className="no-data">
-              <Text className="iconfont icon-empty">&#xe60a;</Text>
-              暂无数据!
-            </View>
-          ) : (
-            ""
-          )}
+  return (
+    <Page className="flex-wrp" title={"用户信息"}>
+      <View className="userinfo">
+        <Image className="u-img" src={user.avatar_url} />
+        <br />
+        <View className="u-name">{user.loginname}</View>
+        <View className="u-bottom">
+          <Text className="u-time">
+            {getLastTimeStr(user.create_at, false)}
+          </Text>
+          <Text className="u-score">
+            积分：
+            {user.score}
+          </Text>
         </View>
       </View>
-    );
-  }
-}
+      <View className="topics">
 
+        <Tabs
+          value={selectItem}
+          title={() => {
+            return [
+              (<View key={1} className={classNames({ 'nut-tabs-titles-item': 1, 'br': 1, "nut-tabs-titles-item-active": selectItem === 1 })} onClick={() => changeItem(1)}>
+                <Text className="nut-tabs-titles-item-text">最近回复</Text>
+                <Text className="nut-tabs-titles-item-line" />
+              </View>),
+              (<View key={2} className={classNames({ 'nut-tabs-titles-item': 1, "nut-tabs-titles-item-active": selectItem === 2 })} onClick={() => changeItem(2)}>
 
+                <Text className="nut-tabs-titles-item-text">最新发布</Text>
+                <Text className="nut-tabs-titles-item-line" />
+              </View>)
+            ]
+          }}
+        >
+        </Tabs>
+        {currentData.map(item => {
+          return (
+            <View className="message">
+              <View className="user">
+                <Link
+                  className="head"
+                  to={{
+                    url: "/pages/user/index",
+                    params: { loginname: item.author.loginname }
+                  }}
+                >
+                  <Image className="head" src={item.author.avatar_url} />
+                </Link>
+                <Link
+                  className="info"
+                  to={{ url: "/pages/topic/index", params: { id: item.id } }}
+                >
+                  <View className="t-title">{item.title}</View>
+                  <Text className="cl mt12">
+                    <Text className="name">{item.author.loginname}</Text>
+                  </Text>
+                  <Text className="cr mt12">
+                    <Text className="name">
+                      {getLastTimeStr(item.last_reply_at, true)}
+                    </Text>
+                  </Text>
+                </Link>
+              </View>
+            </View>
+          );
+        })}
+        {currentData.length === 0 ? (
+          <NoData>暂无数据!</NoData>
+        ) : (
+          ""
+        )}
+      </View>
+    </Page>
+  );
+};
 
-export default User //as ComponentClass<PageOwnProps, PageState>
+export default withUser(User);

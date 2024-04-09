@@ -1,0 +1,11 @@
+{
+  "format": 2,
+  "compileOptions": {
+    "transpile": {
+      "script": {
+        "ignore": ["node_modules/**"]
+      }
+    },
+    "component2": true
+  }
+}

@@ -1,12 +1,69 @@
-  .index {
-    display: block;
-    background-color: #fff;
-    margin: 0 auto;
-    margin-top: 40%;
-  }
+#brim-mask {
+  pointer-events: none;
+}
 
-  .index-subtitle {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 32px;
+#page {
+  // padding-top: 100px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  // overflow-x:hidden;
+}
+
+.show-menu {
+  transform: translateX($gap * 40);
+}
+
+.page-cover {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 7;
+}
+
+/*模块入口样式*/
+
+.posts-list {
+  background-color: $white;
+  .topic {
+    padding: 20px $padding;
+    border-bottom: $border;
   }
+  .stitle {
+    @extend .title;
+  }
+  .content {
+    padding-top: 10px;
+    display: flex;
+  }
+  .avatar {
+    @extend .user-avatar;
+  }
+  .info {
+    display: block;
+    width: 100%;
+    flex: 1;
+
+    view {
+      padding: 3px 0;
+      display: flex;
+      color: $text;
+      font-size: $font-info;
+
+      &:first-child {
+        font-size: $font-content;
+      }
+      .name,
+      .time:first-child {
+        display: block;
+        width: 100%;
+        flex: 1;
+      }
+      .b {
+        color: #42b983;
+      }
+    }
+  }
+}

@@ -1,117 +1,71 @@
+import { useState, useEffect } from 'react';
+import Taro from '@tarojs/taro'
+import { View } from '@tarojs/components';
+import * as utils from "@/libs/utils";
+import { useSelector } from 'react-redux';
+import { Button, TextArea } from '@nutui/nutui-react-taro'
+import classNames from 'classnames';
+import { addReplies } from '@/api';
+import { markdown } from 'markdown';
 
-import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
-import * as utils from "../../libs/utils";
-import { AtTextarea } from "taro-ui";
-import classNames from "classnames";
-import update from "immutability-helper";
-import { post } from "../../utils/request";
-import { connect } from "@tarojs/redux";
-import * as actions from "../../actions/auth";
-import './index.scss'
+import './index.scss';
 
-const markdown = require("markdown").markdown;
+const Reply = ({ topicId, replyId, replyTo, show, updateReplies, onClose }) => {
+  const [hasErr, setHasErr] = useState(false);
+  const [content, setContent] = useState('');
+  const [authorTxt] = useState("\n\n 来自拉风的 [Taro-cnode](https://github.com/icai/taro-cnode)");
 
-type Iprops = {
-  props: {
-    topicId;
-    replyId;
-    replyTo;
-    show;
-    updateReplies: () => void;
-    onClose: () => void;
-  };
-};
 
-type PageState = {
-  hasErr;
-  content;
-  author_txt;
-};
+  const userInfo = useSelector((state: { auth: any }) => state.auth.user || {});
 
-// props: ['topic', 'replyId', 'topicId', 'replyTo', 'show'],
-@connect( ({ auth }) => ({ userInfo: auth }),
-(dispatch: Function) => ({
-  authLogin: (...args: any) => dispatch(actions.auth(...args)),
-  authCheckState: () => dispatch(actions.authCheckState())
-}))
-class Reply extends Component<Iprops, PageState> {
-  state = {
-    hasErr: false,
-    content: "",
-    author_txt:
-      "\n\n 来自拉风的 [Taro-cnode](https://github.com/icai/taro-cnode)"
-  };
-
-  componentWillReceiveProps(nextProps) {
-    // console.log(this.props, nextProps);
-  }
-
-  handleChange = e => {
-    this.setState({
-      content: e.target.value
-    });
-  };
-  componentDidMount() {
-    if (this.props.replyTo) {
-      this.setState({
-        content: `@${this.props.replyTo}`
-      });
+  useEffect(() => {
+    if (replyTo) {
+      setContent(`@${replyTo}`);
     }
-  }
-  addReply() {
-    const { content, author_txt } = this.state;
-    const {
-      userInfo,
-      topic,
-      topicId,
-      replyId,
-      show,
-      updateReplies
-    } = this.props;
+  }, [replyTo]);
+
+  const handleChange = (value) => {
+    setContent(value);
+  };
+
+  const addReply = () => {
     if (!content) {
-      this.setState({ hasErr: true });
+      setHasErr(true);
     } else {
       let time = new Date();
       let linkUsers = utils.linkUsers(content);
-      let htmlText = markdown.toHTML(linkUsers) + author_txt;
-      let replyContent = utils.getContentHtml(htmlText);
+      let htmlText = markdown.toHTML(linkUsers) + authorTxt;
+      // let replyContent = utils.getContentHtml(htmlText);
       let postData = {
         accesstoken: userInfo.token,
-        content: content + author_txt
-      };
+        content: content + authorTxt,
+        topicId
+      } as any;
       if (replyId) {
         postData.reply_id = replyId;
       }
-
-      post({
-        data: postData,
-        url: `https://cnodejs.org/api/v1/topic/${topicId}/replies`
-      })
+      addReplies(postData)
         .then(resp => {
           let res = resp.data;
           if (res.success) {
-            updateReplies && updateReplies((topic, context) => {
-                const newreplies = update(topic.replies, {
-                  $push: [
-                    {
-                      id: res.reply_id,
-                      author: {
-                        loginname: userInfo.loginname,
-                        avatar_url: userInfo.avatar_url
-                      },
-                      content: replyContent,
-                      ups: [],
-                      create_at: time
-                    }
-                  ]
-                });
-                topic.replies = newreplies;
-                context.setState({ topic: topic });
-              });
-            this.setState({ content: "" });
+            updateReplies && updateReplies((topic, setTopic) => {
+              const newReply = {
+                id: res.reply_id,
+                author: {
+                  loginname: userInfo.loginname,
+                  avatar_url: userInfo.avatar_url
+                },
+                content: content + authorTxt,
+                ups: [],
+                create_at: time.toISOString()
+              };
+              const newReplies = [...topic.replies, newReply];
+              const updatedTopic = { replies: newReplies };
+              setTopic(updatedTopic);
+            });
+            setContent('');
             if (show) {
-              this.props.onClose();
+              onClose();
             }
           } else {
             Taro.showToast({ title: res.error_msg });
@@ -121,27 +75,28 @@ class Reply extends Component<Iprops, PageState> {
           console.info(resp);
         });
     }
-  }
+  };
 
-  render() {
-    const { hasErr } = this.state;
-    return <View className="reply">
-        <AtTextarea id="content" className={classNames({
-            text: 1,
-            err: hasErr
-          })} value={this.state.content} onChange={this.handleChange} type="text" placeholder="回复支持Markdown语法,请注意标记代码" rows="8" class="text" />
-        <View className="button" onClick={this.addReply.bind(this)}>
-          确定
-        </View>
-      </View>;
-  }
-}
+  return (
+    <View className="reply">
+      <TextArea
+        id="content"
+        className={classNames({
+          text: 1,
+          err: hasErr
+        })}
+        style={{ fontSize: '12px', border: '1px solid #ccc', minHeight: '100px' }}
+        value={content}
+        onChange={handleChange}
+        placeholder="回复支持Markdown语法,请注意标记代码"
+        rows={8}
 
-// #region 导出注意
-//
-// 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性
-// 这样在使用这个子类时 Ts 才不会提示缺少 JSX 类型参数错误
-//
-// #endregion
+      />
+      <Button shape="square" block type="success" size='large' onClick={addReply}>
+        确定
+      </Button>
+    </View>
+  );
+};
 
-export default Reply //withUser(Reply); // as ComponentClass<PageOwnProps, PageState>;
+export default Reply;

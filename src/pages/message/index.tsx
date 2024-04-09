@@ -1,60 +1,47 @@
-import { ComponentClass } from 'react'
-import Taro, { Component, Config } from "@tarojs/taro";
+import { useState, useEffect } from 'react';
 import { View, Image, Text } from '@tarojs/components';
-import Link from "../../components/link";
-import Header from '../../components/header/index'
+import Link from '@/components/link';
 import classNames from "classnames";
-import * as utils from '../../libs/utils';
-import { post, get } from "../../utils/request";
-import { connect } from "@tarojs/redux";
-import * as actions from "../../actions/auth";
+import * as utils from '@/libs/utils';
+import { useDispatch, useSelector } from "react-redux";
+import { authCheckState } from "@/reducers/auth";
+import { getMessages, markAllMessages } from '@/api';
+import { Tabs } from '@nutui/nutui-react-taro'
+import withUser from '@/components/withUser';
+import Taro from '@tarojs/taro';
 
+import './index.scss';
+import Page from '@/components/page';
+import { Jimi } from '@nutui/icons-react-taro';
+import NoData from '@/components/nodata';
 
-import './index.scss'
+const Message = () => {
+  const dispatch = useDispatch();
+  const userInfo = useSelector(state => state.auth.user);
+  const [showMenu, setShowMenu] = useState(false);
+  const [selectItem, setSelectItem] = useState(1);
+  const [message, setMessage] = useState({
+    hasnot_read_messages: [],
+    has_read_messages: []
+  });
+  const [noData, setNoData] = useState(false);
+  const [currentData, setCurrentData] = useState([] as any[]);
+  const [no_read_len, setNoReadLen] = useState(0);
 
-@connect( ({ auth }) => ({ userInfo: auth }),
-(dispatch: Function) => ({
-  authLogin: (...args: any) => dispatch(actions.auth(...args)),
-  authCheckState: () => dispatch(actions.authCheckState())
-}))
-class Message extends Component<Iprops, PageState> {
+  useEffect(() => {
+    dispatch(authCheckState());
+  }, []);
 
-  config: Config = {
-      navigationBarTitleText: '消息'
-  }
-
-  state = {
-    showMenu: false,
-    selectItem: 2,
-    message: {
-      hasnot_read_messages: [],
-      has_read_messages: []
-    },
-    noData: false,
-    currentData: [],
-    no_read_len: 0
-  }
-  changeItem = (idx)=> {
-    const currentData = idx === 1 ? this.state.message.hasnot_read_messages : this.state.message.has_read_messages
-    this.setState(prevState => ({
-      ...prevState,
-      selectItem: idx,
-      currentData: currentData,
-      noData: currentData.length === 0
-    }))
-  }
-  componentDidShow() {
-    const { userInfo } = this.props;
-    get({
-      url: 'https://cnodejs.org/api/v1/messages?accesstoken=' + userInfo.token
-    }).then(resp => {
+  useEffect(() => {
+    getMessages({ accesstoken: userInfo.token }).then(resp => {
       const d = resp.data;
-      const willdata = {};
+      let willdata = {} as any;
       if (d && d.data) {
         willdata.message = d.data;
         willdata.no_read_len = d.data.hasnot_read_messages.length;
         if (d.data.hasnot_read_messages.length > 0) {
           willdata.currentData = d.data.hasnot_read_messages;
+          willdata.selectItem = 1;
         } else {
           willdata.currentData = d.data.has_read_messages;
           willdata.selectItem = 2;
@@ -63,91 +50,85 @@ class Message extends Component<Iprops, PageState> {
       } else {
         willdata.noData = true;
       }
-      this.setState({...willdata})
-    })
-  }
-  markall = ()=>{
-    const { userInfo } = this.props;
-    post({
-      url: 'https://cnodejs.org/api/v1/message/mark_all',
-      data: {
-        accesstoken: userInfo.token
-      }
-    }).then(resp => {
+      setNoReadLen(willdata.no_read_len);
+      setSelectItem(willdata.selectItem);
+      setCurrentData(willdata.currentData);
+      setMessage(willdata.message);
+      setNoData(willdata.noData);
+    });
+  }, [userInfo]);
+
+  const changeItem = (idx) => {
+    const currentData = idx === 1 ? message.hasnot_read_messages : message.has_read_messages;
+    setSelectItem(idx);
+    setCurrentData(currentData);
+    setNoData(currentData.length === 0);
+  };
+
+  const markall = () => {
+    markAllMessages({ accesstoken: userInfo.token }).then(resp => {
       const d = resp.data;
       if (d && d.success) {
-        window.location.reload();
+        Taro.reLaunch({ url: "/pages/message/index" });
       }
-    })
-  }
-  render () {
-    const { currentData, no_read_len, selectItem,  noData } = this.state;
-    const getLastTimeStr = (date, friendly) => {
-      return utils.getLastTimeStr(date, friendly);
-    }
-    return (
-      <View className="flex-wrp"  >
-        <Header pageType={"消息"} fixHead={true} showMenu={true}
-        needAdd={true} messageCount={no_read_len}></Header>
-        <View id="page" className="page">
-            <View className="tabs">
-            <View className={classNames({ 'item': 1, 'br': 1, "selected": selectItem === 2 })} onClick={this.changeItem.bind(this, 2)}>已读消息</View>
-            <View className={classNames({ 'item': 1, "selected": selectItem === 1 })} onClick={this.changeItem.bind(this, 1)}>
-                    未读消息
-                    {no_read_len > 0 ?  <Text className="iconfont read"
-                onClick={this.markall}>&#xe60c;</Text> : ''}
+    });
+  };
+
+  const getLastTimeStr = (date, friendly) => {
+    return utils.getLastTimeStr(date, friendly);
+  };
+
+  return (
+    <Page className="flex-wrp" title={"消息"}>
+      <View id="page" className="page">
+        <Tabs
+          value={selectItem}
+          title={() => {
+            return [
+              (<View key={2} className={classNames({ 'nut-tabs-titles-item': 1, 'br': 1, "nut-tabs-titles-item-active": selectItem === 2 })} onClick={() => changeItem(2)}>
+                <Text className="nut-tabs-titles-item-text">已读消息</Text>
+                <Text className="nut-tabs-titles-item-line" />
+              </View>),
+              (<View key={1} className={classNames({ 'nut-tabs-titles-item': 1, "nut-tabs-titles-item-active": selectItem === 1 })} onClick={() => changeItem(1)}>
+
+                <Text className="nut-tabs-titles-item-text">未读消息</Text>
+                {no_read_len > 0 ? <Text className="iconfont read" onClick={markall}>&#xe60c;</Text> : ''}
+                <Text className="nut-tabs-titles-item-line" />
+              </View>)
+            ]
+          }}
+        >
+        </Tabs>
+        <View className='tab-content'>
+          {currentData.map((item, idx) => (
+            <View className="message markdown-body" key={idx}>
+              <View className="user">
+                <Image className="head" src={item.author.avatar_url} />
+                <View className="info">
+                  <Text className="cl">
+                    <Text className="name">{item.author.loginname}</Text>
+                    {item.type === 'at' && <Text className="name">在回复中@了您</Text>}
+                    {item.type === 'reply' && <Text className="name">回复了您的话题</Text>}
+                  </Text>
+                  <Text className="cr">
+                    <Text className="name">{getLastTimeStr(item.reply.create_at, true)}</Text>
+                  </Text>
                 </View>
+              </View>
+              <View className="reply_content" dangerouslySetInnerHTML={{ __html: item.reply.content }} />
+              <Link to={{ url: "/pages/topic/index", params: { id: item.topic.id } }}>
+                <View className="topic-title">话题：{item.topic.title}</View>
+              </Link>
             </View>
-            <View className='tab-content'>
-              { currentData.map((item, idx)=> {
-                  return <View className="message markdown-body">
-                      <View className="user">
-                        <Image className="head" src={item.author.avatar_url} />
-                        <View className="info">
-                          <Text className="cl">
-                            <Text className="name">
-                              {item.author.loginname}
-                            </Text>
-                            {item.type === 'at' ? <Text className="name">
-                                在回复中@了您
-                              </Text> : ""}
-                            {item.type === 'reply' ? <Text className="name">
-                                回复了您的话题
-                              </Text> : ""}
-                          </Text>
-                          <Text className="cr">
-                            <Text className="name">
-                              {getLastTimeStr(
-                                item.reply.create_at,
-                                true
-                              )}
-                            </Text>
-                          </Text>
-                        </View>
-                      </View>
-                    <View className="reply_content" dangerouslySetInnerHTML={{ __html: item.reply.content }}>
-                      </View>
-                      <Link to={{ url: "/pages/topic/index", params: { id: item.topic.id } }}>
-                        <View className="topic-title">
-                          话题：
-                          {item.topic.title}
-                        </View>
-                      </Link>
-                    </View>;
-              })}
-              { noData ?
-                <View className="no-data">
-                    <i className="iconfont icon-empty">&#xe60a;</i>
-                    暂无数据!
-                </View> : ''
-              }
-            </View>
-
+          ))}
+          {noData && <NoData>
+            暂无数据!
+          </NoData>
+          }
         </View>
+      </View>
+    </Page>
+  );
+};
 
-    </View>
-    )
-  }
-}
-
-export default Message// withUser(Message)
+export default withUser(Message);

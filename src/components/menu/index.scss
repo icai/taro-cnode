@@ -23,14 +23,22 @@
 
       .item {
         display: block;
-        // font-size: 14px;
         font-weight: 200;
         padding: 9% 0;
+        font-size: 40px;
+        font-style:normal;
         text-align: left;
         text-indent: 1px;
-        // line-height: 15px;
         color: #313131;
-        font-weight: 700;
+        -webkit-font-smoothing: antialiased;
+        -webkit-text-stroke-width: 0.2px;
+        -moz-osx-font-smoothing: grayscale;
+
+        .nut-icon {
+          margin-right: 20px;
+          height: 20px;
+          width: 20px;
+        }
 
         &:last-child {
           margin-bottom: 50px;

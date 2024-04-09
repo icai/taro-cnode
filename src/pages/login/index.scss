@@ -1,6 +1,5 @@
     .page-body {
-      margin-top: 100px;
-      padding: 50px 15px;
+      padding: 150px 15px 50px;
       min-height: 400px;
       background-color: #fff;
       .label {
@@ -22,18 +21,9 @@
         }
 
         .button {
-          display: inline-block;
-          width: 99%;
-          height: 80px;
-          line-height: 80px;
-          border-radius: 3px;
-          color: #fff;
-          font-size: 32px;
-          background-color: #4fc08d;
-          border: none;
-          border-bottom: 4px solid #3aa373;
-          text-align: center;
-          vertical-align: middle;
+          // width: 99%;
+          // height: 80px;
+          // line-height: 80px;
         }
 
         .file {

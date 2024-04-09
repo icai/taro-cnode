@@ -1,0 +1,11 @@
+{
+  "path-intellisense.mappings": {
+    "/": "${workspaceRoot}/src/"
+  },
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.tslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  }
+}

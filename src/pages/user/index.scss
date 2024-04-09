@@ -1,3 +1,84 @@
 .topics {
   background: #fff;
 }
+
+
+
+.userinfo {
+  width: 100%;
+  background-color: $colore7;
+  text-align: center;
+  // height: 180px;
+  .u-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-top: $gap * 3;
+    background: url("~@/assets/images/components/user.png") no-repeat center
+      center;
+    background-size: 100px 100px;
+  }
+  .u-name {
+    color: #000;
+  }
+
+  .u-bottom {
+    background-color: $colore7;
+    width: 100%;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    .u-time {
+      width: 50%;
+      padding-left: $gap * 2;
+      justify-items: center;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .u-score {
+      width: 50%;
+      text-align: right;
+      padding-right: $gap * 2;
+      color: $color80;
+      justify-items: center;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+
+
+.user-tabs {
+  width: 100%;
+  // height: $gap*8.2;
+  list-style: none;
+
+  display: flex;
+  // position: relative;
+  .item {
+    width: 50%;
+    padding: $gap * 2.3 0;
+    flex: 0 1 auto;
+    font-size: 32px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: solid 1px $colord4;
+  }
+  .read {
+    font-size: $gap * 5;
+    color: $color80;
+    position: absolute;
+    right: $gap * 1;
+    top: $gap * 1.5;
+    font-weight: bold;
+  }
+  .br {
+    border-right: solid 1px $colord4;
+  }
+  .selected {
+    color: $red;
+    border-bottom: solid 2px $red;
+  }
+}

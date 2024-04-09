@@ -1,63 +1,80 @@
-import Taro, { Component, Config } from '@tarojs/taro'
+import React, { useState } from 'react';
+import { showToast, redirectTo } from '@tarojs/taro';
 import { View } from '@tarojs/components'
-import Header from '../../components/header/index'
-import {  AtInput } from 'taro-ui'
-import { connect } from "@tarojs/redux";
-import * as actions from "../../actions/auth";
-import './index.scss'
+import { Button, Input } from '@nutui/nutui-react-taro';
+import { Scan, Tips } from '@nutui/icons-react-taro'
+import { useDispatch } from 'react-redux';
+import { auth } from '@/reducers/auth';
+import './index.scss';
+import Page from '@/components/page';
+import Taro from '@tarojs/taro';
 
-@connect( ({ auth }) => ({ userInfo: auth }),
-(dispatch: Function) => ({
-  authLogin: (...args: any) => dispatch(actions.auth(...args)),
-  authCheckState: () => dispatch(actions.authCheckState())
-}))
-class Login extends Component<Iprops, PageState> {
-  config: Config = {
-    navigationBarTitleText: "登录"
+const Login: React.FC = () => {
+  const dispatch = useDispatch();
+  const [token, setToken] = useState('');
+
+  const showMessage = message => {
+    showToast({ title: message });
   };
 
-  state = {
-    token: "",
-    err: {
-      isHiddenIcon: true,
-      iconSize: 36,
-      iconType: "error",
-      iconColor: "#f00",
-      text: ""
-    }
-  };
-
-  showMessage(message) {
-    Taro.showToast({ title: message });
-  }
-  logon = () => {
-    if (this.state.token === "") {
-      this.showMessage("令牌格式错误,应为36位UUID字符串");
+  const logon = () => {
+    if (token === '') {
+      showMessage('令牌格式错误,应为36位UUID字符串');
       return false;
     }
-    this.props.authLogin(this.state.token).then(() => {
-      Taro.navigateTo({ url: "/pages/list/index" });
-    });
+    dispatch(auth(token) as any)
+    redirectTo({ url: '/pages/index/index' });
   };
-  handleChange(val) {
-    this.setState({ token: val });
+
+  const handleChange = (val: string) => {
+    setToken(val);
+  };
+
+  const handleScan = () => {
+    Taro.scanCode({
+      success: res => {
+        setToken(res.result);
+      }
+    });
   }
-  render() {
-    const { token } = this.state;
-    return <View className="login-page">
-        <Header pageType={"登录"} fixHead={true} needAdd={true} />
-        <View className="page-body">
-          <View className="label">
-          <AtInput className="txt" type="text" placeholder="Access Token" value={token} onChange={this.handleChange.bind(this)} maxlength="36" />
-          </View>
-          <View className="label">
-            <View className="button" onClick={this.logon}>
-              登录
-            </View>
+
+  return (
+    <Page className="login-page" title={'登录'}>
+      <View className="page-body">
+        <View className="label">
+          <View
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              // background: '#fff',
+              padding: '0 10px',
+            }}
+          >
+            <Tips />
+            <Input
+              placeholder="Access Token"
+              style={{ '--nutui-input-padding': '10px' }}
+              value={token}
+              onChange={handleChange} maxLength={36}
+            />
+            {process.env.TARO_ENV !== 'h5' && <View
+              className="right"
+              style={{ display: 'flex', alignItems: 'center' }}
+            >
+              <Button size="small" onClick={handleScan} icon={<Scan />} >
+                扫一扫
+              </Button>
+            </View>}
           </View>
         </View>
-      </View>;
-  }
-}
+        <View className="label">
+          <Button className="button" shape="round" size="xlarge" type="success" block onClick={logon} >
+            登录
+          </Button>
+        </View>
+      </View>
+    </Page>
+  );
+};
 
-export default Login //withUser(Login, true);
+export default Login;

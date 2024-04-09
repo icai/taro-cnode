@@ -1,0 +1,15 @@
+.no-data {
+  width: 100%;
+  height: 100%;
+  padding: 40% 0;
+  color: $colord4;
+  font-size: 36px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  .txt {
+    margin-top: 20px;
+  }
+}

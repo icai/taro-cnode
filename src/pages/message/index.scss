@@ -1,0 +1,181 @@
+.page {
+  background-color: $colorfff;
+  height: 100%;
+  padding: $gap * 3 0;
+
+  .user {
+    width: 100%;
+    margin: $gap * 2 0;
+    padding: 0 $gap * 2;
+    display: flex;
+    .tab {
+      display: inline-block;
+      width: $gap * 8;
+      color: $color62;
+      border-radius: $gap;
+      background-color: $colore7;
+      margin-right: $gap * 2;
+      text-align: center;
+      height: $gap * 4;
+      line-height: $gap * 4;
+      vertical-align: middle;
+    }
+    .good {
+      background-color: $color80;
+      color: $colorfff;
+    }
+    .title {
+      font-size: $gap * 6;
+      font-weight: bold;
+      display: block;
+      width: 100%;
+      flex: 1;
+      @extend .break;
+    }
+    .head {
+      display: inline-block;
+      width: $gap * 9;
+      height: $gap * 9;
+      margin-right: $gap * 2;
+      border-radius: 10px;
+      img {
+        width: $gap * 9;
+        border: 2px solid #fff6e6;
+        border-radius: 50%;
+      }
+    }
+    .info {
+      overflow: hidden;
+      display: block;
+      width: 100%;
+      flex: 1;
+      &:after {
+        clear: both;
+      }
+      .t-title {
+        font-size: $gap * 3.6;
+        font-weight: bold;
+        width: 100%;
+        color: #333;
+        @extend .break;
+      }
+      .mt12 {
+        margin-top: 12px;
+      }
+      .cl {
+        display: inline-block;
+        width: 68%;
+        .name {
+          color: $color62;
+        }
+        .mt10 {
+          margin-top: $gap * 2;
+        }
+      }
+      .cr {
+        width: 30%;
+        display: inline-block;
+        text-align: right;
+        .name {
+          margin-top: $gap * 2;
+          color: $color80;
+          font-size: $gap * 4.8;
+        }
+      }
+    }
+  }
+
+  .reply_num {
+    margin-top: $gap * 4;
+    background-color: $colore7;
+    padding: $gap * 2 0 $gap * 2 $gap * 2;
+    border-top: solid 1px $colord4;
+    border-bottom: solid 1px $colord4;
+  }
+  .reply-list {
+    width: 100%;
+    margin-top: $gap * 3;
+    .ul {
+      width: 100%;
+      list-style: none;
+      padding-left: 0;
+      .li {
+        width: 100%;
+        list-style: none;
+        border-bottom: solid 1px $colord4;
+        &:last-child {
+          border-bottom: none;
+        }
+        .uped {
+          color: $color80;
+        }
+        .icon {
+          font-size: 26px;
+        }
+      }
+    }
+  }
+  .topic_content {
+    margin: 0 $gap * 2;
+  }
+  .reply {
+    width: 100%;
+    margin-top: $gap * 3;
+    border-top: solid 1px $colord4;
+    .text {
+      margin: $gap * 3 2%;
+      color: #000;
+    }
+    .btn {
+      display: inline-block;
+      border-radius: $gap;
+      text-align: center;
+      font-size: 16px;
+      margin: 0 2% $gap * 3;
+      width: 96%;
+      background-color: $color80;
+      padding: $gap * 2 0;
+      color: $colorfff;
+    }
+    .err {
+      border-color: red;
+    }
+  }
+  .message {
+    border-bottom: solid 1px $colord4;
+    padding: $gap * 2 0;
+  }
+  .tabs {
+    width: 100%;
+    // height: $gap* 8.2;
+    // margin-top: $gap* 9;
+    list-style: none;
+    display: flex;
+    // position: relative;
+    // margin-bottom: -1px;
+    .item {
+      width: 50%;
+      padding: $gap * 2.3 0;
+      flex: 0 1 auto;
+      font-size: 16px;
+      text-align: center;
+      font-weight: bold;
+      border-bottom: solid 1px $colord4;
+    }
+    .read {
+      font-size: $gap * 5;
+      color: $color80;
+      position: absolute;
+      right: $gap * 1;
+      top: $gap * 1.5;
+      font-weight: bold;
+    }
+    .br {
+      border-right: solid 1px $colord4;
+    }
+    .selected {
+      color: $red;
+      border-bottom: solid 2px $red;
+    }
+  }
+}

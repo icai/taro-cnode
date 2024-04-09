@@ -1,0 +1,32 @@
+/*postcss-pxtransform disable*/
+
+.m-qrcode-container {
+  border: 1px solid #e4e4e4;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  left: 50%;
+  top: 100px;
+  margin-left: 388px;
+}
+
+.m-qrcode-container .m-qrcode-txt {
+  font-size: 14px;
+  color: #666;
+  line-height: 26px;
+  margin: 0;
+}
+
+.m-qrcode-container .qrcode-image {
+  height: 160px;
+  width: 160px;
+}
+
+.m-qrcode-container svg {
+  height: 158px;
+  width: 158px;
+  border: 1px solid #ddd;
+}

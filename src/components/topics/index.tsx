@@ -1,26 +1,20 @@
-import Taro, { Component } from "@tarojs/taro";
-import { View } from "@tarojs/components";
-import { Topic } from "../topic";
-import { ITopic } from "../../interfaces/topic";
+import React from 'react';
+import { View } from '@tarojs/components';
+import { Topic } from '../topic';
+import { ITopic } from '@/interfaces/topic';
 
-import "../topic/index.scss";
 
 interface IProps {
   topics: ITopic[];
 }
 
-class TopicsList extends Component<IProps, {}> {
-  static defaultProps = {
-    topics: []
-  };
+const TopicsList: React.FC<IProps> = ({ topics }) => {
+  const renderTopics = topics.map((topic) => <Topic key={topic.id} topic={topic} />);
+  return <View className="topic-list">{renderTopics}</View>;
+};
 
-  render() {
-    const { topics } = this.props;
-    const element = topics.map(topic => {
-      return <Topic key={topic.id} topic={topic} />;
-    });
-    return <View className="topic-list">{element}</View>;
-  }
-}
+TopicsList.defaultProps = {
+  topics: [],
+};
 
 export { TopicsList };

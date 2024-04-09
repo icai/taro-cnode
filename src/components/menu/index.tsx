@@ -1,58 +1,58 @@
-import Taro, { Component } from "@tarojs/taro";
-import { View } from "@tarojs/components";
-import UserInfo from '../user-info';
+
+import React from 'react';
+import { View } from '@tarojs/components';
+import UserInfo from "../user-info";
 import classNames from "classnames";
 import Drawer from '../drawer'
-import Link from "../link"
+import Link from "../link";
 
+import "./index.scss";
+import { Category, Fabulous, Share, Comment, Tips, Ask, PickedUp, Message } from '@nutui/icons-react-taro';
 
-import './index.scss'
+const NvMenu: React.FC<any> = ({ showMenu, pageType, nickName, profileUrl, style }) => {
+  const classnames = classNames({
+    "nav-list": true,
+    show: showMenu
+  });
 
+  return (
+    <View id="sideBar" className={classnames} >
+      <Drawer mask={false} show={showMenu} navTopStyle={style}>
+        <UserInfo />
+        <View className="list-ul">
+          <Link className="item" to={{ url: "/pages/index/index?tab=all" }}>
+            <Category />
+            全部
+          </Link>
+          <Link className="item" to={{ url: "/pages/index/index?tab=good" }}>
+            <Fabulous />
+            精华
+          </Link>
+          <Link className="item" to={{ url: "/pages/index/index?tab=share" }}>
+            <Share />
+            分享
+          </Link>
+          <Link className="item" to={{ url: "/pages/index/index?tab=ask" }}>
 
-interface IProps {
-  showMenu : boolean,
-  pageType : string,
-  nickName: string,
-  profileUrl : string
-}
-
-class NvMenu extends Component<IProps, {}> {
-  render() {
-    const { showMenu } = this.props;
-    const classnames = classNames({
-      "nav-list": true,
-      show: showMenu
-    });
-    return <View id="sideBar" className={classnames}>
-        <Drawer mask={false} show={showMenu}>
-          <UserInfo />
-          <View className="list-ul">
-            <Link className="icon-quanbu iconfont item" to={{ url: "/pages/list/index?tab=all" }}>
-              全部
-            </Link>
-            <Link className="icon-hao iconfont item" to={{ url: "/pages/list/index?tab=good" }}>
-              精华
-            </Link>
-            <Link className="icon-fenxiang iconfont item" to={{ url: "/pages/list/index?tab=share" }}>
-              分享
-            </Link>
-            <Link className="icon-wenda iconfont item" to={{ url: "/pages/list/index?tab=ask" }}>
-              问答
-            </Link>
-            <Link className="icon-zhaopin iconfont item" to={{ url: "/pages/list/index?tab=job" }}>
-              招聘
-            </Link>
-            <Link className="icon-xiaoxi iconfont item line" to={{ url: "/pages/message/index" }}>
-              消息
-            </Link>
-            <Link className="icon-about iconfont item" to={{ url: "/pages/about/index" }}>
-              关于
-            </Link>
-          </View>
-        </Drawer>
-      </View>;
-  }
-}
-
+            <Comment />
+            问答
+          </Link>
+          <Link className="item" to={{ url: "/pages/index/index?tab=job" }}>
+            <PickedUp />
+            招聘
+          </Link>
+          <Link className="item line" to={{ url: "/pages/message/index" }}>
+            <Message />
+            消息
+          </Link>
+          <Link className="item" to={{ url: "/pages/about/index" }}>
+            <Tips />
+            关于
+          </Link>
+        </View>
+      </Drawer>
+    </View>
+  );
+};
 
 export default NvMenu;

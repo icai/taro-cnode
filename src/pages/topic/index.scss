@@ -1,0 +1,215 @@
+.topic-title {
+  @extend .title-nooverflow;
+  padding: $gap;
+  margin: $padding;
+  color: $title;
+  background-color: $colorf0;
+  border-radius: $gap;
+  font-weight: 700;
+}
+
+.user {
+  width: 100%;
+  margin: $gap * 2 0;
+  padding: 0 $gap * 2;
+  display: flex;
+  .tab {
+    display: inline-block;
+    width: $gap * 8;
+    color: $color62;
+    border-radius: $gap;
+    background-color: $colore7;
+    margin-right: $gap * 2;
+    text-align: center;
+    height: $gap * 4;
+    line-height: $gap * 4;
+    vertical-align: middle;
+  }
+  .good {
+    background-color: $color80;
+    color: $colorfff;
+  }
+  .title {
+    font-size: $gap * 6;
+    font-weight: bold;
+    display: block;
+    width: 100%;
+    flex: 1;
+    @extend .break;
+  }
+  .head {
+    display: inline-block;
+    width: $gap * 9;
+    height: $gap * 9;
+    margin-right: $gap * 2;
+    border-radius: 10px;
+    img {
+      width: $gap * 9;
+      border: 2px solid #fff6e6;
+      border-radius: 50%;
+    }
+  }
+  .info {
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+    flex: 1;
+    &:after {
+      clear: both;
+    }
+    .t-title {
+      font-size: $gap * 3.6;
+      font-weight: bold;
+      width: 100%;
+      color: #333;
+      @extend .break;
+    }
+    .mt12 {
+      margin-top: 12px;
+    }
+    .cl {
+      display: flex;
+      width: 65%;
+      flex: 1;
+      .name {
+        color: $color62;
+      }
+      .mt10 {
+        margin-top: $gap * 2;
+      }
+    }
+    .cr {
+      width: 30%;
+      display: flex;
+      align-items: center;
+      text-align: right;
+      justify-content: space-around;
+      .txt {
+        font-size: 24px;
+      }
+      .name {
+        margin-top: $gap * 2;
+        color: $color80;
+        font-size: $gap * 4.8;
+      }
+    }
+  }
+}
+
+.author-info {
+  display: flex;
+  align-items: center;
+  padding: 0 $padding;
+  color: $text;
+  font-size: 12px;
+  .col {
+    display: block;
+    width: 100%;
+    flex: 1;
+  }
+  .avatar {
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin-right: $padding;
+    border-radius: 50%;
+  }
+  .right {
+    text-align: right;
+  }
+
+  .name,
+  .time {
+    display: block;
+    padding: 5px 0;
+  }
+  .tag {
+    display: block;
+    @extend .tag;
+    color: #ffffff;
+    &.top {
+      background: #e74c3c;
+    }
+    &.ask {
+      background: #3498db;
+    }
+    &.good {
+      background: #e67e22;
+    }
+    &.job {
+      background: #9b59b6;
+    }
+    &.share {
+      background: #1abc9c;
+    }
+  }
+}
+.topic-content {
+  padding: $padding;
+  margin-top: $padding;
+  background: #ffffff;
+  border-bottom: solid 1px $colord4;
+  .from {
+    color: $red;
+  }
+}
+.topic-reply {
+  @extend .title;
+  padding: $padding;
+  border-bottom: solid 1px $colord4;
+  strong {
+    color: #42b983;
+  }
+}
+.reply_num {
+  margin-top: $gap * 4;
+  background-color: $colore7;
+  padding: $gap * 2 0 $gap * 2 $gap * 2;
+  border-top: solid 1px $colord4;
+  border-bottom: solid 1px $colord4;
+}
+.reply-list {
+  width: 100%;
+  margin-top: $gap * 3;
+  .ul {
+    width: 100%;
+    list-style: none;
+    padding-left: 0;
+    .li {
+      width: 100%;
+      list-style: none;
+      border-bottom: solid 1px $colord4;
+      &:last-child {
+        border-bottom: none;
+      }
+      .uped {
+        color: $color80;
+      }
+      .icon {
+        font-size: 26px;
+      }
+      .from {
+        color: $red;
+      }
+      .language-javascript {
+        background-color: $colorf0;
+        overflow-x: auto;
+      }
+    }
+  }
+}
+
+/* 回复框样式 */
+
+.reply {
+  margin: 0 $padding;
+  textarea {
+    display: block;
+    width: 100%;
+    flex: 1;
+    background-color: #fff;
+    font-size: 28px;
+    padding: $padding;
+    color: #313131;
+  }
+}

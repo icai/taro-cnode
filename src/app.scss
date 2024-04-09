@@ -1,0 +1,14 @@
+.message {
+  background-color: #fff;
+  padding: $gap;
+  border-bottom: solid 1px $colord4;
+}
+
+
+.topics {
+  .icon-empty {
+    font-size: $gap * 25;
+    color: $colord4;
+    display: block;
+  }
+}

@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import * as utils from "../libs/utils";
+import * as utils from "@/libs/utils";
 
 
 export const post = (options, data?) => {

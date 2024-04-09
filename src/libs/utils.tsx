@@ -1,7 +1,18 @@
-"use strict";
-
-import { format, register } from 'timeago.js';
 import Taro from "@tarojs/taro";
+
+
+export const isH5 = () => {
+  return Taro.getEnv() === Taro.ENV_TYPE.WEB;
+}
+
+export const isWeapp = () => {
+  return Taro.getEnv() === Taro.ENV_TYPE.WEAPP;
+}
+
+export const isAlipay = () => {
+  return Taro.getEnv() === Taro.ENV_TYPE.ALIPAY;
+}
+
 
 export const updateObject = (oldObject, updatedProperties) => {
   return {
@@ -11,20 +22,44 @@ export const updateObject = (oldObject, updatedProperties) => {
 };
 
 
-export const typeOf = (obj)=> {
+export const typeOf = (obj) => {
   return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
 }
 
 
-export const isObject = (obj)=> {
+export const isObject = (obj) => {
   return typeOf(obj) === "object";
 }
 
-export const navigateTo = ({ url, params }) => {
-  Taro.navigateTo({
-    url: url + (params ? "?" + param(params) : "")
-  });
-};
+export const navigateTo = ({ url, params, ...rest }: { url: string, params?: Object }) => {
+  if (url.indexOf('?') !== -1 && /[\u4e00-\u9fa5]/.test(url)) {
+    url = encodeURI(url)
+  }
+  let uri = params ? '?' + param(params) : ''
+  if (Taro.getCurrentPages().length === 5) {
+    Taro.redirectTo({
+      url: url + uri,
+      ...rest
+    })
+  } else {
+    Taro.navigateTo({
+      url: url + uri,
+      ...rest
+    })
+  }
+}
+
+export const redirectTo = ({ url, params, ...rest }: { url: string, params?: Object }) => {
+  if (url.indexOf('?') !== -1 && /[\u4e00-\u9fa5]/.test(url)) {
+    url = encodeURI(url)
+  }
+  let uri = params ? '?' + param(params) : ''
+  Taro.redirectTo({
+    url: url + uri,
+    ...rest
+  })
+}
+
 
 
 let getCheck = {
@@ -139,13 +174,37 @@ const fmtDate = (date, fmt) => {
   return fmt;
 };
 
+function timeAgo(dateString) {
+  const date = new Date(dateString.replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '').replace(/(-)/g, '/'));
+  const now = new Date().getTime();
+  const seconds = Math.floor((now - date.getTime()) / 1000);
+
+  const intervals = {
+    年: 31536000,
+    个月: 2592000,
+    周: 604800,
+    天: 86400,
+    小时: 3600,
+    分钟: 60,
+    秒: 1
+  };
+
+  for (const interval in intervals) {
+    const value = Math.floor(seconds / intervals[interval]);
+    if (value >= 1) {
+      return `${value} ${interval}前`;
+    }
+  }
+  return '刚刚';
+}
+
 /**
  * 调用Timeago库显示到现在的时间
  */
 export const MillisecondToDate = time => {
   var str = "";
   if (time !== null && time !== "") {
-    str = format(time, "zh_CN");
+    str = timeAgo(time);
   }
   return str;
 };
@@ -226,7 +285,7 @@ export const getTabInfo = (tab, good, top, isClass) => {
 export const throttle = (fn, wait, mustRun) => {
   let timeout;
   let startTime = new Date().getTime();
-  return function() {
+  return function () {
     let context = this;
     let args = arguments;
     let curTime = new Date().getTime();
@@ -249,43 +308,20 @@ export { linkUsers, fetchUsers, getCheck, fmtDate };
 
 
 
-// 数字/英文与中文之间需要加空格
-const betterChineseDict = (_, index) => {
-  return [
-    ["刚刚", "片刻后"],
-    ["%s 秒前", "%s 秒后"],
-    ["1 分钟前", "1 分钟后"],
-    ["%s 分钟前", "%s 分钟后"],
-    ["1 小时前", "1小 时后"],
-    ["%s 小时前", "%s 小时后"],
-    ["1 天前", "1 天后"],
-    ["%s 天前", "%s 天后"],
-    ["1 周前", "1 周后"],
-    ["%s 周前", "%s 周后"],
-    ["1 月前", "1 月后"],
-    ["%s 月前", "%s 月后"],
-    ["1 年前", "1 年后"],
-    ["%s 年前", "%s 年后"]
-  ][index];
-};
-
-register("zh", betterChineseDict);
-
-
-export const trim = (v)=> {
+export const trim = (v) => {
   var re = /^\s+|\s+$/g;
   return v.replace(re, "");
 }
 
-export const param = function(a) {
+export const param = function (a) {
   var s = [];
-  var add = function(k, v) {
+  var add = function (k, v) {
     v = typeof v === "function" ? v() : v;
     v = v === null ? "" : v === undefined ? "" : v;
     // @ts-ignore
     s[s.length] = encodeURIComponent(k) + "=" + encodeURIComponent(v);
   };
-  var buildParams = function(prefix, obj) {
+  var buildParams = function (prefix, obj) {
     var i, len, key;
 
     if (prefix) {
@@ -293,9 +329,9 @@ export const param = function(a) {
         for (i = 0, len = obj.length; i < len; i++) {
           buildParams(
             prefix +
-              "[" +
-              (typeof obj[i] === "object" && obj[i] ? i : "") +
-              "]",
+            "[" +
+            (typeof obj[i] === "object" && obj[i] ? i : "") +
+            "]",
             obj[i]
           );
         }

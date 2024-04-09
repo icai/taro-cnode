@@ -1,81 +1,151 @@
-import Taro, { Component } from '@tarojs/taro'
-import classNames from "classnames";
-import { View, Text } from "@tarojs/components";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchSystemInfo } from '@/reducers/base';
+import { authCheckState } from "@/reducers/auth";
+import classNames from 'classnames';
+import Taro, { useLoad, useReady, useRouter } from '@tarojs/taro';
+import { View, Text } from '@tarojs/components';
 import NvMenu from "../menu"
-import Link from "../link"
+import { NavBar } from '@nutui/nutui-react-taro';
+import { ArrowLeft, Category, Share } from '@nutui/icons-react-taro';
+import { isAlipay } from '@/libs/utils';
+import './index.scss';
 
-
-
-import './index.scss'
-
-
-type IProps = {
-  pageType: string,
-  fixHead: boolean,
-  messageCount?: number,
-  scrollTop?: number,
-  needAdd: boolean
-};
-
-interface IState {
-  nickname: string,
-  profileimgurl: string,
-  show: boolean
+interface IProps {
+  pageType?: string;
+  fixHead?: boolean;
+  messageCount?: number;
+  scrollTop?: number;
+  needAdd?: boolean;
+  showMenu?: boolean;
 }
 
-class Header extends Component<IProps, IState> {
+const Header: React.FC<IProps> = ({ pageType = '', messageCount = 0, needAdd }) => {
+  const [show, setShow] = useState<boolean>(false);
 
-  static defaultProps = {
-    messageCount: 0,
-    scrollTop: 0
+  const router = useRouter(true);
+  const systemInfo = useSelector((state: any) => state.base.systemInfo);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(authCheckState());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (show) {
+      setShow(!show);
+    }
+  }, [router.path, router.params.tab]);
+
+
+  const fixHead = true;
+
+  const openMenu = () => {
+    setShow(!show);
   };
 
-  state = {
-    nickname: "",
-    profileimgurl: "",
-    show: false
+  const showMenus = () => {
+    setShow(!show);
   };
 
-  openMenu = () => {
-    this.setState({
-      show: !this.state.show
-    })
-  };
-  showMenus = () => {
-    this.setState({
-      show: !this.state.show
-    })
-  };
+  const classnames = classNames({
+    show: show && fixHead,
+    'fix-header': fixHead,
+    'no-fix': !fixHead,
+  });
+  useReady(() => {
+    if (isAlipay()) {
+      my.hideBackHome();
+    }
+  })
+  useLoad(() => {
+    fetchSystemInfo()(dispatch)
+  })
 
-  render() {
-    const { show, nickname, profileimgurl } = this.state;
-    const { needAdd, pageType, fixHead, messageCount } = this.props;
-    const classnames = classNames({
-      show: show && fixHead,
-      "fix-header": fixHead,
-      "no-fix": !fixHead
-    });
-    return <View className="header">
-        {show && fixHead ? <View>
-            <View className="page-cover" onClick={this.showMenus} />
-          </View> : ""}
-        <View className={classnames} id="hd">
-          <View className="nv-toolbar">
-            {fixHead ? <View className="toolbar-nav" onClick={this.openMenu} /> : ""}
-            <Text>{pageType}</Text>
-            {messageCount > 0 ? <Text className="num">
-                {messageCount}
-              </Text> : ""}
-          {(needAdd && !messageCount) || messageCount <= 0 ? <Link className="iconfont add-icon" to={{url: "/pages/add/index"}} >
-                &#xe60f;
-              </Link> : ""}
-          </View>
-        </View>
-        <NvMenu showMenu={show} pageType={pageType} nickName={nickname} profileUrl={profileimgurl} />
-        {/* {fixHead ? "" : ""} */}
-      </View>;
+
+  const style = {
+    height: fixHead ? systemInfo.navBarHeight + 'px' : 'auto',
+    backgroundColor: isAlipay() ? '#fff' : 'transparent'
+  };
+  let hboxStyle = {
+    paddingTop: fixHead ? systemInfo.statusBarHeight + 'px' : '0',
+    backgroundColor: '#fff'
+  } as any;
+
+
+  if (isAlipay()) {
+    hboxStyle = {
+      paddingTop: fixHead ? systemInfo.statusBarHeight + 'px' : '0',
+      backgroundColor: '#fff'
+    }
   }
-}
 
+  const toolbarStyle = {
+    height: systemInfo.titleBarHeight + 'px',
+    backgroundColor: '#fff',
+    marginBottom: '0px',
+  };
+
+  let backMenu = () => {
+    if (isAlipay()) {
+      return <View style={{ marginLeft: '30px' }}>
+        <Category size={24} />
+      </View>
+    }
+    return (
+      0 ? <>
+        <ArrowLeft size={24} />
+        返回
+      </> : <>
+        <Category size={24} />
+      </>
+    )
+  }
+
+  let nvMenuStyle = {
+    paddingTop: systemInfo.statusBarHeight + 'px',
+  }
+
+  if (isAlipay()) {
+    nvMenuStyle = {
+      paddingTop: systemInfo.navBarHeight + 'px',
+    }
+  }
+  return (
+    <View className="header" style={style} >
+      <View className={classnames} id="hdbox" style={hboxStyle}>
+        {show && fixHead ? (
+          <View>
+            <View className="page-cover" onClick={showMenus} />
+          </View>
+        ) : (
+          ''
+        )}
+
+        <NavBar
+          className="nv-toolbar" style={toolbarStyle}
+          zIndex={0}
+          back={
+            backMenu()
+          }
+          right={
+            <View
+              className="flex-center"
+              onClick={(e) => Taro.showToast({ title: 'icon' })}
+            >
+              <Share size={24} />
+            </View>
+          }
+          onBackClick={(e) => openMenu()}
+        >
+          <View onClick={(e) => Taro.showToast({ title: '标题' })}>{pageType}</View>
+        </NavBar>
+        <View className={classnames} id="hd">
+          <NvMenu showMenu={show} pageType={pageType} style={nvMenuStyle} />
+        </View>
+      </View>
+    </View>
+  );
+};
 
 export default Header;

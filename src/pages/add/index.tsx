@@ -1,80 +1,64 @@
-import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Picker } from '@tarojs/components'
-import Header from '../../components/header/index'
-import { AtTextarea, AtInput } from "taro-ui";
-import * as utils from '../../libs/utils'
+import { useState } from 'react';
+import Taro from "@tarojs/taro";
+import { View } from '@tarojs/components'
+import { Picker, Cell, Button, Sticky } from '@nutui/nutui-react-taro';
+import { TextArea, Input } from '@nutui/nutui-react-taro'
+import * as utils from '@/libs/utils'
 import classNames from "classnames";
-import { post } from "../../utils/request";
-import { connect } from "@tarojs/redux";
-import * as actions from "../../actions/auth";
-
+import withUser from '@/components/withUser'
+import { useDispatch, useSelector } from 'react-redux';
+import { addTopics } from '@/api';
 
 import './index.scss'
+import Page from '@/components/page';
+import useObjState from '@/hooks/useObjState';
 
-@connect( ({ auth }) => ({ userInfo: auth }),
-(dispatch: Function) => ({
-  authLogin: (...args: any) => dispatch(actions.auth(...args)),
-  authCheckState:() => dispatch(actions.authCheckState())
-}))
-class Add extends Component<{}, {}> {
-  config: Config = {
-    navigationBarTitleText: "主题"
-  };
+const Add = () => {
+  const [topic, setTopic] = useObjState({
+    tab: "share",
+    title: "",
+    content: ""
+  });
+  const [err, setErr] = useState("");
+  const userInfo = useSelector((state: any) => state.auth.user);
 
-  state = {
-    topic: {
-      tab: "share",
-      title: "",
-      content: ""
-    },
-    selectorIndex: 0,
-    selector: [
-      {
-        name: "分享",
-        value: "share"
-      },
-      {
-        name: "问答",
-        value: "ask"
-      },
-      {
-        name: "招聘",
-        value: "job"
-      }
-    ],
-    err: "",
-    authorTxt:
-      "\n\n 来自拉风的 [Taro-cnode](https://github.com/icai/taro-cnode)"
-  };
-  addTopic() {
-    let title = utils.trim(this.state.topic.title);
-    let contents = utils.trim(this.state.topic.content);
+  const selector = [
+    [
+      { text: "分享", value: "share" },
+      { text: "问答", value: "ask" },
+      { text: "招聘", value: "job" }
+    ]
+  ];
+
+
+  const [visible, setVisible] = useState(false)
+  const [baseDesc, setBaseDesc] = useState('')
+
+
+
+
+  const addTopic = () => {
+    console.log('addTopic', topic)
+    let title = utils.trim(topic.title);
+    let contents = utils.trim(topic.content);
     if (!title || title.length < 10) {
-      this.setState({
-        err: "title"
-      });
+      setErr("title");
       return false;
     }
     if (!contents) {
-      this.setState({
-        err: "content"
-      });
+      setErr("content");
       return false;
     }
     let postData = {
-      ...this.state.topic,
-      content: this.state.topic.content + this.state.authorTxt,
-      accesstoken: this.props.userInfo.token
+      ...topic,
+      content: topic.content + "\n\n 来自拉风的 [Taro-cnode](https://github.com/icai/taro-cnode)",
+      accesstoken: userInfo.token
     };
-
-    post({
-      data: postData,
-      url: "https://cnodejs.org/api/v1/topics"
-    })
+    addTopics(postData)
       .then(resp => {
         let res = resp.data;
         if (res.success) {
-          Taro.navigateTo({ url: "/pages/list/index" });
+          utils.redirectTo({ url: "/pages/index/index" });
         } else {
           Taro.showToast({ title: res.error_msg });
         }
@@ -82,66 +66,58 @@ class Add extends Component<{}, {}> {
       .catch(resp => {
         console.info(resp);
       });
-  }
-  handleTopicTabChange = e => {
-    this.setState(prevState => ({
-      topic: {
-        ...prevState.topic,
-        tab: prevState.selector[e.detail.value]["value"]
-      },
-      selectorIndex: e.detail.value
-    }));
   };
-  handleTopicContentChange = e => {
-    this.setState(prevState => ({
-      topic: {
-        ...prevState.topic,
-        content: e.target.value
-      }
-    }));
-  };
-  handleTopicChange = e => {
-    this.setState(prevState => ({
-      topic: {
-        ...prevState.topic,
-        title: e
-      }
-    }));
-  };
-  render() {
-    const { err, selectorIndex } = this.state;
-    return <View className="flex-wrp">
-        <Header pageType={"主题"} fixHead={true} showMenu={true} />
-        <View className="add-container">
-          <View className="line">
-            选择分类：
-            <Picker className="add-tab" mode="selector" value={selectorIndex} range={this.state.selector} rangeKey={"name"} onChange={this.handleTopicTabChange}>
-              <View className="picker">
-                {this.state.selector[selectorIndex]["name"]}
-              </View>
-            </Picker>
-            {/* <select className="add-tab" value={this.state.topic.tab} onChange={this.handleTopicTabChange}>
-              <option value="share">分享</option>
-              <option value="ask">问答</option>
-              <option value="job">招聘</option>
-            </select> */}
-            <View className="add-btn" onClick={this.addTopic.bind(this)}>
-              发布
-            </View>
-          </View>
-          <View className="line">
-            <AtInput className={classNames({
-                "add-title": 1,
-                err: err == "title"
-              })} value={this.state.topic.title} onChange={this.handleTopicChange} type="text" placeholder="标题，字数10字以上" max-length="100" />
-          </View>
-          <AtTextarea className={classNames({
-              "add-content": 1,
-              err: err == "content"
-            })} value={this.state.topic.content} onChange={this.handleTopicContentChange} maxlength={9999} height="400" placeholder="回复支持Markdown语法,请注意标记代码" />
-        </View>
-      </View>;
-  }
-}
 
-export default Add //withUser(Add);
+  const confirmPicker = (options: any[], values: (string | number)[]) => {
+    let description = ''
+    options.forEach((option: any) => {
+      description += option.text
+    })
+    setBaseDesc(description)
+    setTopic({
+      tab: values[0]
+    });
+  }
+
+  const handleTopicContentChange = e => {
+    setTopic({
+      content: e
+    });
+  };
+
+  const handleTopicChange = e => {
+    setTopic({
+      title: e
+    });
+  };
+
+  return (
+    <Page className="flex-wrp" title={"主题"}>
+      <View className="add-container">
+        <View className="line">
+          <Cell title="请选择分类" description={baseDesc} onClick={() => setVisible(!visible)} />
+          <Picker
+            options={selector}
+            visible={visible}
+            onConfirm={(list, values) => confirmPicker(list, values)}
+            onClose={() => setVisible(false)} >
+          </Picker>
+
+        </View>
+        <View className="line">
+          <Input className={classNames({ "add-title": 1, err: err == "title" })} value={topic.title} onChange={handleTopicChange} type="text" placeholder="标题，字数10字以上" max-length="100" name={''} />
+        </View>
+        <TextArea className={classNames({ "add-content": 1, err: err == "content" })} style={{ minHeight: '100px' }} value={topic.content} onChange={handleTopicContentChange} maxLength={9999} rows={20} placeholder="回复支持Markdown语法,请注意标记代码" />
+        <View style={{ margin: '0 15px' }}>
+          <Sticky threshold={110} position="bottom"  >
+            <Button block type="success" size='xlarge' onClick={addTopic} >
+              发布
+            </Button>
+          </Sticky>
+        </View>
+      </View>
+    </Page>
+  );
+};
+
+export default withUser(Add);

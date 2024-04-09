@@ -1,46 +1,63 @@
-import { View } from "@tarojs/components";
-import Taro, { Component, Config } from "@tarojs/taro";
-import * as utils from '../../libs/utils';
+import { View } from '@tarojs/components';
+import Taro from '@tarojs/taro';
+import * as utils from '@/libs/utils';
+import React from 'react';
 
-type IProps = {
-  props: {
-    to: {
-      url: string,
-      params?: object
-    }
-    className: string,
-    children: any
-  }
-}
-type PageState = {
-
-}
-
-class Link extends Component<IProps, PageState> {
-  static defaultProps = {
-    to: {
-      url: "",
-      params: {}
-    }
+interface IProps {
+  to: {
+    url: string;
+    params?: object;
   };
+  className?: string;
+  children: React.ReactNode;
+}
 
-  goTo = ({ url, params }) => {
-    Taro.navigateTo({
-      url: url + (params ? "?" + utils.param(params) : "")
+
+const urlParse = (url: string, params?: object) => {
+  const arr = url.split('?');
+  const path = arr[0];
+  const query = arr[1] || '';
+  if (query === '') {
+    return {
+      path,
+      params,
+    };
+  }
+  const queryArr = query.split('&');
+  const queryObj = {};
+  queryArr.forEach((item) => {
+    const itemArr = item.split('=');
+    queryObj[itemArr[0]] = itemArr[1];
+  });
+  // merge params
+  Object.assign(queryObj, params || {});
+  return {
+    path,
+    params: queryObj,
+  };
+}
+
+const Link: React.FC<IProps> = ({ to, className, children }) => {
+  const goTo = () => {
+    const { path, params } = urlParse(to.url, to.params);
+    utils.navigateTo({
+      url: path,
+      params,
     });
-    return false;
   };
-  render() {
-    const props = this.props;
-    const cprops = {
-      ...props, style: {
-        cursor: 'pointer'
-      }};
-    delete cprops.to;
-    return <View className={cprops.className} style={cprops.style} onClick={this.goTo.bind(this, props.to)}>
-        {this.props.children}
-      </View>;
-  }
-}
+
+  return (
+    <View className={className} style={{ cursor: 'pointer' }} onClick={goTo}>
+      {children}
+    </View>
+  );
+};
+
+Link.defaultProps = {
+  to: {
+    url: '',
+    params: {},
+  },
+};
 
 export default Link;

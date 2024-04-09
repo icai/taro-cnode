@@ -1,30 +1,18 @@
-import Taro, { Component } from '@tarojs/taro'
-import { View, Icon } from "@tarojs/components";
-// import { connect } from '@tarojs/redux'
 
-import './index.scss'
+import React from 'react';
+import { View } from "@tarojs/components";
+import { Loading, ConfigProvider } from '@nutui/nutui-react-taro';
+import "./index.scss";
 
-interface IProps {
-  showTxt?: string
-  show: boolean
+const LoadingX: React.FC<any> = ({ height = "8rem" }) => {
+  return (
+    <View className="loading" style={{ minHeight: height, height }}>
+      <ConfigProvider theme={{ nutuiLoadingIconColor: '#9d8352',nutuiLoadingIconSize: '40px' }}>
+        <Loading type="circular" />
+      </ConfigProvider>
+    </View>
+  );
 }
 
+export default LoadingX;
 
-class Loading extends Component<IProps, {}> {
-  render() {
-    const { showTxt, show } = this.props;
-    return (
-      <View>
-        {show ? <View id="wxloading" className="wx_loading">
-          <View className="wx_loading_inner">
-            <i class="wx_loading_icon"></i>
-            {showTxt}...
-          </View>
-        </View> : ''}
-      </View>
-    );
-  }
-}
-
-
-export default Loading;

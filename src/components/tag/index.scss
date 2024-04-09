@@ -1,0 +1,23 @@
+.xtag {
+  display: inline;
+  margin-right: 10px;
+  @extend .tag;
+  color: $white;
+
+  &.top {
+    background: #e74c3c;
+  }
+  &.ask {
+    background: #3498db;
+  }
+  &.good {
+    background: #e67e22;
+  }
+  &.job {
+    background: #9b59b6;
+  }
+  &.share {
+    background: #1abc9c;
+  }
+}
+
