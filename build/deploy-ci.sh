@@ -17,7 +17,7 @@ git clone --depth 1 -b gh-pages --single-branch https://$ROT_TOKEN@github.com/ic
 cp -rf ../../dist/** .
 cp -rf ../../README.md .
 git add -A .
-git commit -m "$TRAVIS_COMMIT_MSG"
+git commit -m "$COMMIT_MSG"
 git push origin gh-pages
 cd ../..
 

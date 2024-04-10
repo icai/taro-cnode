@@ -22,7 +22,7 @@ const Login: React.FC = () => {
       showMessage('令牌格式错误,应为36位UUID字符串');
       return false;
     }
-    dispatch(auth(token) as any)
+    auth(token)(dispatch)
     redirectTo({ url: '/pages/index/index' });
   };
 

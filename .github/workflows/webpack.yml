@@ -2,9 +2,9 @@ name: NodeJS with Webpack
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 jobs:
   build:
@@ -12,29 +12,29 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [20.x]
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Install dependencies
-      run: |
-        npm install -g pnpm
-        pnpm install
+      - name: Install dependencies
+        run: |
+          npm install -g pnpm
+          pnpm install
 
-    - name: Build project
-      run: pnpm run build:h5
+      - name: Build project
+        run: pnpm run build:h5
 
-    - name: Deploy on master branch
-      if: github.ref == 'refs/heads/master' && github.event_name == 'push' && github.event.pull_request == null
-      run: |
-        export TRAVIS_COMMIT_MSG="$(git log --format='%h - %B' --no-merges -n 1)"
-        export TRAVIS_COMMIT_USER="$(git log --no-merges -n 1 --format=%an)"
-        export TRAVIS_COMMIT_EMAIL="$(git log --no-merges -n 1 --format=%ae)"
-        export ROT_TOKEN=${{ secrets.GITHUB_TOKEN }}
-        sh build/deploy-ci.sh
+      - name: Deploy on master branch
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push' && github.event.pull_request == null
+        run: |
+          export COMMIT_MSG="$(git log --format='%h - %B' --no-merges -n 1)"
+          export COMMIT_USER="$(git log --no-merges -n 1 --format=%an)"
+          export COMMIT_EMAIL="$(git log --no-merges -n 1 --format=%ae)"
+          export ROT_TOKEN="${{ secrets.GITHUB_TOKEN }}"
+          sh build/deploy-ci.sh
