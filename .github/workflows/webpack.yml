@@ -10,31 +10,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [20.x]
-
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: Checkout 🛎️
+        uses: actions/checkout@master
         with:
-          node-version: ${{ matrix.node-version }}
+          persist-credentials: false
 
-      - name: Install dependencies
+      - name: Install 🔧
         run: |
           npm install -g pnpm
           pnpm install
 
-      - name: Build project
-        run: pnpm run build:h5
-
-      - name: Deploy on master branch
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push' && github.event.pull_request == null
+      - name: Build 🏗️
         run: |
-          export COMMIT_MSG="$(git log --format='%h - %B' --no-merges -n 1)"
-          export COMMIT_USER="$(git log --no-merges -n 1 --format=%an)"
-          export COMMIT_EMAIL="$(git log --no-merges -n 1 --format=%ae)"
-          export ROT_TOKEN="${{ secrets.GITHUB_TOKEN }}"
-          sh build/deploy-ci.sh
+          pnpm run build:h5
+
+      - name: Deploy to GH Pages 🚀
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+          cname: taro.w3cub.com
