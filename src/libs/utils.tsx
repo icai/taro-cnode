@@ -1,6 +1,10 @@
 import Taro from "@tarojs/taro";
 
 
+export const isDev = () => {
+  return process.env.NODE_ENV === 'development';
+}
+
 export const isH5 = () => {
   return Taro.getEnv() === Taro.ENV_TYPE.WEB;
 }

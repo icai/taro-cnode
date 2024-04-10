@@ -1,14 +1,15 @@
 import { createLogger } from 'redux-logger'
 import rootReducer from '../reducers'
 import { configureStore } from '@reduxjs/toolkit'
+import { isDev } from '@/libs/utils'
 
-import { persistReducer, persistStore } from 'redux-persist';
-import storage from '@/utils/store'
-
-const middlewares = [
+let middlewares = [
   // thunk,
-  createLogger()
-]
+] as any[]
+
+if (isDev()) {
+  middlewares.push(createLogger())
+}
 
 // const persistConfig = {
 //   key: 'root',
@@ -29,5 +30,5 @@ const store = configureStore({
 export default store
 
 export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+
 export type AppDispatch = typeof store.dispatch
