@@ -24,11 +24,12 @@
 
 git clone --depth 50 -b master --single-branch https://github.com/icai/taro-cnode.git && cd taro-cnode
 
-npm install -g @tarojs/cli
+pnpm install -g @tarojs/cli
 
-npm install
+pnpm install
 
-npm run dev:h5
+pnpm run dev:wepp
+
 
 ```
 
@@ -44,12 +45,10 @@ http://taro.w3cub.com/
 
 - 小程序地址
 
-还在调试中，待定
 
 
 
-taro 完整程序可以参考：
-
+taro-ui 参考：
 
 https://github.com/cpitax/taro-tax
 
@@ -57,10 +56,7 @@ https://github.com/cpitax/taro-tax
 
 ## 声明
 
-本程序一开始存在一个错误的兼容方向。按照Taro的设计原理，应该先兼容小程序再兼容其他端。
-本工程本来基于 https://github.com/shinygang/Vue-cnodejs 开发而来，所以一开始是兼容H5为主， 
-但是到了后续Taro的升级，存在各种Taro API向小程序靠拢的迹象， 很多ES6，React的屏蔽。 
-所以假如要用Taro开发，建议先以**小程序**为主端，向多端扩散。
+
 
 基于 https://github.com/shinygang/Vue-cnodejs 和 taro-cli 实现
 
@@ -68,4 +64,4 @@ https://github.com/cpitax/taro-tax
 
 ## LICENSE
 
-Copyright (c) 2018 Terry Cai. Licensed under the MIT license.
+Copyright (c) 2018 - 2024 Terry Cai. Licensed under the MIT license.

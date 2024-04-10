@@ -1,19 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-  <meta content="width=device-width,initial-scale=1,user-scalable=no" name="viewport">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="format-detection" content="telephone=no,address=no">
-  <meta name="apple-mobile-web-app-status-bar-style" content="white">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" >
-<title>Taro-Cnodejs社区</title>
-  <script>
-    !function(x){function w(){var v,u,t,tes,s=x.document,r=s.documentElement,a=r.getBoundingClientRect().width;if(!v&&!u){var n=!!x.navigator.appVersion.match(/AppleWebKit.*Mobile.*/);v=x.devicePixelRatio;tes=x.devicePixelRatio;v=n?v:1,u=1/v}if(a>=640){r.style.fontSize="40px"}else{if(a<=320){r.style.fontSize="20px"}else{r.style.fontSize=a/320*20+"px"}}}x.addEventListener("resize",function(){w()});w()}(window);
-  </script>
-<link href="/css/app.css" rel="stylesheet"></head>
-<body>
-  <div id="app"></div>
-<script type="text/javascript" src="/js/app.js"></script></body>
-</html>
+<!doctype html><html><head><meta charset="utf-8"/><title>cnode社区</title><meta content="text/html; charset=utf-8" http-equiv="Content-Type"><meta content="width=device-width,initial-scale=1,user-scalable=no" name="viewport"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="format-detection" content="telephone=no,address=no"><meta name="apple-mobile-web-app-status-bar-style" content="white"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width,initial-scale=1"/><script>!function (xyz) {
+      function adjustFontSize() {
+        var devicePixelRatio, scaleFactor, documentElement, screenWidth, s = xyz.document,
+          rootElement = s.documentElement,
+          container = s.getElementById('app'),
+          width = container.getBoundingClientRect().width || rootElement.getBoundingClientRect().width;
+        if (!devicePixelRatio && !scaleFactor) {
+          var isMobile = !!xyz.navigator.appVersion.match(/AppleWebKit.*Mobile.*/);
+          devicePixelRatio = xyz.devicePixelRatio;
+          scaleFactor = xyz.devicePixelRatio;
+          devicePixelRatio = isMobile ? devicePixelRatio : 1, scaleFactor = 1 / devicePixelRatio
+        }
+        if (width >= 640) {
+          rootElement.style.fontSize = "40px"
+        } else {
+          if (width <= 320) {
+            rootElement.style.fontSize = "20px"
+          } else {
+            rootElement.style.fontSize = width / 320 * 20 + "px"
+          }
+        }
+      }
+      xyz.addEventListener("resize", function () {
+        adjustFontSize()
+      });
+      xyz.addEventListener("pageshow", function () {
+        adjustFontSize()
+      });
+    }(window);</script><style>body,
+    html {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      overflow: hidden;
+    }
+
+    body {
+      position: absolute;
+      max-width: 750px;
+      margin: auto;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    /* .header {
+      position: absolute !important;
+    } */</style><script defer="defer" src="/js/238.js"></script><script defer="defer" src="/js/app.js"></script><link href="/css/app.css" rel="stylesheet"></head><body><div id="app"></div></body></html>
