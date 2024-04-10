@@ -28,7 +28,12 @@ pnpm install -g @tarojs/cli
 
 pnpm install
 
-pnpm run dev:wepp
+pnpm run dev:h5
+
+pnpm run dev:weapp
+
+pnpm run dev:alipay
+
 
 
 ```
@@ -37,32 +42,40 @@ pnpm run dev:wepp
 
 ## 预览效果
 
+<!--  table wrap 3 rows -->
 
-<img src="https://github.com/icai/taro-cnode/blob/master/screenshots/Jietu20240410-011438.png?raw=true" width="285" />
-<img src="https://github.com/icai/taro-cnode/blob/master/screenshots/Jietu20240410-011525.png?raw=true" width="285" />
-<img src="https://github.com/icai/taro-cnode/blob/master/screenshots/Jietu20240410-113749.png?raw=true" width="285" />
-
-
-
-- h5预览地址
-
-http://taro.w3cub.com/
-
-<img src="https://user-images.githubusercontent.com/1061012/45255911-2542e080-b3c1-11e8-90bf-4be7cd765516.png" width="200" height="200"/>
-
-- 小程序地址
-
-
-<img src="https://github.com/icai/taro-cnode/blob/master/screenshots/2021002183695117.jpg?raw=true" width="200" height="200"/>
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/icai/taro-cnode/blob/master/screenshots/Jietu20240410-011438.png?raw=true" width="285" />
+    </td>
+    <td>
+      <img src="https://github.com/icai/taro-cnode/blob/master/screenshots/Jietu20240410-011525.png?raw=true" width="285" />
+    </td>
+    <td>
+      <img src="https://github.com/icai/taro-cnode/blob/master/screenshots/Jietu20240410-113749.png?raw=true" width="285" />
+    </td>
+  </tr>
+</table>
 
 
+<table>
+  <tr>
+    <td>
+      <div align="center"><a href="http://taro.w3cub.com/">http://taro.w3cub.com/</a></div>
+      <div align="center"><img src="https://user-images.githubusercontent.com/1061012/45255911-2542e080-b3c1-11e8-90bf-4be7cd765516.png" width="200" height="200"/></div>
+    </td>
+    <td>
+      <div align="center">小程序地址</div>
+       <div align="center">
+        <img src="https://github.com/icai/taro-cnode/blob/master/screenshots/2021002183695117.jpg?raw=true" width="200"
+        height="200" />
+      </div>
+    </td>
+  </tr>
+</table>
 
 
-
-
-taro-ui 参考：
-
-https://github.com/cpitax/taro-tax
 
 
 
