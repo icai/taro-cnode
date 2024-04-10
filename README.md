@@ -37,6 +37,13 @@ pnpm run dev:wepp
 
 ## 预览效果
 
+
+<img src="https://github.com/icai/taro-cnode/blob/master/screenshots/Jietu20240410-011438.png?raw=true" width="285" />
+<img src="https://github.com/icai/taro-cnode/blob/master/screenshots/Jietu20240410-011525.png?raw=true" width="285" />
+<img src="https://github.com/icai/taro-cnode/blob/master/screenshots/Jietu20240410-113749.png?raw=true" width="285" />
+
+
+
 - h5预览地址
 
 http://taro.w3cub.com/
@@ -44,6 +51,11 @@ http://taro.w3cub.com/
 <img src="https://user-images.githubusercontent.com/1061012/45255911-2542e080-b3c1-11e8-90bf-4be7cd765516.png" width="200" height="200"/>
 
 - 小程序地址
+
+
+<img src="https://github.com/icai/taro-cnode/blob/master/screenshots/2021002183695117.jpg?raw=true" width="200" height="200"/>
+
+
 
 
 
