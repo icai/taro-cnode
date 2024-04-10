@@ -75,7 +75,6 @@ export const auth = (token) => async (dispatch) => {
       };
       store.setItem('user', JSON.stringify(user));
       dispatch(authSuccess(user));
-      return user;
     } else {
       return dispatch(authFail(response.data.error));
     }

@@ -5,9 +5,11 @@ import { Button, Input } from '@nutui/nutui-react-taro';
 import { Scan, Tips } from '@nutui/icons-react-taro'
 import { useDispatch } from 'react-redux';
 import { auth } from '@/reducers/auth';
+import { Comment } from '@nutui/icons-react-taro'
 import './index.scss';
 import Page from '@/components/page';
 import Taro from '@tarojs/taro';
+import { isH5 } from '@/libs/utils';
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
@@ -19,11 +21,16 @@ const Login: React.FC = () => {
 
   const logon = () => {
     if (token === '') {
-      showMessage('令牌格式错误,应为36位UUID字符串');
+      showMessage('请输入令牌');
       return false;
     }
-    auth(token)(dispatch)
-    redirectTo({ url: '/pages/index/index' });
+    auth(token)(dispatch).then((res: any) => {
+      if (res.type === 'auth/authSuccess') {
+        redirectTo({ url: '/pages/index/index' });
+      } else {
+        showMessage(res.payload.data?.error_msg || '登录失败');
+      }
+    });
   };
 
   const handleChange = (val: string) => {
@@ -37,10 +44,24 @@ const Login: React.FC = () => {
       }
     });
   }
+  const copyUrl = () => {
+    Taro.setClipboardData({
+      data: 'https://cnodejs.org/setting',
+      success: function () {
+        showMessage('复制成功');
+      }
+    });
+  }
 
   return (
     <Page className="login-page" title={'登录'}>
       <View className="page-body">
+
+        <View className="header">
+          <Comment size={80} color='#55B83B' />
+          <View className='content' onClick={copyUrl}>打开 https://cnodejs.org/setting 获取 token</View>
+        </View>
+
         <View className="label">
           <View
             style={{
@@ -57,7 +78,7 @@ const Login: React.FC = () => {
               value={token}
               onChange={handleChange} maxLength={36}
             />
-            {process.env.TARO_ENV !== 'h5' && <View
+            {!isH5() && <View
               className="right"
               style={{ display: 'flex', alignItems: 'center' }}
             >

@@ -1,39 +1,53 @@
-    .page-body {
-      padding: 150px 15px 50px;
-      min-height: 400px;
-      background-color: #fff;
-      .label {
-        display: inline-block;
-        width: 100%;
-        margin-top: 15px;
-        position: relative;
-        left: 0;
-        top: 0;
+.page-body {
+  padding: 150px 15px 50px;
+  min-height: 400px;
+  background-color: #fff;
 
-        .txt {
-          padding: 12px 0;
-          border: none;
-          border-bottom: 1px solid #4fc08d;
-          background-color: transparent;
-          width: 100%;
-          font-size: 14px;
-          color: #313131;
-        }
+  .header {
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-        .button {
-          // width: 99%;
-          // height: 80px;
-          // line-height: 80px;
-        }
-
-        .file {
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 42px;
-          width: 48%;
-          outline: medium none;
-          opacity: 0;
-        }
-      }
+    .content {
+      margin-top: 30px;
+      color: #313131;
+      font-size: 24px;
     }
+  }
+  .label {
+    display: inline-block;
+    width: 100%;
+    margin-top: 15px;
+    position: relative;
+    left: 0;
+    top: 0;
+
+    .txt {
+      padding: 12px 0;
+      border: none;
+      border-bottom: 1px solid #4fc08d;
+      background-color: transparent;
+      width: 100%;
+      font-size: 14px;
+      color: #313131;
+    }
+
+    .button {
+      // width: 99%;
+      // height: 80px;
+      // line-height: 80px;
+    }
+
+    .file {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 42px;
+      width: 48%;
+      outline: medium none;
+      opacity: 0;
+    }
+  }
+}

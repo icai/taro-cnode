@@ -51,7 +51,7 @@ const BottomTabbar = () => {
   } else {
     option = {
       fixed: true,
-      safeAreaInsetBottom: true
+      safeArea: true
     }
   }
   return (
@@ -59,7 +59,7 @@ const BottomTabbar = () => {
       style={tabbarStyle}
       {...option}
       value={value}
-      inactiveColor="#999" activeColor="#5CC59F"
+      inactiveColor={tabBar.color} activeColor={tabBar.selectedColor}
       onSwitch={(value) => {
         navigateTo({
           url: `/${tabBar.list[value].pagePath}`

@@ -20,7 +20,7 @@ interface IProps {
   showMenu?: boolean;
 }
 
-const Header: React.FC<IProps> = ({ pageType = '', messageCount = 0, needAdd }) => {
+const Header: React.FC<IProps> = ({ pageType = '' }) => {
   const [show, setShow] = useState<boolean>(false);
 
   const router = useRouter(true);
@@ -55,7 +55,7 @@ const Header: React.FC<IProps> = ({ pageType = '', messageCount = 0, needAdd }) 
   });
   useReady(() => {
     if (isAlipay()) {
-      my.hideBackHome();
+      Taro.hideBackHome();
     }
   })
   useLoad(() => {
@@ -128,17 +128,17 @@ const Header: React.FC<IProps> = ({ pageType = '', messageCount = 0, needAdd }) 
           back={
             backMenu()
           }
-          right={
-            <View
-              className="flex-center"
-              onClick={(e) => Taro.showToast({ title: 'icon' })}
-            >
-              <Share size={24} />
-            </View>
-          }
+          // right={
+          //   <View
+          //     className="flex-center"
+          //     onClick={(e) => Taro.showToast({ title: 'icon' })}
+          //   >
+          //     <Share size={24} />
+          //   </View>
+          // }
           onBackClick={(e) => openMenu()}
         >
-          <View onClick={(e) => Taro.showToast({ title: '标题' })}>{pageType}</View>
+          <View onClick={(e) => { }}>{pageType}</View>
         </NavBar>
         <View className={classnames} id="hd">
           <NvMenu showMenu={show} pageType={pageType} style={nvMenuStyle} />
