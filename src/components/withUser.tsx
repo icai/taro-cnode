@@ -19,7 +19,6 @@ function withUser(WrappedComponent, allowNologin = false) {
 
     const perform = () => {
       if (!isSuperRender()) {
-        console.log("User not logged in, redirecting to login page", userInfo, router);
         return Taro.redirectTo({ url: "/pages/login/index" });
       }
     };

@@ -4,7 +4,6 @@
   color: #313131;
 }
 
-
 /*未登录*/
 .login-no {
   overflow: hidden;
@@ -42,23 +41,5 @@
     margin-left: 10px;
     overflow: hidden;
     float: left;
-  }
-  p {
-    width: 85px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font-size: 12px;
-    line-height: 12px;
-    line-height: 40px;
-    &.lh20 {
-      line-height: 20px;
-    }
-  }
-  &:after {
-    display: block;
-    background: url("~@/assets/images/components/go_icon.png") no-repeat center
-      right;
-    background-size: 7px 7px;
   }
 }

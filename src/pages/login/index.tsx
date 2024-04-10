@@ -24,7 +24,7 @@ const Login: React.FC = () => {
       showMessage('请输入令牌');
       return false;
     }
-    auth(token)(dispatch).then((res: any) => {
+    auth(token)(dispatch).then((res) => {
       if (res.type === 'auth/authSuccess') {
         redirectTo({ url: '/pages/index/index' });
       } else {

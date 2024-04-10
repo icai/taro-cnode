@@ -1,9 +1,10 @@
-import Taro, {  usePageScroll } from '@tarojs/taro';
+import Taro, { usePageScroll } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import { throttle } from 'throttle-debounce';
 import { useEffect, useState } from 'react';
 import './index.scss';
 import { ArrowCircleUp } from '@nutui/icons-react-taro';
+import { isH5 } from '@/libs/utils';
 
 
 const BackTop = () => {
@@ -12,13 +13,13 @@ const BackTop = () => {
   let scrollbinding: () => void;
 
   useEffect(() => {
-    if (Taro.getEnv() === 'WEB') {
+    if (isH5()) {
       componentScrollBox = document.documentElement;
       scrollbinding = throttle(300, handleScroll);
       window.addEventListener('scroll', scrollbinding);
     }
     return () => {
-      if (Taro.getEnv() === 'WEB') {
+      if (isH5()) {
         window.removeEventListener('scroll', scrollbinding);
       }
     };

@@ -19,7 +19,7 @@ const UserInfo = () => {
       {!userInfo.loginname ? (
         <Link className="login-no" to={{ url: '/pages/login/index' }}>
           <View className="login">
-            <Login color='#F29291' size={24} style={{ marginRight: '10px'}} /><View>登录</View>
+            <Login color='#F29291' size={24} style={{ marginRight: '10px' }} /><View>登录</View>
           </View>
         </Link>
       ) : (
