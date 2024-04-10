@@ -68,7 +68,7 @@ export const getWindowBarInfo = async () => {
   let titleBarHeight = 0;
   let statusBarHeight = 0;
 
-  let windowInfo = Taro.getSystemInfoSync() as Taro.getSystemInfoSync.Result & { titleBarHeight: number };
+  let windowInfo = Taro.getSystemInfoSync() as Taro.getSystemInfoSync.Result & { titleBarHeight: number, statusBarHeight: number };
   let menuButtonInfo = { top: 0, height: 0 } as any;
 
   if (isWeapp()) {
