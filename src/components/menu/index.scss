@@ -1,55 +1,52 @@
-    .nav-list {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: -460px;
-      width: 460px;
-      background-color: #fff;
-      color: #313131;
-      transition: all .3s ease;
-      z-index: 99;
+.nav-list {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: -460px;
+  width: 460px;
+  background-color: #fff;
+  color: #313131;
+  transition: all 0.3s ease;
+  z-index: 99;
 
-      &.show {
-        transform: translateX(460px);
-      }
+  &.show {
+    transform: translateX(460px);
+  }
+}
+
+/*侧边栏列表*/
+.list-ul {
+  margin: 0 24px;
+  border-top: 1px solid #d4d4d4;
+  overflow: hidden;
+  padding-top: 9%;
+
+  .item {
+    display: block;
+    font-weight: 200;
+    padding: 9% 0;
+    font-size: 40px;
+    font-style: normal;
+    text-align: left;
+    text-indent: 1px;
+    color: #313131;
+
+    .nut-icon {
+      margin-right: 20px;
+      height: 20px;
+      width: 20px;
     }
 
-    /*侧边栏列表*/
-    .list-ul {
-      margin: 0 24px;
-      border-top: 1px solid #d4d4d4;
-      overflow: hidden;
-      padding-top: 9%;
-
-      .item {
-        display: block;
-        font-weight: 200;
-        padding: 9% 0;
-        font-size: 40px;
-        font-style:normal;
-        text-align: left;
-        text-indent: 1px;
-        color: #313131;
-        -webkit-font-smoothing: antialiased;
-        -webkit-text-stroke-width: 0.2px;
-        -moz-osx-font-smoothing: grayscale;
-
-        .nut-icon {
-          margin-right: 20px;
-          height: 20px;
-          width: 20px;
-        }
-
-        &:last-child {
-          margin-bottom: 50px;
-        }
-
-        &:before {
-          color: #2c3e50;
-        }
-      }
-
-      .line {
-        border-top: 1px solid #d4d4d4;
-      }
+    &:last-child {
+      margin-bottom: 50px;
     }
+
+    &:before {
+      color: #2c3e50;
+    }
+  }
+
+  .line {
+    border-top: 1px solid #d4d4d4;
+  }
+}

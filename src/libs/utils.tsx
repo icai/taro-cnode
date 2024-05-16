@@ -17,6 +17,10 @@ export const isAlipay = () => {
   return Taro.getEnv() === Taro.ENV_TYPE.ALIPAY;
 }
 
+export const isRn = () => {
+  return Taro.getEnv() === Taro.ENV_TYPE.RN;
+}
+
 
 export const updateObject = (oldObject, updatedProperties) => {
   return {
