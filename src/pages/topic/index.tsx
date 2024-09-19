@@ -43,7 +43,6 @@ const Topic: React.FC = () => {
 
   useEffect(() => {
     dispatch(authCheckState());
-    fetchTopic();
   }, [dispatch]);
 
 
