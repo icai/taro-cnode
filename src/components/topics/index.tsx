@@ -8,13 +8,9 @@ interface IProps {
   topics: ITopic[];
 }
 
-const TopicsList: React.FC<IProps> = ({ topics }) => {
+const TopicsList: React.FC<IProps> = ({ topics = [] }) => {
   const renderTopics = topics.map((topic) => <Topic key={topic.id} topic={topic} />);
   return <View className="topic-list">{renderTopics}</View>;
-};
-
-TopicsList.defaultProps = {
-  topics: [],
 };
 
 export { TopicsList };

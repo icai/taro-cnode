@@ -1,5 +1,4 @@
 import { View } from '@tarojs/components';
-import Taro from '@tarojs/taro';
 import * as utils from '@/libs/utils';
 import React from 'react';
 
@@ -53,11 +52,5 @@ const Link: React.FC<IProps> = ({ to, className, children }) => {
   );
 };
 
-Link.defaultProps = {
-  to: {
-    url: '',
-    params: {},
-  },
-};
 
 export default Link;

@@ -7,5 +7,6 @@
       }
     },
     "component2": true
-  }
+  },
+  "miniprogramRoot": "dist/"
 }

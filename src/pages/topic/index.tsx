@@ -46,6 +46,12 @@ const Topic: React.FC = () => {
     fetchTopic();
   }, [dispatch]);
 
+
+  // watch route change
+  useEffect(() => {
+    fetchTopic();
+  }, [router.params.id]);
+
   const addReply = (id: string) => {
     setCurReplyId(id);
     if (!userInfo.userId) {
@@ -90,6 +96,12 @@ const Topic: React.FC = () => {
 
   const fetchTopic = () => {
     const topicId = router?.params.id || '';
+    if (!topicId) {
+      // navigate to home page
+      return utils.redirectTo({
+        url: "/pages/index/index"
+      });
+    }
     setTopicId(topicId);
     getTopic({
       topicId: topicId
