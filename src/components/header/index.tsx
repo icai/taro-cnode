@@ -7,7 +7,7 @@ import Taro, { useLoad, useReady, useRouter } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
 import NvMenu from "../menu"
 import { NavBar } from '@nutui/nutui-react-taro';
-import { ArrowLeft, Category, Share } from '@nutui/icons-react-taro';
+import { ArrowLeft, FilterH, Share } from '@nutui/icons-react-taro';
 import { isAlipay } from '@/libs/utils';
 import './index.scss';
 
@@ -89,7 +89,7 @@ const Header: React.FC<IProps> = ({ pageType = '' }) => {
   let backMenu = () => {
     if (isAlipay()) {
       return <View style={{ marginLeft: '30px' }}>
-        <Category size={24} />
+        <FilterH size={24} />
       </View>
     }
     return (
@@ -97,7 +97,7 @@ const Header: React.FC<IProps> = ({ pageType = '' }) => {
         <ArrowLeft size={24} />
         返回
       </> : <>
-        <Category size={24} />
+        <FilterH size={24} />
       </>
     )
   }

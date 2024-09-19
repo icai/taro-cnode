@@ -79,12 +79,6 @@ pnpm run dev:alipay
 
 
 
-## 声明
-
-
-
-基于 https://github.com/shinygang/Vue-cnodejs 和 taro-cli 实现
-
 
 
 ## LICENSE
