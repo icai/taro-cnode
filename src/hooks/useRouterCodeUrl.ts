@@ -5,6 +5,9 @@ const useRouterCodeUrl = (basePath = '') => {
   const router = useRouter(true);
   const [url, setUrl] = useState('');
   let page = router.path.replace(basePath, '')
+  if (page.startsWith('/')) {
+    page = page.slice(1);
+  }
   if (page.includes('?')) {
     page = page.split('?')[0];
   }
