@@ -9,7 +9,7 @@ const useRouterCodeUrl = (basePath = '') => {
   const query = Object.keys(params).map(key => `${key}=${params[key]}`).join('&');
   const fullUrl = query ? `${page}?${encodeURIComponent(query)}` : page;
   useEffect(() => {
-    const newUrl = `alipays://platformapi/startapp?appId=2021002183695117&page=${fullUrl}`
+    const newUrl = `alipays://platformapi/startapp?appId=2021002183695117&page=${encodeURIComponent(fullUrl)}`;
     setUrl(newUrl);
   }, [router.path, router.params.id, basePath]);
 
