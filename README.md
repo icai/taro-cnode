@@ -79,6 +79,8 @@ pnpm run dev:alipay
 
 
 
+[阿里云OSS优化计划](https://www.aliyun.com/product/oss?source=5176.29345612&userCode=mas28ird)
+
 
 
 ## LICENSE
